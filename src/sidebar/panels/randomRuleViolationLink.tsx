@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Api } from "api";
 import { addNotification } from "../../redux/actions";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import { forceRedirect } from "../../redirect";
 const useRandomRuleViolation = (): (() => void) => {
   const [isChecking, setIsChecking] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const doCheck = () => setIsChecking(true);
 
@@ -25,13 +26,13 @@ const useRandomRuleViolation = (): (() => void) => {
             })
           );
         } else {
-          forceRedirect(`/show/${mediumIds[0]}`);
+          forceRedirect(history, `/show/${mediumIds[0]}`);
         }
       })
       .finally(() => {
         setIsChecking(false);
       });
-  }, [isChecking, dispatch]);
+  }, [history, isChecking, dispatch]);
 
   return doCheck;
 };

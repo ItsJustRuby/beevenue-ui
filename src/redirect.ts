@@ -1,6 +1,6 @@
-import history from "./beevenueHistory";
+import { BrowserHistory } from "history";
 
-export const forceRedirect = (target: string, doReplace?: boolean) => {
+export const forceRedirect = (history: BrowserHistory, target: string, doReplace?: boolean) => {
   let actualDoReplace = false;
 
   if (doReplace !== undefined) {
@@ -13,3 +13,4 @@ export const forceRedirect = (target: string, doReplace?: boolean) => {
     history.push(target);
   }
 };
+

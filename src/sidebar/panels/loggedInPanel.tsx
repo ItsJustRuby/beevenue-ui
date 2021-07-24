@@ -9,12 +9,14 @@ import { BeevenueSpinner } from "../../beevenueSpinner";
 import { commitId } from "../../config.json";
 import { useBeevenueSelector } from "../../redux/selectors";
 import { forceRedirect } from "../../redirect";
+import { useHistory } from "react-router-dom";
 
 const LoggedInPanel = () => {
   const [loginInProgress, setLoginInProgress] = useState(false);
 
   const serverVersion = useBeevenueSelector(store => store.login.serverVersion);
 
+    const history = useHistory();
   const dispatch = useDispatch();
 
   const isMounted = useRef(true);
@@ -33,7 +35,7 @@ const LoggedInPanel = () => {
         if (res.status === 200) {
           // The session cookie is unset now.
           dispatch(logout());
-          forceRedirect("/");
+          forceRedirect(history, "/");
         }
       })
       .finally(finish);

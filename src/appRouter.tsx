@@ -1,9 +1,8 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { BeevenueSpinner } from "./beevenueSpinner";
 
-import history from "./beevenueHistory";
 import { Api } from "api";
 import { login, loginAnonymous } from "./redux/actions";
 import { BeevenuePage } from "./routing/beevenuePage";
@@ -81,7 +80,7 @@ const AppRouter = () => {
   }
 
   return (
-    <Router history={history}>
+    <BrowserRouter>
       <BeevenuePage>
         <Suspense fallback={fallback}>
           <Switch>
@@ -97,7 +96,7 @@ const AppRouter = () => {
           </Switch>
         </Suspense>
       </BeevenuePage>
-    </Router>
+    </BrowserRouter>
   );
 };
 

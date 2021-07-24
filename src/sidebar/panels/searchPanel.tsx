@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 import { setShouldRefresh, setSearchQuery } from "../../redux/actions";
 import qs from "qs";
 import { useBeevenueSelector } from "../../redux/selectors";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { forceRedirect } from "../../redirect";
 
 const SearchPanel = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -28,7 +29,7 @@ const SearchPanel = () => {
 
     if (searchTerms === "") {
       dispatch(setSearchQuery(""));
-      forceRedirect("/");
+      forceRedirect(history, "/");
       return;
     }
 
@@ -52,7 +53,7 @@ const SearchPanel = () => {
       return;
     }
 
-    forceRedirect(newPath);
+    forceRedirect(history, newPath);
   };
 
   const onChange = (newSearchTerms: string) => {

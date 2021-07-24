@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Api } from "api";
 import { forceRedirect } from "../redirect";
+import { useHistory } from "react-router-dom";
 
 interface EditableTitleFieldProps {
   initialTitle: string;
@@ -9,6 +10,8 @@ interface EditableTitleFieldProps {
 const EditableTitleField = (props: EditableTitleFieldProps) => {
   const [currentTitle, setCurrentTitle] = useState(props.initialTitle);
 
+  const history = useHistory();
+
   useEffect(() => {
     setCurrentTitle(props.initialTitle);
   }, [props.initialTitle]);
@@ -16,7 +19,7 @@ const EditableTitleField = (props: EditableTitleFieldProps) => {
   const [isBeingEdited, setIsBeingEdited] = useState(false);
 
   const onTitleChanged = (newTitle: string): void => {
-    forceRedirect(`/tag/${newTitle}`, true);
+    forceRedirect(history, `/tag/${newTitle}`, true);
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {

@@ -9,11 +9,13 @@ import { SpeedTaggerPanel } from "./panels/speedTaggerPanel";
 import { Anonymous } from "../redux/storeTypes";
 import { useBeevenueSelector } from "../redux/selectors";
 import { forceRedirect } from "../redirect";
+import { useHistory } from "react-router-dom";
 
 const Sidebar = () => {
   const loggedInUser = useBeevenueSelector(store => store.login.loggedInUser);
   const loggedInRole = useBeevenueSelector(store => store.login.loggedInRole);
 
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const getElements = (): JSX.Element[] => {
@@ -39,7 +41,7 @@ const Sidebar = () => {
   const onHomeButtonClicked = (e: any) => {
     e.preventDefault();
     dispatch(setSearchQuery(""));
-    forceRedirect("/");
+    forceRedirect(history, "/", false);
   };
 
   return (

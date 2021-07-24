@@ -1,5 +1,5 @@
 import qs from "qs";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useCallback } from "react";
 import { forceRedirect } from "../redirect";
 
@@ -9,6 +9,7 @@ interface QueryStringRedirectParameters {
 }
 
 export const useQueryStringRedirect = () => {
+  const history = useHistory();
   const location = useLocation();
   const f = useCallback(
     (q: QueryStringRedirectParameters) => {
@@ -22,9 +23,9 @@ export const useQueryStringRedirect = () => {
         search: qs.stringify(newQs, { addQueryPrefix: true })
       };
 
-      forceRedirect(newLocation.pathname + newLocation.search);
+      forceRedirect(history, newLocation.pathname + newLocation.search);
     },
-    [location]
+    [history, location]
   );
 
   return f;

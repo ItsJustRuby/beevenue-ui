@@ -5,12 +5,14 @@ import { Api } from "api";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/actions";
 import { forceRedirect } from "../redirect";
+import { useHistory } from "react-router-dom";
+import { BrowserHistory } from "history";
 
 interface MediumDeleteButtonProps {
   mediumId: number;
 }
 
-const doConfirm = (dispatch: (x: any) => void, mediumId: number) => {
+const doConfirm = (history: BrowserHistory, dispatch: (x: any) => void, mediumId: number) => {
   Api.Medium.delete(mediumId)
     .then(
       res => {
@@ -31,7 +33,7 @@ const doConfirm = (dispatch: (x: any) => void, mediumId: number) => {
       }
     )
     .finally(() => {
-      forceRedirect("/");
+      forceRedirect(history, "/");
     });
 };
 
@@ -74,13 +76,14 @@ const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
 const MediumDeleteButton = (props: MediumDeleteButtonProps) => {
   const [isShowingModel, setIsShowingModel] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onCloseModal = () => {
     setIsShowingModel(false);
   };
 
   const onConfirm = () => {
-    doConfirm(dispatch, props.mediumId);
+    doConfirm(history, dispatch, props.mediumId);
     onCloseModal();
   };
 

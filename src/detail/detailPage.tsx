@@ -14,6 +14,7 @@ import { DetailPageTagsCard } from "./detailPageTagsCard";
 import { DetailPageRatingCard } from "./detailPageRatingCard";
 import { DetailPageAdminCard } from "./detailPageAdminCard";
 import { forceRedirect } from "../redirect";
+import { useHistory } from "react-router-dom";
 
 interface DetailPageParams {
   id: string;
@@ -22,18 +23,21 @@ interface DetailPageParams {
 const useClosePageOnSfw = (viewModel: ShowViewModel | null) => {
   const dispatch = useDispatch();
   const isSessionSfw = useIsSessionSfw();
+  const history = useHistory();
 
   useEffect(() => {
     if (isSessionSfw && viewModel !== null) {
       if (viewModel.rating !== "s") {
-        forceRedirect("/");
+        forceRedirect(history, "/");
       }
     }
-  }, [isSessionSfw, viewModel, dispatch]);
+  }, [history, isSessionSfw, viewModel, dispatch]);
 };
 
 const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const isSessionSfw = useIsSessionSfw();
 
   const match = useRouteMatch<DetailPageParams>();
@@ -49,10 +53,10 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
           dispatch(addNotLoggedInNotification());
         }
 
-        forceRedirect("/");
+        forceRedirect(history, "/");
       }
     );
-  }, [dispatch, id, isSessionSfw, setViewModel]);
+  }, [dispatch, history, id, isSessionSfw, setViewModel]);
 
   return id;
 };

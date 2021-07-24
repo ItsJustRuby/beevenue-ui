@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useRouteMatch } from "react-router";
+import { useHistory } from "react-router-dom";
 import { forceRedirect } from "../redirect";
 
 interface WildcardPageParams {
@@ -8,14 +9,15 @@ interface WildcardPageParams {
 }
 
 const WildcardPage = () => {
+  const history = useHistory();
   const match = useRouteMatch<WildcardPageParams>();
   const { whatever } = match.params;
 
   useEffect(() => {
     if (whatever) {
-      forceRedirect("/");
+      forceRedirect(history, "/");
     }
-  }, [whatever]);
+  }, [history, whatever]);
 
   return (
     <div className="column">
