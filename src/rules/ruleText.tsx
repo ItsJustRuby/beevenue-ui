@@ -26,10 +26,6 @@ interface ThenRulePart extends RulePart {
   type: ThenRulePartKind;
 }
 
-interface FailThenRulePart extends ThenRulePart {
-  type: "fail";
-}
-
 interface HasRatingRulePart extends RulePart {
   type: "hasRating";
   data: Rating;

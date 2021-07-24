@@ -51,7 +51,7 @@ const AppRouter = () => {
       });
   };
 
-  useEffect(tryLoggingIn, [dispatch]);
+  useEffect(tryLoggingIn, [dispatch, tryLoggingIn]);
 
   const statusText =
     countdown > 0
