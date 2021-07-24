@@ -6,8 +6,8 @@ interface Dims {
 }
 
 export const zoomAndDrag = (svg: any, g: any, dims: Dims) => {
-  const zoomed = () => {
-    g.attr("transform", d3.event.transform);
+  const zoomed = (event: any) => {
+    g.attr("transform", event.transform);
   };
 
   svg.call(
