@@ -25,10 +25,8 @@ const BeevenuePagination = (props: PaginationProps) => {
 
   if (page && page.pageSize) {
     initialPageSize = page.pageSize;
-  } else if (q.pageSize && typeof q.pageSize === "string") {
-    const queryParamPageSize: number = parseInt(q.pageSize);
-    if (!isNaN(queryParamPageSize))
-      initialPageSize = queryParamPageSize;
+  } else if (q.pageSize) {
+    initialPageSize = q.pageSize;
   }
 
   const [pageSize, setPageSize] = useState(initialPageSize);
