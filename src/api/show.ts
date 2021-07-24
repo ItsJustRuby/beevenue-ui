@@ -7,7 +7,8 @@ export interface PartialShowViewModel {
   hash: string;
   mime_type: MimeType;
   rating: Rating;
-  tags: Array<any>;
+  tags: Array<string>;
+  absentTags: Array<string>;
 }
 
 export interface ShowViewModel extends PartialShowViewModel {

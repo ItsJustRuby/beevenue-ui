@@ -1,12 +1,13 @@
 import React from "react";
 import TagsInput from "react-tagsinput";
-import { ShowViewModel } from "../api/show";
 import { Link } from "react-router-dom";
 
 interface DetailPageTagsCardProps {
-  viewModel: ShowViewModel;
+  className: string;
+  tags: Array<string>;
   userIsAdmin: boolean;
   onTagsChange: (x: any) => void;
+  placeholder: string;
 }
 
 const renderTag = (props: any) => {
@@ -44,18 +45,19 @@ const getRenderLayout = (userIsAdmin: boolean) => {
 };
 
 const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
-  const { viewModel, userIsAdmin, onTagsChange } = props;
+  const { className, tags, userIsAdmin, onTagsChange, placeholder } = props;
 
-  if (!viewModel.tags) {
+  if (!tags) {
     return null;
   }
 
   return (
-    <nav className="level beevenue-medium-tags">
+    <nav className={`level ${className}`}>
       <TagsInput
-        value={viewModel.tags.sort()}
+        value={tags.sort()}
         disabled={userIsAdmin ? undefined : true}
         className="tagsinput field is-grouped is-grouped-multiline input"
+        inputProps={{ className: 'react-tagsinput-input', placeholder }}
         tagProps={{ className: "tags has-addons" }}
         renderTag={renderTag}
         renderLayout={getRenderLayout(userIsAdmin)}

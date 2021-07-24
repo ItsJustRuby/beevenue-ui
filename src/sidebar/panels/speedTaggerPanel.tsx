@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import {
   toggleSpeedTagging,
+  toggleSpeedTaggingAbsent,
   setShouldRefresh,
   clearSpeedTaggingItems,
 } from "../../redux/actions";
@@ -53,7 +54,37 @@ const useMarkCheckbox = (dispatch: (x: any) => void) => {
   );
 };
 
+const useAbsentCheckbox = (dispatch: (x: any) => void) => {
+  const toggle = () => {
+    dispatch(toggleSpeedTaggingAbsent());
+  };
+
+  const isSpeedTagging = useBeevenueSelector(
+    (store) => store.speedTagging.isSpeedTagging
+  );
+
+  const isSpeedTaggingAbsent = useBeevenueSelector(
+    (store) => store.speedTagging.isAbsent
+  );
+
+  return (
+    <div className="field">
+      <input
+        type="checkbox"
+        id="speed-tagger-absent-switch"
+        name="speed-tagger-absent-switch"
+        className="switch"
+        disabled={!isSpeedTagging}
+        defaultChecked={isSpeedTaggingAbsent}
+        onChange={(_) => toggle()}
+      />
+      <label htmlFor="speed-tagger-absent-switch">Absent</label>
+    </div>
+  );
+};
+
 const go = (
+  isAbsent: boolean,
   speedTaggingItems: any[],
   tags: string,
   dispatch: (x: any) => void
@@ -68,22 +99,27 @@ const go = (
     return;
   }
 
-  Api.Tags.batchAdd(tagNames, items).finally(() => {
+  Api.Tags.batchAdd(isAbsent, tagNames, items).finally(() => {
     dispatch(clearSpeedTaggingItems());
     dispatch(setShouldRefresh(true));
   });
 };
 
-const getGoButton = (
+const useGoButton = (
   speedTaggingItems: any[],
   tags: string,
   dispatch: (x: any) => void
 ) => {
+
+  const isAbsent = useBeevenueSelector(
+    (store) => store.speedTagging.isAbsent
+  );
+
   return (
     <div className="field">
       <a
         className="button"
-        onClick={(_) => go(speedTaggingItems, tags, dispatch)}
+        onClick={(_) => go(isAbsent, speedTaggingItems, tags, dispatch)}
       >
         <FontAwesomeIcon icon={faCheck} />
       </a>
@@ -94,13 +130,15 @@ const getGoButton = (
 const useForm = (speedTaggingItems: any[]) => {
   const dispatch = useDispatch();
   const markCheckbox = useMarkCheckbox(dispatch);
+  const absentCheckbox = useAbsentCheckbox(dispatch);
   const { tagsInputField, tags } = useTagsInputField();
-  const goButton = getGoButton(speedTaggingItems, tags, dispatch);
+  const goButton = useGoButton(speedTaggingItems, tags, dispatch);
 
   return (
     <form>
       {tagsInputField}
       {markCheckbox}
+      {absentCheckbox}
       {goButton}
     </form>
   );

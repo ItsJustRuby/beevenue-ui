@@ -9,6 +9,7 @@ type ThenRulePartKind =
   | "fail"
   | "hasRating"
   | "hasAnyTagsIn"
+  | "hasAllAbsentOrPresent"
   | "hasAnyTagsLike";
 
 export type RulePartKind = IffRulePartKind | ThenRulePartKind;
@@ -41,6 +42,11 @@ interface HasAnyTagsLikeRulePart extends RulePart {
 
 interface HasAnyTagsInRulePart extends RulePart {
   type: "hasAnyTagsIn";
+  data: string[];
+}
+
+interface HasAllTagsAbsentOrPresentRulePart extends RulePart {
+  type: "hasAllAbsentOrPresent";
   data: string[];
 }
 
@@ -117,6 +123,15 @@ const RuleText = (props: Rule) => {
     );
   };
 
+  const renderThenAbsentOrPresent = (rulePart: HasAllTagsAbsentOrPresentRulePart) => {
+    return (
+      <>
+        should have all of the following tags marked as present or absent:&nbsp;
+        {_arrayToFragment(rulePart.data, {finalSeparator: " and "}, linkSelector)}
+      </>
+    );
+  };
+
   const renderIf = (iff: IfRulePart) => {
     switch (iff.type) {
       case "all":
@@ -149,6 +164,8 @@ const RuleText = (props: Rule) => {
         return _thenTextHasRating(then as HasRatingRulePart);
       case "hasAnyTagsIn":
         return renderThenTagsIn(then as HasAnyTagsInRulePart);
+      case "hasAllAbsentOrPresent":
+          return renderThenAbsentOrPresent(then as HasAllTagsAbsentOrPresentRulePart);
       case "hasAnyTagsLike":
         return `should have a tag like ${_arrayToFragment(
           (then as HasAnyTagsLikeRulePart).data

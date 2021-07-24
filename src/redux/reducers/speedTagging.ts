@@ -1,5 +1,6 @@
 import {
   SET_SPEED_TAGGING,
+  SET_SPEED_TAGGING_ABSENT,
   TOGGLE_SPEED_TAGGING_ITEM,
   CLEAR_SPEED_TAGGING_ITEMS
 } from "../actionTypes";
@@ -7,6 +8,7 @@ import { SpeedTaggingStore } from "../storeTypes";
 
 const initialState: SpeedTaggingStore = {
   isSpeedTagging: false,
+  isAbsent: false,
   speedTaggingItems: []
 };
 
@@ -15,6 +17,8 @@ const speedTagging = (
   action: any
 ): any => {
   switch (action.type) {
+    case SET_SPEED_TAGGING_ABSENT:
+      return { ...state, isAbsent: !state.isAbsent };
     case SET_SPEED_TAGGING:
       const newIsSpeedTagging = !state.isSpeedTagging;
       const result = { ...state, isSpeedTagging: newIsSpeedTagging };

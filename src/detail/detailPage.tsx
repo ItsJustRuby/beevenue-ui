@@ -61,7 +61,7 @@ const updateMedium = (
   setViewModel: (vm: ShowViewModel) => void,
   newViewModel: ShowViewModel
 ): void => {
-  const params = pick(newViewModel, ["id", "tags", "rating"]);
+  const params = pick(newViewModel, ["id", "absentTags", "tags", "rating"]);
   setViewModel(newViewModel);
   Api.Medium.update(params).then((res) => {
     setViewModel(res.data as ShowViewModel);
@@ -72,17 +72,24 @@ const onChange = (
   viewModel: ShowViewModel | null,
   setViewModel: (vm: ShowViewModel) => void
 ) => {
-  const onTagsChange = (newTags: string[]) => {
+  const cleanTags = (unclean: string[]) => {
     // Technically, the user can't manually enter these characters.
     // However, by pasting them, they can still occur in here.
-    const cleanTags = newTags.map((unclean) => {
-      return unclean.replace(/[\t\r\n ]/g, "");
-    });
+    return unclean.map(s => s.replace(/[\t\r\n ]/g, ""));
+  }
 
-    const newViewModel = { ...viewModel } as ShowViewModel;
-    newViewModel.tags = cleanTags;
-    updateMedium(setViewModel, newViewModel);
-  };
+  const tagChangeHelper = (setter: ((vm: ShowViewModel, tags: string[]) => void)) => {
+    const f = (tags: string[]) => {
+      const cleanedTags = cleanTags(tags);
+      const newViewModel = { ...viewModel } as ShowViewModel;
+      setter(newViewModel, cleanedTags);
+      updateMedium(setViewModel, newViewModel);
+    }
+    return f;
+  }
+
+  const onTagsChange = tagChangeHelper((vm, t) => { vm.tags = t});
+  const onAbsentTagsChange = tagChangeHelper((vm, t) => { vm.absentTags = t});
 
   const onRatingChange = (value: string) => {
     const newRating = value as Rating;
@@ -92,7 +99,7 @@ const onChange = (
     newViewModel.rating = newRating;
     updateMedium(setViewModel, newViewModel);
   };
-  return { onTagsChange, onRatingChange };
+  return { onAbsentTagsChange, onTagsChange, onRatingChange };
 };
 
 const useSetup = () => {
@@ -100,8 +107,8 @@ const useSetup = () => {
   const id = useRefreshOnUpdate(setViewModel);
   useClosePageOnSfw(viewModel);
 
-  const { onTagsChange, onRatingChange } = onChange(viewModel, setViewModel);
-  return { viewModel, setViewModel, id, onTagsChange, onRatingChange };
+  const { onAbsentTagsChange, onTagsChange, onRatingChange } = onChange(viewModel, setViewModel);
+  return { viewModel, setViewModel, id, onAbsentTagsChange, onTagsChange, onRatingChange };
 };
 
 const DetailPage = () => {
@@ -110,6 +117,7 @@ const DetailPage = () => {
     viewModel,
     setViewModel,
     id,
+    onAbsentTagsChange,
     onTagsChange,
     onRatingChange,
   } = useSetup();
@@ -120,7 +128,8 @@ const DetailPage = () => {
     view = (
       <>
         <Medium {...viewModel} />
-        <DetailPageTagsCard {...{ viewModel, userIsAdmin, onTagsChange }} />
+        <DetailPageTagsCard {...{ className: "beevenue-medium-tags", tags: viewModel.tags, userIsAdmin, onTagsChange, placeholder: "Add tags" }} />
+        <DetailPageTagsCard {...{ className: "beevenue-medium-absent-tags", tags: viewModel.absentTags, userIsAdmin, onTagsChange: onAbsentTagsChange, placeholder: "Add absent tags" }} />
         <DetailPageRatingCard {...{ viewModel, userIsAdmin, onRatingChange }} />
         <DetailPageAdminCard
           {...{ viewModel, setViewModel, userIsAdmin, mediumId: id }}

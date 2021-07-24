@@ -9,6 +9,7 @@ import {
   SET_SFW_SESSION,
   SET_FILE_UPLOADED,
   SET_SPEED_TAGGING,
+  SET_SPEED_TAGGING_ABSENT,
   TOGGLE_SPEED_TAGGING_ITEM,
   CLEAR_SPEED_TAGGING_ITEMS,
   SET_SHOULD_REFRESH
@@ -88,6 +89,10 @@ export const setFileUploaded = () => ({
 
 export const toggleSpeedTagging = () => ({
   type: SET_SPEED_TAGGING
+});
+
+export const toggleSpeedTaggingAbsent = () => ({
+  type: SET_SPEED_TAGGING_ABSENT
 });
 
 export const toggleSpeedTaggingItem = (id: number) => ({

@@ -115,7 +115,7 @@ const Api = {
       return _notification_wrapper(
         axiosClient.patch(
           `medium/${params.id}/metadata`,
-          pick(params, ["rating", "tags"])
+          pick(params, ["rating", "absentTags", "tags"])
         )
       );
     },
@@ -150,9 +150,9 @@ const Api = {
       );
     },
 
-    batchAdd(tags: string[], mediumIds: number[]): AxiosPromise<any> {
+    batchAdd(isAbsent: boolean, tags: string[], mediumIds: number[]): AxiosPromise<any> {
       return _notification_wrapper(
-        axiosClient.post(`tags/batch`, { tags, mediumIds })
+        axiosClient.post(`tags/batch`, { isAbsent, tags, mediumIds })
       );
     },
 

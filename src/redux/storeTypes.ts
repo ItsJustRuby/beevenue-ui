@@ -39,6 +39,7 @@ export interface SearchStore {
 
 export interface SpeedTaggingStore {
   isSpeedTagging: boolean;
+  isAbsent: boolean;
   speedTaggingItems: any[];
 }
 
