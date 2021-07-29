@@ -242,17 +242,7 @@ const Api = {
 
   Stats: {
     get(): AxiosPromise<any> {
-      return axiosClient.post("graphql", {
-        query: `{
-          statistics
-          {
-              ratings
-              {
-                  q, s, e, u
-              }
-          }
-        }`,
-      });
+      return axiosClient.get("stats");
     },
   },
 };

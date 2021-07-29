@@ -8,13 +8,7 @@ import { Rating } from "api/show";
 
 export type RatingStats = Record<Rating, number>;
 
-interface InnerStatistics {
-  ratings: RatingStats;
-}
-
-interface Stats {
-  statistics: InnerStatistics;
-}
+type Stats = Record<Rating, number>;
 
 const StatsPage = () => {
   const [stats, setStats] = useState<Stats | null>(null);
@@ -22,7 +16,7 @@ const StatsPage = () => {
 
   const loadStats = () => {
     Api.Stats.get().then((res) => {
-      setStats(res.data.data);
+      setStats(res.data);
     });
   };
 
@@ -31,29 +25,23 @@ const StatsPage = () => {
   }, []);
 
   const getStats = (stats: Stats) => {
-    const rows: JSX.Element[] = [];
+    const allRatings: Rating[] = ['s', 'q', 'e', 'u'];
 
     let total = 0;
-    for (const untypedRating in stats.statistics.ratings) {
-      const rating: Rating = untypedRating as Rating;
-      if (rating === null) continue;
-      total += stats.statistics.ratings[rating];
-    }
+    allRatings.forEach(rating => {total += stats[rating]})
 
-    for (const untypedRating in stats.statistics.ratings) {
-      const rating: Rating = untypedRating as Rating;
-      if (rating === null) continue;
-
-      rows.push(
+    const rows: JSX.Element[] = allRatings.map(rating => {
+      return (
         <tr key={rating}>
           <td>{rating}</td>
-          <td>{stats.statistics.ratings[rating]}</td>
+          <td>{stats[rating]}</td>
           <td>
-            {((100 * stats.statistics.ratings[rating]) / total).toFixed(1)}
+            {((100 * stats[rating]) / total).toFixed(2)}
           </td>
         </tr>
       );
-    }
+    })
+
     return (
       <table className="beevenue-table table">
         <thead>
