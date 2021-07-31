@@ -7,6 +7,8 @@ import { BeevenueSpinner } from "../beevenueSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons/faQuestionCircle";
 import { useBeevenueSelector, useIsSessionSfw } from "../redux/selectors";
+import { useDispatch } from "react-redux";
+import { setTitle } from "redux/actions";
 
 interface SimpleTag {
   impliedBySomething: boolean;
@@ -178,6 +180,9 @@ const getFilteredTags = (tags: SimpleTag[], filter: string): SimpleTag[] => {
 const TagsPage = () => {
   const { loggedInRole, filter, setFilter, tags } = useSetup();
   const isAdmin = loggedInRole === "admin";
+  
+  const dispatch = useDispatch();
+  dispatch(setTitle("Tags"));
 
   const filteredTags = useMemo(() => getFilteredTags(tags, filter), [
     tags,

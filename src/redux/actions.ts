@@ -6,6 +6,7 @@ import {
   DISMISS_NOTIFICATION,
   DISMISS_ALL_NOTIFICATIONS,
   NEW_SEARCH_QUERY,
+  NEW_TITLE,
   SET_SFW_SESSION,
   SET_FILE_UPLOADED,
   SET_SPEED_TAGGING,
@@ -53,6 +54,11 @@ export const logout = () => ({
 export const setSearchQuery = (query: string) => ({
   type: NEW_SEARCH_QUERY,
   payload: query
+});
+
+export const setTitle = (title: string) => ({
+  type: NEW_TITLE,
+  payload: title
 });
 
 export const addNotification = (

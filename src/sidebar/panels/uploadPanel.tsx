@@ -5,6 +5,8 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons/faUpload";
 import { setFileUploaded } from "../../redux/actions";
 import { Api } from "api";
 import { useDispatch } from "react-redux";
+import prettyBytes from "pretty-bytes";
+import pluralize from "pluralize";
 
 const getOnChangeHandler = (
   setFiles: (f: FileList | null) => void,
@@ -71,12 +73,33 @@ const getProgressBarClasses = (doneCount: number, files: FileList | null) => {
   return result + " is-warning";
 };
 
+const getStatusText = (files: FileList | null): JSX.Element | null => {
+
+  if (files === null || files.length === 0) {
+    return null;
+  }
+  
+  let totalFileSize = 0;
+  for (let i = 0; i < files.length; ++i) {
+    totalFileSize += files[i].size;
+  }
+  const fileSizeString = prettyBytes(totalFileSize).replace(" ", "\u00A0"); // nbsp
+  
+  return (
+    <div className="field">
+      <p>{files.length} {pluralize("file", files.length)} selected ({fileSizeString})</p>
+    </div>
+  );
+}
+
 const renderBox = (
   doneCount: number,
   files: FileList | null,
   onChange: (f: FileList | null) => void
 ) => {
+
   return (
+    <>
     <div className="file is-boxed">
       <label className="file-label">
         <input
@@ -90,15 +113,18 @@ const renderBox = (
           <FontAwesomeIcon icon={faUpload} />
           <span className="file-label">Select files</span>
         </span>
-        {files === null ? null : (
-          <progress
+        
+        {(files === null || files.length === 0) ? null : (
+        <progress
             className={getProgressBarClasses(doneCount, files)}
             value={doneCount}
             max={files.length}
           />
         )}
       </label>
-    </div>
+      </div>
+      {getStatusText(files)}
+    </>
   );
 };
 
@@ -117,7 +143,7 @@ const UploadPanel = () => {
             <input
               type="submit"
               className="button"
-              disabled={files === null}
+              disabled={files === null || files.length === 0}
               value="Go"
             />
           </div>

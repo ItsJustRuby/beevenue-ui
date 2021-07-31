@@ -5,3 +5,11 @@
 .beevenue-sidebar > .level.beevenue-home {
   margin-bottom: 1.5rem;
 }
+
+.beevenue-sidebar .level-item {
+  flex-shrink: 1;
+}
+
+.beevenue-sidebar p {
+  word-break: break-word;
+}

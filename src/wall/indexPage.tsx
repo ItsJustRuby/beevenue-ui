@@ -3,7 +3,7 @@ import qs from "qs";
 
 import { Api } from "api";
 import { useDispatch } from "react-redux";
-import { setShouldRefresh } from "../redux/actions";
+import { setShouldRefresh, setTitle } from "../redux/actions";
 import { paginationParamsFromQuery } from "./pagination";
 import { Anonymous, Unknown } from "../redux/storeTypes";
 import { useBeevenueSelector, useIsSessionSfw } from "../redux/selectors";
@@ -23,6 +23,8 @@ const IndexPage = () => {
   const lastFileUploaded = useBeevenueSelector(
     store => store.fileUpload.lastFileUploaded
   );
+
+  dispatch(setTitle(""));
 
   const [media, setMedia] = useState<MediumWallPagination | null>(null);
 

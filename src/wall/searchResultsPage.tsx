@@ -4,7 +4,7 @@ import qs from "qs";
 
 import { useDispatch } from "react-redux";
 
-import { setSearchQuery, setShouldRefresh } from "../redux/actions";
+import { setSearchQuery, setShouldRefresh, setTitle } from "../redux/actions";
 
 import { Api } from "api";
 import { MediumWallPagination } from "./mediumWallTypes";
@@ -82,6 +82,7 @@ const SearchResultsPage = () => {
   useEffect(() => {
     const tagsFromRoute = getSearchTermsFromRoute();
     dispatch(setSearchQuery(tagsFromRoute));
+    dispatch(setTitle(`Search: ${tagsFromRoute}`));
   }, [dispatch, getSearchTermsFromRoute]);
 
   useEffect(() => {

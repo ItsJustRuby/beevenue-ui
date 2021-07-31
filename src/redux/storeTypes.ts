@@ -37,6 +37,10 @@ export interface SearchStore {
   searchQuery: string;
 }
 
+export interface TitleStore {
+  title: string;
+}
+
 export interface SpeedTaggingStore {
   isSpeedTagging: boolean;
   isAbsent: boolean;
@@ -51,4 +55,5 @@ export interface BeevenueStore extends Store {
   notifications: NotificationStore;
   speedTagging: SpeedTaggingStore;
   refresh: RefreshStore;
+  title: TitleStore;
 }

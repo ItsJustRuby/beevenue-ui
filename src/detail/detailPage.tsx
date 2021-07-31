@@ -5,7 +5,7 @@ import { Api } from "api";
 import { ShowViewModel, Rating } from "../api/show";
 import { Medium } from "./medium";
 import { useDispatch } from "react-redux";
-import { addNotLoggedInNotification } from "../redux/actions";
+import { addNotLoggedInNotification, setTitle } from "../redux/actions";
 import pick from "lodash-es/pick";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
@@ -126,6 +126,9 @@ const DetailPage = () => {
     onRatingChange,
   } = useSetup();
   const userIsAdmin = loggedInRole === "admin";
+  
+  const dispatch = useDispatch();
+  dispatch(setTitle(`${id}`));
 
   let view;
   if (viewModel !== null) {

@@ -10,6 +10,8 @@ import { BeevenueSpinner } from "../beevenueSpinner";
 import { ImplicationsCard } from "./implicationsCard";
 import { EditableTitleField } from "./editableTitleField";
 import TagDetailPageAliasCard from "./tagShowPageAliasCard";
+import { useDispatch } from "react-redux";
+import { setTitle } from "redux/actions";
 
 export interface ShowTagViewModel {
   aliases: string[];
@@ -74,6 +76,9 @@ const TagDetailPage = () => {
   const { tag, tagName, onAliasRemoved, onAliasAdded, tagNotFound } = useTag();
 
   useLoginRequired();
+
+  const dispatch = useDispatch();
+  dispatch(setTitle(`"${tagName}"`));
 
   const subtitle = () => {
     if (tagNotFound || !tag) {
