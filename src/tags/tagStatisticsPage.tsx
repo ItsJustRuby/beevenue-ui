@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TagSimilarityWidget } from "./tagSimilarityWidget";
 import { TagImplicationWidget } from "./tagImplicationWidget";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,10 @@ import { setTitle } from "redux/actions";
 
 const TagStatisticsPage = () => {
   const dispatch = useDispatch();
-  dispatch(setTitle("Tag Stats"));
+  
+  useEffect(() => {
+    dispatch(setTitle("Tag Stats"));
+  }, [dispatch]);
 
   return (
     <div>

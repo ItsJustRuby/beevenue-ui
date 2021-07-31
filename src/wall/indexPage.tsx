@@ -24,7 +24,9 @@ const IndexPage = () => {
     store => store.fileUpload.lastFileUploaded
   );
 
-  dispatch(setTitle(""));
+  useEffect(() => {
+    dispatch(setTitle(""));
+  }, [dispatch]);
 
   const [media, setMedia] = useState<MediumWallPagination | null>(null);
 

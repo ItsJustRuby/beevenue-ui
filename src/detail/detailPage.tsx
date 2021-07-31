@@ -128,7 +128,9 @@ const DetailPage = () => {
   const userIsAdmin = loggedInRole === "admin";
   
   const dispatch = useDispatch();
-  dispatch(setTitle(`${id}`));
+  useEffect(() => {
+    dispatch(setTitle(`${id}`));
+  }, [dispatch, id]);
 
   let view;
   if (viewModel !== null) {

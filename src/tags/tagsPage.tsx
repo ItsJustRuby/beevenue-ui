@@ -182,7 +182,10 @@ const TagsPage = () => {
   const isAdmin = loggedInRole === "admin";
   
   const dispatch = useDispatch();
-  dispatch(setTitle("Tags"));
+  
+  useEffect(() => {
+    dispatch(setTitle("Tags"));
+  }, [dispatch]);
 
   const filteredTags = useMemo(() => getFilteredTags(tags, filter), [
     tags,

@@ -78,7 +78,9 @@ const TagDetailPage = () => {
   useLoginRequired();
 
   const dispatch = useDispatch();
-  dispatch(setTitle(`"${tagName}"`));
+  useEffect(() => {
+    dispatch(setTitle(`"${tagName}"`));
+  }, [dispatch, tagName]);
 
   const subtitle = () => {
     if (tagNotFound || !tag) {

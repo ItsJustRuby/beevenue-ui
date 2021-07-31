@@ -2,11 +2,13 @@ import React from "react";
 import { Sidebar } from "../sidebar";
 import { NotificationsPanel } from "./notificationsPanel";
 import { Helmet } from "react-helmet";
-import { useBeevenueSelector } from "redux/selectors";
+import { useTitle } from "redux/selectors";
 
 export const BeevenuePage = (props: any) => {
-  const title = useBeevenueSelector((store) => store.title.title);
+  const titleAccessor = useTitle();
+
   let fullTitle = "Beevenue";
+  const title = titleAccessor.title;
   if (title !== "") {
     fullTitle = `${fullTitle} - ${title}`
   }

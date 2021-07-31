@@ -8,15 +8,22 @@ import { RuleFileUploadCard } from "./ruleFileUploadCard";
 import { RuleFileDownloadCard } from "./ruleFileDownloadCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
+import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import { Rule, RuleText } from "./ruleText";
 import { useDispatch } from "react-redux";
 import { setTitle } from "redux/actions";
+import { Link } from "react-router-dom";
+import { ConfirmationModal } from "confirmationModal";
+
 
 const RulesPage = () => {
   const dispatch = useDispatch();
-  dispatch(setTitle("Rules"));
+  useEffect(() => {
+    dispatch(setTitle("Rules"));
+  }, [dispatch]);
 
   const [rules, setRules] = useState<any[] | null>(null);
+  const [isShowingModal, setIsShowingModal] = useState(false);
 
   useLoginRequired();
 
@@ -30,12 +37,40 @@ const RulesPage = () => {
     loadRules();
   }, []);
 
-  const deleteRule = (e: any, ruleIndex: number) => {
+  const [ruleIndexToDelete, setRuleIndexToDelete] = useState<number | null>(null);
+
+  const startShowingModal = (e: any, c: number) => {
     e.preventDefault();
-    Api.Rules.delete(ruleIndex).then(_ => loadRules());
-  };
+    setRuleIndexToDelete(c);
+    setIsShowingModal(true);
+  }
 
   const getRules = (rules: Rule[]) => {
+    const getRuleElement = (r: Rule, idx: number) => {
+      return (
+        <li key={`rule${idx}`}>
+          <RuleText {...r} />
+          &nbsp;
+          <span className="beevenue-icon-container">
+          <Link to={`/search/rule:${idx}`}>
+            <FontAwesomeIcon icon={faSearch} />
+          </Link>
+          <Link to="#" onClick={e => startShowingModal(e, idx) }>
+            <FontAwesomeIcon icon={faTrash} />
+          </Link>
+          </span>
+        </li>
+      );
+    }
+
+    const doConfirm = () => {
+      if (ruleIndexToDelete === null) {
+        return;
+      }
+
+      Api.Rules.delete(ruleIndexToDelete).then(_ => loadRules());
+    }
+
     return (
       <>
         <nav className="level">
@@ -46,18 +81,12 @@ const RulesPage = () => {
               </header>
               <div className="card-content">
                 <div className="content">
+                  <ConfirmationModal
+                    isVisible={isShowingModal}
+                    setVisible={setIsShowingModal}
+                    onConfirm={doConfirm} />
                   <ul>
-                    {rules.map((r, idx) => {
-                      return (
-                        <li key={`rule${idx}`}>
-                          <RuleText {...r} />
-                          &nbsp;
-                          <a href="#" onClick={e => deleteRule(e, idx)}>
-                            <FontAwesomeIcon icon={faTrash} />
-                          </a>
-                        </li>
-                      );
-                    })}
+                    {rules.map(getRuleElement)}
                   </ul>
                 </div>
               </div>

@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { Api } from "api";
-import { useBeevenueSelector } from "../../redux/selectors";
+import { useBeevenueSelector, useSpeedTagging } from "../../redux/selectors";
 
 const useTagsInputField = () => {
   const [tags, setTags] = useState("");
@@ -145,9 +145,8 @@ const useForm = (speedTaggingItems: any[]) => {
 };
 
 const SpeedTaggerPanel = () => {
-  const speedTaggingItems = useBeevenueSelector((store) =>
-    store.speedTagging.speedTaggingItems.slice()
-  );
+  const speedTagging = useSpeedTagging();
+  const speedTaggingItems = speedTagging.speedTaggingItems.slice();
 
   const form = useForm(speedTaggingItems);
 

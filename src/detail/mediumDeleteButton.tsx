@@ -5,6 +5,7 @@ import { Api } from "api";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/actions";
 import { forceRedirect } from "../redirect";
+import { ConfirmationModal } from "confirmationModal";
 import { useHistory } from "react-router-dom";
 import { BrowserHistory } from "history";
 
@@ -37,68 +38,24 @@ const doConfirm = (history: BrowserHistory, dispatch: (x: any) => void, mediumId
     });
 };
 
-const renderModalFooter = (onCloseModal: () => void, onConfirm: () => void) => {
-  return (
-    <footer className="modal-card-foot">
-      <button className="button is-danger" onClick={e => onConfirm()}>
-        Definitely delete forever
-      </button>
-      <button className="button" onClick={e => onCloseModal()}>
-        Cancel
-      </button>
-    </footer>
-  );
-};
-
-const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
-  return (
-    <div className="modal is-active">
-      <div className="modal-background" onClick={e => onCloseModal()} />
-
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title">Confirm</p>
-          <button
-            className="delete"
-            aria-label="close"
-            onClick={e => onCloseModal()}
-          />
-        </header>
-        <section className="modal-card-body">
-          Are you sure you want to delete this?
-        </section>
-        {renderModalFooter(onCloseModal, onConfirm)}
-      </div>
-    </div>
-  );
-};
-
 const MediumDeleteButton = (props: MediumDeleteButtonProps) => {
-  const [isShowingModel, setIsShowingModel] = useState(false);
+  const [isShowingModal, setIsShowingModal] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onCloseModal = () => {
-    setIsShowingModel(false);
-  };
-
-  const onConfirm = () => {
-    doConfirm(history, dispatch, props.mediumId);
-    onCloseModal();
-  };
-
   return (
     <>
-      {isShowingModel ? renderModal(onCloseModal, onConfirm) : null}
+    <ConfirmationModal isVisible={isShowingModal} setVisible={setIsShowingModal} onConfirm={() => doConfirm(history, dispatch, props.mediumId)}>
       <button
         className="button is-danger beevenue-medium-action-button"
         title="Delete"
         onClick={e => {
-          setIsShowingModel(true);
+          setIsShowingModal(true);
         }}
       >
         <FontAwesomeIcon icon={faTrash} />
       </button>
+    </ConfirmationModal>
     </>
   );
 };
