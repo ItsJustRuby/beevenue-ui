@@ -4,7 +4,7 @@ interface PaginationParams {
 }
 
 export const paginationParamsFromQuery = (q: any): PaginationParams => {
-  let pageNumber: number = parseInt(q.pageNr, 10) || 1;
+  let pageNumber: number = parseInt(q.pageNumber, 10) || 1;
   if (pageNumber < 1) pageNumber = 1;
 
   let pageSize: number = parseInt(q.pageSize, 10) || 10;

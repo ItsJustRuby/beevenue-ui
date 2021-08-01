@@ -1,25 +1,46 @@
 import React from "react";
+import qs from "qs";
 import Masonry from "react-masonry-css";
 
 import { BeevenuePagination } from "./beevenuePagination";
-import { useQueryStringRedirect } from "./queryString";
 import { ProgressiveThumbnail } from "./progressiveThumbnail";
 import {
   MediumWallPagination,
   MediumWallPaginationItem
 } from "./mediumWallTypes";
+import { useHistory, useLocation } from "react-router-dom";
+import { paginationParamsFromQuery } from "./pagination";
+import { LoadMediaParameters } from "api/api";
+
+type PaginationChange = Partial<Pick<MediumWallPagination, "pageNumber" | "pageSize">>;
 
 interface MediumWallProps {
   media: MediumWallPagination;
+  onMediaChange: (p: PaginationChange) => void;
+  onPaginationChange: (paginationParams: LoadMediaParameters) => void;
 }
 
 const MediumWall = (props: MediumWallProps) => {
-  const queryStringRedirect = useQueryStringRedirect();
+  const { media, onMediaChange, onPaginationChange } = props;
+  
+  const history = useHistory();
+  const location = useLocation();
 
-  const { media } = props;
+  const onPaginationChangeWrapper = (change: PaginationChange) => {
+    onMediaChange(change);
+    
+    let q = qs.parse(location.search, { ignoreQueryPrefix: true });
+    const paginationParams = paginationParamsFromQuery(q);
+
+    const newPaginationParams = { ...paginationParams, ...change};
+    const newQs = qs.stringify(newPaginationParams, { addQueryPrefix: true })
+    history.push(newQs);
+
+    onPaginationChange(newPaginationParams);
+  }
 
   const onPageSelect = (n: number) => {
-    queryStringRedirect({ pageNr: n });
+    onPaginationChangeWrapper({ pageNumber: n })
   };
 
   const onPageSizeSelect = (n: number) => {
@@ -37,27 +58,27 @@ const MediumWall = (props: MediumWallProps) => {
 
     const newPageNumber = Math.ceil(previousFirstVisibleImageIndex / n);
 
-    queryStringRedirect({ pageNr: newPageNumber, pageSize: n });
+    onPaginationChangeWrapper({ pageNumber: newPageNumber, pageSize: n })
   };
 
-  const results = () => {
-    if (!media || !media.items) {
-      return null;
-    }
-
-    const imageLinks = media.items.map((r: MediumWallPaginationItem) => {
-      const maybeSrc = r.tinyThumbnail
-        ? `data:image/png;base64, ${r.tinyThumbnail}`
-        : undefined;
-
-      return (
-        <div className="beevenue-masonry-item" key={r.id}>
-          <ProgressiveThumbnail src={maybeSrc} medium={r} />
-        </div>
-      );
-    });
+  const imageLinks = media.items.map((r: MediumWallPaginationItem) => {
+    const maybeSrc = r.tinyThumbnail
+      ? `data:image/png;base64, ${r.tinyThumbnail}`
+      : undefined;
 
     return (
+      <div className="beevenue-masonry-item" key={r.id}>
+        <ProgressiveThumbnail src={maybeSrc} medium={r} />
+      </div>
+    );
+  });
+
+  return (
+    <BeevenuePagination
+      page={media}
+      onPageSelect={onPageSelect}
+      onPageSizeSelect={onPageSizeSelect}
+    >
       <Masonry
         breakpointCols={{
           default: 4,
@@ -69,21 +90,10 @@ const MediumWall = (props: MediumWallProps) => {
       >
         {imageLinks}
       </Masonry>
-    );
-  };
-
-  return (
-    <>
-      <BeevenuePagination
-        page={media}
-        onPageSelect={n => onPageSelect(n)}
-        onPageSizeSelect={n => onPageSizeSelect(n)}
-      >
-        {results()}
-      </BeevenuePagination>
-    </>
+    </BeevenuePagination>
   );
 };
 
 export { MediumWall };
 export default MediumWall;
+export type { PaginationChange };

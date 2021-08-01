@@ -1,28 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useRouteMatch, useLocation } from "react-router";
-import qs from "qs";
+import React, { useEffect, useMemo } from "react";
+import { useRouteMatch, } from "react-router";
 
 import { useDispatch } from "react-redux";
 
-import { setSearchQuery, setShouldRefresh, setTitle } from "../redux/actions";
+import { setSearchQuery, setTitle } from "../redux/actions";
 
 import { Api } from "api";
-import { MediumWallPagination } from "./mediumWallTypes";
-import { paginationParamsFromQuery } from "./pagination";
-import { BeevenueSpinner } from "../beevenueSpinner";
-import { useBeevenueSelector, useIsSessionSfw } from "../redux/selectors";
-
-const MediumWall = React.lazy(() => import("./mediumWall"));
-
-interface SearchResultItem {
-  id: any;
-  tinyThumbnail: string | null;
-  hash: string;
-}
-
-interface SearchResults extends MediumWallPagination {
-  items: SearchResultItem[];
-}
+import { LoadMediaParameters } from "api/api";
+import Album from "./album";
 
 interface SearchResultsPageParams {
   extra: string;
@@ -30,47 +15,12 @@ interface SearchResultsPageParams {
 
 const SearchResultsPage = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const shouldRefresh = useBeevenueSelector(
-    (store) => store.refresh.shouldRefresh
-  );
-
-  const isSessionSfw = useIsSessionSfw();
-
   const match = useRouteMatch<SearchResultsPageParams>();
 
-  const [results, setResults] = useState<SearchResults | null>(null);
-  const [doShowSpinner, setDoShowSpinner] = useState(false);
-
-  const doSearch = useCallback(
-    (s: string) => {
-      const q = qs.parse(location.search, { ignoreQueryPrefix: true });
-      const paginationParams = paginationParamsFromQuery(q);
-      const queryParams = { ...paginationParams, q: s };
-
-      setResults(null);
-      setDoShowSpinner(true);
-      Api.Medium.search(queryParams).then(
-        (res) => {
-          setResults(res.data);
-          setDoShowSpinner(false);
-        },
-        (_) => {}
-      );
-    },
-    [location]
-  );
-
-  useEffect(() => {
-    if (shouldRefresh) {
-      dispatch(setShouldRefresh(false));
-    }
-  }, [dispatch, shouldRefresh]);
-
-  const getSearchTermsFromRoute = useCallback((): string => {
-    const joinedTags = match.params.extra;
-    if (!joinedTags) return "";
-    const tags = joinedTags.split("/").join(" ");
+  const searchTermsFromRoute = useMemo((): string => {
+    const joinedTerms = match.params.extra;
+    if (!joinedTerms) return "";
+    const tags = joinedTerms.split("/").join(" ");
     return tags;
   }, [match.params.extra]);
 
@@ -79,32 +29,15 @@ const SearchResultsPage = () => {
   // Local state is then kept in sync with global state
   // as the source of truth.
   useEffect(() => {
-    const tagsFromRoute = getSearchTermsFromRoute();
-    dispatch(setSearchQuery(tagsFromRoute));
-    dispatch(setTitle(`Search: ${tagsFromRoute}`));
-  }, [dispatch, getSearchTermsFromRoute]);
+    dispatch(setSearchQuery(searchTermsFromRoute));
+    dispatch(setTitle(`Search: ${searchTermsFromRoute}`));
+  }, [dispatch, searchTermsFromRoute]);
 
-  useEffect(() => {
-    doSearch(getSearchTermsFromRoute());
-  }, [
-    location.search,
-    dispatch,
-    doSearch,
-    isSessionSfw,
-    getSearchTermsFromRoute,
-    shouldRefresh,
-  ]);
-
-  let inner = null;
-  if (doShowSpinner) {
-    inner = () => <BeevenueSpinner />;
-  } else if (!results || !results.items || results.items.length === 0) {
-    inner = () => <h2 className="title is-2">No results found.</h2>;
-  } else {
-    inner = () => <MediumWall media={results} />;
+  const apiCall = (params: LoadMediaParameters) => {
+    return Api.Medium.search({...params, q: searchTermsFromRoute})
   }
 
-  return inner();
+  return <Album apiCall={apiCall}  />
 };
 
 export { SearchResultsPage };
