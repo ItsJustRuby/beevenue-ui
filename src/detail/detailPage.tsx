@@ -40,6 +40,10 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
 
   const isSessionSfw = useIsSessionSfw();
 
+  const globalSearchTerms = useBeevenueSelector(
+    store => store.search.searchQuery
+  );
+
   const match = useRouteMatch<DetailPageParams>();
   const id = parseInt(match.params.id, 10);
 
@@ -53,10 +57,14 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
           dispatch(addNotLoggedInNotification());
         }
 
-        forceRedirect(history, "/");
+        if (globalSearchTerms === "") {
+          forceRedirect(history, "/");
+        } else {
+          forceRedirect(history, `/search/${globalSearchTerms.replaceAll(" ", "/")}`);
+        }
       }
     );
-  }, [dispatch, history, id, isSessionSfw, setViewModel]);
+  }, [dispatch, globalSearchTerms, history, id, isSessionSfw, setViewModel]);
 
   return id;
 };
