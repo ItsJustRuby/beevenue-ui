@@ -47,7 +47,10 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
     };
   }, [props.medium.hash, thumbnailSize]);
 
-  const className = doBlur ? "tiny-thumb" : undefined;
+  let className = "beevenue-thumb";
+  if (doBlur) {
+    className = `${className} beevenue-tiny-thumb`;
+  }
 
   if (isSpeedTagging) {
     const innerProps = {
@@ -56,14 +59,18 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
 
     return (
       <SpeedTaggingItem {...innerProps}>
-        <img width="50vw" className={className} src={src} />
+        <div className="beevenue-thumb-container">
+          <img width="50vw" className={className} src={src} />
+        </div>
       </SpeedTaggingItem>
     );
   }
 
   return (
     <Link to={`/show/${props.medium.id}`}>
-      <img width="50vw" className={className} src={src} />
+      <div className="beevenue-thumb-container">
+        <img width="50vw" className={className} src={src} />
+      </div>
     </Link>
   );
 };

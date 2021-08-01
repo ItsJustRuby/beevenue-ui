@@ -25,6 +25,14 @@ $gutter: 1.25rem;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 }
 
-.tiny-thumb {
+.beevenue-thumb-container {
+  overflow: hidden;
+}
+
+.beevenue-thumb {
+  transition: all 0.05s ease-in-out;
+}
+
+.beevenue-tiny-thumb {
   filter: blur(8px);
 }
