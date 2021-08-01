@@ -1,7 +1,6 @@
 export interface MediumWallPaginationItem {
   tinyThumbnail: string | null;
   id: number;
-  aspectRatio: string | null;
   hash: string;
 }
 

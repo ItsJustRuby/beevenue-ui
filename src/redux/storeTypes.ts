@@ -12,6 +12,12 @@ export const Unknown: IUnknown = {};
 
 export type BeevenueUser = string | number | IAnonymous | IUnknown;
 
+export type ClientThumbnailSize = "s" | "l" | "unknown";
+
+export interface ClientStore {
+  thumbnailSize: ClientThumbnailSize;
+}
+
 export interface LoginStore {
   loggedInUser: BeevenueUser;
   loggedInRole: string | null;
@@ -48,12 +54,12 @@ export interface SpeedTaggingStore {
 }
 
 export interface BeevenueStore extends Store {
+  client: ClientStore;
   fileUpload: FileUploadStore;
   login: LoginStore;
-
-  search: SearchStore;
   notifications: NotificationStore;
-  speedTagging: SpeedTaggingStore;
   refresh: RefreshStore;
+  search: SearchStore;
+  speedTagging: SpeedTaggingStore;
   title: TitleStore;
 }

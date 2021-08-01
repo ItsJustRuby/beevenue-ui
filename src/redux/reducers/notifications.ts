@@ -12,7 +12,7 @@ const initialState: NotificationStore = {
 const notifications = (
   state: NotificationStore = initialState,
   action: any
-): any => {
+): NotificationStore => {
   switch (action.type) {
     case ADD_NOTIFICATION: {
       const newNotifications = {

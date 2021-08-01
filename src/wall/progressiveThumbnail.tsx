@@ -6,6 +6,7 @@ import { useBeevenueSelector } from "../redux/selectors";
 
 interface Medium {
   id: number;
+  hash: string;
 }
 
 interface ProgressiveThumbnailProps {
@@ -23,6 +24,8 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
 
   const isMounted = useRef(true);
 
+  const thumbnailSize = useBeevenueSelector(state => state.client.thumbnailSize);
+
   useEffect(() => {
     new Promise((resolve, reject) => {
       const img = new Image();
@@ -31,7 +34,7 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
         resolve(img.src);
       };
 
-      img.src = `${backendUrl}/thumbs/${props.medium.id}`;
+      img.src = `${backendUrl}/thumbs/${props.medium.hash}.${thumbnailSize}.jpg`;
     }).then((resSrc: any) => {
       if (!isMounted.current) return;
       setSrc(resSrc);
@@ -42,7 +45,7 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
     return () => {
       isMounted.current = false;
     };
-  }, [props.medium.id]);
+  }, [props.medium.hash, thumbnailSize]);
 
   const className = doBlur ? "tiny-thumb" : undefined;
 

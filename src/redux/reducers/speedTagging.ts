@@ -15,7 +15,7 @@ const initialState: SpeedTaggingStore = {
 const speedTagging = (
   state: SpeedTaggingStore = initialState,
   action: any
-): any => {
+): SpeedTaggingStore => {
   switch (action.type) {
     case SET_SPEED_TAGGING_ABSENT:
       return { ...state, isAbsent: !state.isAbsent };

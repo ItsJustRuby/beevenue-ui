@@ -3,7 +3,7 @@ import { TitleStore } from "../storeTypes";
 
 const initialState: TitleStore = { title: "" };
 
-const title = (state: TitleStore = initialState, action: any): any => {
+const title = (state: TitleStore = initialState, action: any): TitleStore => {
   switch (action.type) {
     case NEW_TITLE: {
       return {

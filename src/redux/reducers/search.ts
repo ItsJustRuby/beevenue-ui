@@ -3,7 +3,7 @@ import { SearchStore } from "../storeTypes";
 
 const initialState: SearchStore = { searchQuery: "" };
 
-const search = (state: SearchStore = initialState, action: any): any => {
+const search = (state: SearchStore = initialState, action: any): SearchStore => {
   switch (action.type) {
     case NEW_SEARCH_QUERY: {
       return {

@@ -13,13 +13,15 @@ import {
   SET_SPEED_TAGGING_ABSENT,
   TOGGLE_SPEED_TAGGING_ITEM,
   CLEAR_SPEED_TAGGING_ITEMS,
-  SET_SHOULD_REFRESH
+  SET_SHOULD_REFRESH,
+  SET_CLIENT_THUMBNAIL_SIZE
 } from "./actionTypes";
 import {
   BeevenueNotificationId,
   BeevenueNotificationTemplate,
   makeNotificationFromTemplate
 } from "../notifications";
+import { ClientThumbnailSize } from "./storeTypes";
 
 interface LoginDetails {
   id: string;
@@ -54,6 +56,11 @@ export const logout = () => ({
 export const setSearchQuery = (query: string) => ({
   type: NEW_SEARCH_QUERY,
   payload: query
+});
+
+export const setClientThumbnailSize = (thumbnailSize: ClientThumbnailSize) => ({
+  type: SET_CLIENT_THUMBNAIL_SIZE,
+  payload: thumbnailSize
 });
 
 export const setTitle = (title: string) => ({

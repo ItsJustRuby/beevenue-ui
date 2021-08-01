@@ -6,7 +6,7 @@ const initialState: FileUploadStore = { lastFileUploaded: -Infinity };
 const fileUpload = (
   state: FileUploadStore = initialState,
   action: any
-): any => {
+): FileUploadStore => {
   switch (action.type) {
     case SET_FILE_UPLOADED: {
       return {

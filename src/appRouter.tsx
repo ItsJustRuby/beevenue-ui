@@ -1,10 +1,11 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import Bowser from "bowser";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { BeevenueSpinner } from "./beevenueSpinner";
 
 import { Api } from "api";
-import { login, loginAnonymous } from "./redux/actions";
+import { login, loginAnonymous, setClientThumbnailSize } from "./redux/actions";
 import { BeevenuePage } from "./routing/beevenuePage";
 
 import { IndexPage } from "./wall/indexPage";
@@ -51,6 +52,15 @@ const AppRouter = () => {
   };
 
   useEffect(tryLoggingIn, [dispatch, tryLoggingIn]);
+  useEffect(() => {
+    const browser = Bowser.getParser(window.navigator.userAgent);
+    const platformType = browser.getPlatformType();
+    if (platformType === "mobile") {
+      dispatch(setClientThumbnailSize("s"));
+    } else {
+      dispatch(setClientThumbnailSize("l"));
+    }
+  }, [dispatch]);
 
   const statusText =
     countdown > 0

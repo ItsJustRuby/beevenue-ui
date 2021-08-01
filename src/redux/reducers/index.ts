@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import client from "./client";
 import fileUpload from "./fileUpload";
 import login from "./login";
 import search from "./search";
@@ -8,6 +9,7 @@ import speedTagging from "./speedTagging";
 import refresh from "./refresh";
 
 const rootStore = {
+  client,
   fileUpload,
   login,
   search,

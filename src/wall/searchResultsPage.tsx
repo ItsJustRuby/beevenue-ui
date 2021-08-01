@@ -16,7 +16,6 @@ const MediumWall = React.lazy(() => import("./mediumWall"));
 
 interface SearchResultItem {
   id: any;
-  aspectRatio: string | null;
   tinyThumbnail: string | null;
   hash: string;
 }

@@ -3,7 +3,7 @@ import { RefreshStore } from "../storeTypes";
 
 const initialState: RefreshStore = { shouldRefresh: false };
 
-const refresh = (state: RefreshStore = initialState, action: any): any => {
+const refresh = (state: RefreshStore = initialState, action: any): RefreshStore => {
   switch (action.type) {
     case SET_SHOULD_REFRESH:
       return {
