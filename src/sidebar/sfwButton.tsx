@@ -6,18 +6,18 @@ import { useBeevenueSelector } from "../redux/selectors";
 
 const SfwButton = () => {
   const dispatch = useDispatch();
-  const initialSfw = useBeevenueSelector(store => store.login.sfwSession);
+  const initialSfw = useBeevenueSelector((store) => store.login.sfwSession);
 
   const [sfw, setSfw] = useState(initialSfw);
 
   const onChange = () => {
     const newValue = !sfw;
     Api.Session.setSfw(newValue).then(
-      _ => {
+      (_) => {
         dispatch(setSfwSession(newValue));
         setSfw(newValue);
       },
-      _ => {}
+      (_) => {}
     );
   };
 
@@ -29,7 +29,7 @@ const SfwButton = () => {
         name="sfw-switch"
         className="switch"
         defaultChecked={initialSfw}
-        onChange={_ => onChange()}
+        onChange={(_) => onChange()}
       />
       <label htmlFor="sfw-switch">SFW</label>
     </div>

@@ -13,6 +13,6 @@ export const paginationParamsFromQuery = (q: any): PaginationParams => {
 
   return {
     pageNumber,
-    pageSize
+    pageSize,
   };
 };

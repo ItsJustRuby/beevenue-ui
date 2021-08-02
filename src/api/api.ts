@@ -79,7 +79,7 @@ const Api = {
     regenerateThumbnail(mediumId: number): AxiosPromise<any> {
       return _notification_wrapper(axiosClient.patch(`thumbnail/${mediumId}`));
     },
-    replace(mediumId: number, file: File) : AxiosPromise<any> {
+    replace(mediumId: number, file: File): AxiosPromise<any> {
       const fd = new FormData();
       fd.append("file", file);
       return _notification_wrapper(
@@ -150,7 +150,11 @@ const Api = {
       );
     },
 
-    batchAdd(isAbsent: boolean, tags: string[], mediumIds: number[]): AxiosPromise<any> {
+    batchAdd(
+      isAbsent: boolean,
+      tags: string[],
+      mediumIds: number[]
+    ): AxiosPromise<any> {
       return _notification_wrapper(
         axiosClient.post(`tags/batch`, { isAbsent, tags, mediumIds })
       );

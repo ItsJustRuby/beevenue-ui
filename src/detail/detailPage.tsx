@@ -41,7 +41,7 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
   const isSessionSfw = useIsSessionSfw();
 
   const globalSearchTerms = useBeevenueSelector(
-    store => store.search.searchQuery
+    (store) => store.search.searchQuery
   );
 
   const match = useRouteMatch<DetailPageParams>();
@@ -60,7 +60,10 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
         if (globalSearchTerms === "") {
           forceRedirect(history, "/");
         } else {
-          forceRedirect(history, `/search/${globalSearchTerms.replaceAll(" ", "/")}`);
+          forceRedirect(
+            history,
+            `/search/${globalSearchTerms.replaceAll(" ", "/")}`
+          );
         }
       }
     );
@@ -87,21 +90,27 @@ const onChange = (
   const cleanTags = (unclean: string[]) => {
     // Technically, the user can't manually enter these characters.
     // However, by pasting them, they can still occur in here.
-    return unclean.map(s => s.replace(/[\t\r\n ]/g, ""));
-  }
+    return unclean.map((s) => s.replace(/[\t\r\n ]/g, ""));
+  };
 
-  const tagChangeHelper = (setter: ((vm: ShowViewModel, tags: string[]) => void)) => {
+  const tagChangeHelper = (
+    setter: (vm: ShowViewModel, tags: string[]) => void
+  ) => {
     const f = (tags: string[]) => {
       const cleanedTags = cleanTags(tags);
       const newViewModel = { ...viewModel } as ShowViewModel;
       setter(newViewModel, cleanedTags);
       updateMedium(setViewModel, newViewModel);
-    }
+    };
     return f;
-  }
+  };
 
-  const onTagsChange = tagChangeHelper((vm, t) => { vm.tags = t});
-  const onAbsentTagsChange = tagChangeHelper((vm, t) => { vm.absentTags = t});
+  const onTagsChange = tagChangeHelper((vm, t) => {
+    vm.tags = t;
+  });
+  const onAbsentTagsChange = tagChangeHelper((vm, t) => {
+    vm.absentTags = t;
+  });
 
   const onRatingChange = (value: string) => {
     const newRating = value as Rating;
@@ -119,8 +128,18 @@ const useSetup = () => {
   const id = useRefreshOnUpdate(setViewModel);
   useClosePageOnSfw(viewModel);
 
-  const { onAbsentTagsChange, onTagsChange, onRatingChange } = onChange(viewModel, setViewModel);
-  return { viewModel, setViewModel, id, onAbsentTagsChange, onTagsChange, onRatingChange };
+  const { onAbsentTagsChange, onTagsChange, onRatingChange } = onChange(
+    viewModel,
+    setViewModel
+  );
+  return {
+    viewModel,
+    setViewModel,
+    id,
+    onAbsentTagsChange,
+    onTagsChange,
+    onRatingChange,
+  };
 };
 
 const DetailPage = () => {
@@ -134,7 +153,7 @@ const DetailPage = () => {
     onRatingChange,
   } = useSetup();
   const userIsAdmin = loggedInRole === "admin";
-  
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setTitle(`${id}`));
@@ -145,8 +164,24 @@ const DetailPage = () => {
     view = (
       <>
         <Medium {...viewModel} />
-        <DetailPageTagsCard {...{ className: "beevenue-medium-tags", tags: viewModel.tags, userIsAdmin, onTagsChange, placeholder: "Add tags" }} />
-        <DetailPageTagsCard {...{ className: "beevenue-medium-absent-tags", tags: viewModel.absentTags, userIsAdmin, onTagsChange: onAbsentTagsChange, placeholder: "Add absent tags" }} />
+        <DetailPageTagsCard
+          {...{
+            className: "beevenue-medium-tags",
+            tags: viewModel.tags,
+            userIsAdmin,
+            onTagsChange,
+            placeholder: "Add tags",
+          }}
+        />
+        <DetailPageTagsCard
+          {...{
+            className: "beevenue-medium-absent-tags",
+            tags: viewModel.absentTags,
+            userIsAdmin,
+            onTagsChange: onAbsentTagsChange,
+            placeholder: "Add absent tags",
+          }}
+        />
         <DetailPageRatingCard {...{ viewModel, userIsAdmin, onRatingChange }} />
         <DetailPageAdminCard
           {...{ viewModel, setViewModel, userIsAdmin, mediumId: id }}

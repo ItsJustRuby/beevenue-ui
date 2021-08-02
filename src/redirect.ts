@@ -1,6 +1,10 @@
 import { BrowserHistory } from "history";
 
-export const forceRedirect = (history: BrowserHistory, target: string, doReplace?: boolean) => {
+export const forceRedirect = (
+  history: BrowserHistory,
+  target: string,
+  doReplace?: boolean
+) => {
   let actualDoReplace = false;
 
   if (doReplace !== undefined) {
@@ -13,4 +17,3 @@ export const forceRedirect = (history: BrowserHistory, target: string, doReplace
     history.push(target);
   }
 };
-

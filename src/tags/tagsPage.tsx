@@ -180,17 +180,17 @@ const getFilteredTags = (tags: SimpleTag[], filter: string): SimpleTag[] => {
 const TagsPage = () => {
   const { loggedInRole, filter, setFilter, tags } = useSetup();
   const isAdmin = loggedInRole === "admin";
-  
+
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(setTitle("Tags"));
   }, [dispatch]);
 
-  const filteredTags = useMemo(() => getFilteredTags(tags, filter), [
-    tags,
-    filter,
-  ]);
+  const filteredTags = useMemo(
+    () => getFilteredTags(tags, filter),
+    [tags, filter]
+  );
 
   const renderContent = () => {
     return (

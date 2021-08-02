@@ -85,3 +85,22 @@
 .react-tagsinput-input {
   width: 120px;
 }
+
+.beevenue-medium-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.beevenue-medium-fit {
+  img,
+  video {
+    max-height: 95vh;
+    padding-bottom: 3rem;
+  }
+}
+
+@media screen and (min-width: 769px), print {
+  .pagination {
+    margin-top: -0.75rem;
+  }
+}

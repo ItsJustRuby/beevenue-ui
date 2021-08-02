@@ -17,7 +17,7 @@ const RegenerateThumbnailButton = (props: RegenerateThumbnailButtonProps) => {
       dispatch(
         addNotification({
           level: "info",
-          contents: ["Successfully created new thumbnails."]
+          contents: ["Successfully created new thumbnails."],
         })
       );
     });
@@ -27,7 +27,7 @@ const RegenerateThumbnailButton = (props: RegenerateThumbnailButtonProps) => {
     <button
       className="button is-primary beevenue-medium-action-button"
       title="Regenerate thumbnail"
-      onClick={e => onClick()}
+      onClick={(e) => onClick()}
     >
       <FontAwesomeIcon icon={faSync} />
     </button>

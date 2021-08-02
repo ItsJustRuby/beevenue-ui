@@ -16,7 +16,7 @@ interface ProgressiveThumbnailProps {
 
 const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
   const isSpeedTagging = useBeevenueSelector(
-    store => store.speedTagging.isSpeedTagging
+    (store) => store.speedTagging.isSpeedTagging
   );
 
   const [doBlur, setDoBlur] = useState(true);
@@ -24,7 +24,9 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
 
   const isMounted = useRef(true);
 
-  const thumbnailSize = useBeevenueSelector(state => state.client.thumbnailSize);
+  const thumbnailSize = useBeevenueSelector(
+    (state) => state.client.thumbnailSize
+  );
 
   useEffect(() => {
     new Promise((resolve, reject) => {
@@ -54,7 +56,7 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
 
   if (isSpeedTagging) {
     const innerProps = {
-      ...props.medium
+      ...props.medium,
     };
 
     return (

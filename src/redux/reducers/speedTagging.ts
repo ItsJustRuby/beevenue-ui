@@ -2,14 +2,14 @@ import {
   SET_SPEED_TAGGING,
   SET_SPEED_TAGGING_ABSENT,
   TOGGLE_SPEED_TAGGING_ITEM,
-  CLEAR_SPEED_TAGGING_ITEMS
+  CLEAR_SPEED_TAGGING_ITEMS,
 } from "../actionTypes";
 import { SpeedTaggingStore } from "../storeTypes";
 
 const initialState: SpeedTaggingStore = {
   isSpeedTagging: false,
   isAbsent: false,
-  speedTaggingItems: []
+  speedTaggingItems: [],
 };
 
 const speedTagging = (
@@ -31,7 +31,7 @@ const speedTagging = (
     case CLEAR_SPEED_TAGGING_ITEMS:
       return {
         ...state,
-        speedTaggingItems: []
+        speedTaggingItems: [],
       };
     case TOGGLE_SPEED_TAGGING_ITEM: {
       const speedTaggingItems = state.speedTaggingItems;
@@ -46,7 +46,7 @@ const speedTagging = (
 
       return {
         ...state,
-        speedTaggingItems
+        speedTaggingItems,
       };
     }
     default:

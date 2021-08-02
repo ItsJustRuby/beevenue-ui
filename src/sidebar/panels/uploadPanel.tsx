@@ -38,7 +38,7 @@ const useSubmitHandler = () => {
   async function uploadFile(f: File) {
     await Api.Medium.upload(f).finally(() => {
       doneCount.current = doneCount.current + 1;
-      setVisibleDoneCount(c => c + 1);
+      setVisibleDoneCount((c) => c + 1);
 
       if (files && doneCount.current === files.length) {
         dispatch(setFileUploaded());
@@ -74,54 +74,55 @@ const getProgressBarClasses = (doneCount: number, files: FileList | null) => {
 };
 
 const getStatusText = (files: FileList | null): JSX.Element | null => {
-
   if (files === null || files.length === 0) {
     return null;
   }
-  
+
   let totalFileSize = 0;
   for (let i = 0; i < files.length; ++i) {
     totalFileSize += files[i].size;
   }
   const fileSizeString = prettyBytes(totalFileSize).replace(" ", "\u00A0"); // nbsp
-  
+
   return (
     <div className="field">
-      <p>{files.length} {pluralize("file", files.length)} selected ({fileSizeString})</p>
+      <p>
+        {files.length} {pluralize("file", files.length)} selected (
+        {fileSizeString})
+      </p>
     </div>
   );
-}
+};
 
 const renderBox = (
   doneCount: number,
   files: FileList | null,
   onChange: (f: FileList | null) => void
 ) => {
-
   return (
     <>
-    <div className="file is-boxed">
-      <label className="file-label">
-        <input
-          className="file-input"
-          multiple={true}
-          type="file"
-          name="medium"
-          onChange={e => onChange(e.target.files)}
-        />
-        <span className="file-cta">
-          <FontAwesomeIcon icon={faUpload} />
-          <span className="file-label">Select files</span>
-        </span>
-        
-        {(files === null || files.length === 0) ? null : (
-        <progress
-            className={getProgressBarClasses(doneCount, files)}
-            value={doneCount}
-            max={files.length}
+      <div className="file is-boxed">
+        <label className="file-label">
+          <input
+            className="file-input"
+            multiple={true}
+            type="file"
+            name="medium"
+            onChange={(e) => onChange(e.target.files)}
           />
-        )}
-      </label>
+          <span className="file-cta">
+            <FontAwesomeIcon icon={faUpload} />
+            <span className="file-label">Select files</span>
+          </span>
+
+          {files === null || files.length === 0 ? null : (
+            <progress
+              className={getProgressBarClasses(doneCount, files)}
+              value={doneCount}
+              max={files.length}
+            />
+          )}
+        </label>
       </div>
       {getStatusText(files)}
     </>
@@ -137,7 +138,7 @@ const UploadPanel = () => {
         <p className="card-header-title">Upload</p>
       </div>
       <div className="card-content">
-        <form method="POST" onSubmit={e => onSubmit(e)}>
+        <form method="POST" onSubmit={(e) => onSubmit(e)}>
           <div className="field">{renderBox(doneCount, files, onChange)}</div>
           <div className="field">
             <input

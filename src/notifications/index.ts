@@ -55,7 +55,7 @@ export const makeNotificationFromTemplate = (
     id,
     level: t.level,
     content: makeNotificationContent(t.contents),
-    timestamp: new Date()
+    timestamp: new Date(),
   };
 };
 
@@ -67,17 +67,18 @@ export const makeNotification = (
   return { id: id, level: level, content: makeNotificationContent(contents) };
 };
 
-export const makeNotificationExampleTemplate = (): BeevenueNotificationTemplate => {
-  const example: NotificationContentModel[] = [
-    "foobar",
-    {
-      type: "link",
-      data: {
-        location: "/foo",
-        text: "click here"
-      }
-    }
-  ];
+export const makeNotificationExampleTemplate =
+  (): BeevenueNotificationTemplate => {
+    const example: NotificationContentModel[] = [
+      "foobar",
+      {
+        type: "link",
+        data: {
+          location: "/foo",
+          text: "click here",
+        },
+      },
+    ];
 
-  return { level: "error", contents: example };
-};
+    return { level: "error", contents: example };
+  };

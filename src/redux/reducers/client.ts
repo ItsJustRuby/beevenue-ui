@@ -3,11 +3,14 @@ import { ClientStore } from "../storeTypes";
 
 const initialState: ClientStore = { thumbnailSize: "unknown" };
 
-const client = (state: ClientStore = initialState, action: any): ClientStore => {
+const client = (
+  state: ClientStore = initialState,
+  action: any
+): ClientStore => {
   switch (action.type) {
     case SET_CLIENT_THUMBNAIL_SIZE: {
       return {
-        thumbnailSize: action.payload
+        thumbnailSize: action.payload,
       };
     }
     default: {

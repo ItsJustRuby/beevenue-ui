@@ -10,27 +10,27 @@ export const BeevenuePage = (props: any) => {
   let fullTitle = "Beevenue";
   const title = titleAccessor.title;
   if (title !== "") {
-    fullTitle = `${fullTitle} - ${title}`
+    fullTitle = `${fullTitle} - ${title}`;
   }
 
   return (
     <>
-    <Helmet>
-      <title>{fullTitle}</title>
-    </Helmet>
-    <div>
-      <section className="section">
-        <div className="columns">
-          <div className="column is-narrow">
-            <Sidebar {...props} />
+      <Helmet>
+        <title>{fullTitle}</title>
+      </Helmet>
+      <div>
+        <section className="section">
+          <div className="columns">
+            <div className="column is-narrow">
+              <Sidebar {...props} />
+            </div>
+            <div className="column">
+              <NotificationsPanel />
+              {props.children}
+            </div>
           </div>
-          <div className="column">
-            <NotificationsPanel />
-            {props.children}
-          </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
     </>
   );
 };

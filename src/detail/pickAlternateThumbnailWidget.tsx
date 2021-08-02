@@ -11,7 +11,7 @@ const usePickCount = () => {
       <select
         defaultValue="5"
         value={pickCount}
-        onChange={e => setPickCount(Number(e.currentTarget.value))}
+        onChange={(e) => setPickCount(Number(e.currentTarget.value))}
       >
         <option>3</option>
         <option>5</option>
@@ -29,7 +29,7 @@ const usePicks = (id: number, pickCount: number) => {
 
   const onClick = () => {
     setIsLoading(true);
-    Api.Medium.generateThumbnailPicks(id, pickCount).then(success => {
+    Api.Medium.generateThumbnailPicks(id, pickCount).then((success) => {
       setIsLoading(false);
       setPicks(success.data.thumbs);
     });
@@ -39,14 +39,14 @@ const usePicks = (id: number, pickCount: number) => {
     if (!picks) return;
 
     setIsLoading(true);
-    Api.Medium.selectThumbnailPick(id, i, pickCount).then(success => {
+    Api.Medium.selectThumbnailPick(id, i, pickCount).then((success) => {
       setIsLoading(false);
       setPicks(null);
     });
   };
 
   const goButton = (
-    <button className="button is-primary" onClick={e => onClick()}>
+    <button className="button is-primary" onClick={(e) => onClick()}>
       Go
     </button>
   );
@@ -65,7 +65,7 @@ const renderPicks = (picks: string[] | null, choosePick: (p: any) => void) => {
         return (
           <img
             key={`pick${i}`}
-            onClick={_ => choosePick(i)}
+            onClick={(_) => choosePick(i)}
             src={`data:image/png;base64, ${p}`}
           />
         );

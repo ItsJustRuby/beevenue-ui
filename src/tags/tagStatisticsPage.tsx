@@ -6,7 +6,7 @@ import { setTitle } from "redux/actions";
 
 const TagStatisticsPage = () => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(setTitle("Tag Stats"));
   }, [dispatch]);

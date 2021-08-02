@@ -21,7 +21,7 @@ const useSimThreshold = () => {
         min="0"
         max="1"
         defaultValue={simThreshold}
-        onChange={e => changeSimThreshold(e)}
+        onChange={(e) => changeSimThreshold(e)}
         type="range"
       />
       <label htmlFor="sim-threshold-slider">Threshold: {simThreshold}</label>
@@ -42,7 +42,7 @@ const useHideSingletonNodes = () => {
         name="hide-singletons-switch"
         className="switch"
         defaultChecked={true}
-        onChange={_ => setHideSingletonNodes(x => !x)}
+        onChange={(_) => setHideSingletonNodes((x) => !x)}
       />
       <label htmlFor="hide-singletons-switch">Hide singletons</label>
     </div>
@@ -57,7 +57,7 @@ const useAutoUpdate = (simThreshold: number, hideSingletonNodes: boolean) => {
 
   const isSessionSfw = useIsSessionSfw();
   useEffect(() => {
-    Api.Tags.getSimilarity().then(res => {
+    Api.Tags.getSimilarity().then((res) => {
       setSimilarity(res.data as SimilarityData);
     });
   }, [isSessionSfw]);
@@ -66,7 +66,7 @@ const useAutoUpdate = (simThreshold: number, hideSingletonNodes: boolean) => {
     if (similarity === null) return;
     createSimilaritySvg(svgRef.current!, similarity!, {
       hideSingletonNodes,
-      simThreshold
+      simThreshold,
     });
   }, [similarity, hideSingletonNodes, simThreshold]);
 
@@ -75,10 +75,8 @@ const useAutoUpdate = (simThreshold: number, hideSingletonNodes: boolean) => {
 
 const TagSimilarityWidget = () => {
   const { simThreshold, simThresholdField } = useSimThreshold();
-  const {
-    hideSingletonNodes,
-    hideSingletonNodesField
-  } = useHideSingletonNodes();
+  const { hideSingletonNodes, hideSingletonNodesField } =
+    useHideSingletonNodes();
 
   const svgRef = useAutoUpdate(simThreshold, hideSingletonNodes);
 

@@ -16,7 +16,7 @@ const rootStore = {
   title,
   notifications,
   speedTagging,
-  refresh
+  refresh,
 };
 
 export const rootReducer = combineReducers(rootStore);

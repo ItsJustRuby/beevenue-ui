@@ -11,7 +11,7 @@ const fileUpload = (
     case SET_FILE_UPLOADED: {
       return {
         ...state,
-        lastFileUploaded: action.payload
+        lastFileUploaded: action.payload,
       };
     }
     default: {

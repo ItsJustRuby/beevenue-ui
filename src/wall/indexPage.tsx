@@ -9,7 +9,7 @@ import Album from "./album";
 
 const IndexPage = () => {
   const dispatch = useDispatch();
-  const loggedInUser = useBeevenueSelector(store => store.login.loggedInUser);
+  const loggedInUser = useBeevenueSelector((store) => store.login.loggedInUser);
 
   useEffect(() => {
     dispatch(setTitle(""));
@@ -17,7 +17,7 @@ const IndexPage = () => {
 
   return (
     <>
-      {(loggedInUser !== Anonymous) ?  <Album apiCall={Api.Medium.load}  /> : null}
+      {loggedInUser !== Anonymous ? <Album apiCall={Api.Medium.load} /> : null}
     </>
   );
 };

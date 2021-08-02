@@ -8,11 +8,11 @@ import { useHistory } from "react-router-dom";
 const useLoginRequired = () => {
   const history = useHistory();
 
-  const loggedInRole = useBeevenueSelector(store => {
+  const loggedInRole = useBeevenueSelector((store) => {
     return store.login.loggedInRole;
   });
 
-  const isLoggedIn = useBeevenueSelector(store => {
+  const isLoggedIn = useBeevenueSelector((store) => {
     return typeof store.login.loggedInUser === "string";
   });
 

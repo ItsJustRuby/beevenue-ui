@@ -6,13 +6,15 @@ import { BeevenuePagination } from "./beevenuePagination";
 import { ProgressiveThumbnail } from "./progressiveThumbnail";
 import {
   MediumWallPagination,
-  MediumWallPaginationItem
+  MediumWallPaginationItem,
 } from "./mediumWallTypes";
 import { useHistory, useLocation } from "react-router-dom";
 import { paginationParamsFromQuery } from "./pagination";
 import { LoadMediaParameters } from "api/api";
 
-type PaginationChange = Partial<Pick<MediumWallPagination, "pageNumber" | "pageSize">>;
+type PaginationChange = Partial<
+  Pick<MediumWallPagination, "pageNumber" | "pageSize">
+>;
 
 interface MediumWallProps {
   media: MediumWallPagination;
@@ -22,25 +24,25 @@ interface MediumWallProps {
 
 const MediumWall = (props: MediumWallProps) => {
   const { media, onMediaChange, onPaginationChange } = props;
-  
+
   const history = useHistory();
   const location = useLocation();
 
   const onPaginationChangeWrapper = (change: PaginationChange) => {
     onMediaChange(change);
-    
+
     let q = qs.parse(location.search, { ignoreQueryPrefix: true });
     const paginationParams = paginationParamsFromQuery(q);
 
-    const newPaginationParams = { ...paginationParams, ...change};
-    const newQs = qs.stringify(newPaginationParams, { addQueryPrefix: true })
+    const newPaginationParams = { ...paginationParams, ...change };
+    const newQs = qs.stringify(newPaginationParams, { addQueryPrefix: true });
     history.push(newQs);
 
     onPaginationChange(newPaginationParams);
-  }
+  };
 
   const onPageSelect = (n: number) => {
-    onPaginationChangeWrapper({ pageNumber: n })
+    onPaginationChangeWrapper({ pageNumber: n });
   };
 
   const onPageSizeSelect = (n: number) => {
@@ -58,7 +60,7 @@ const MediumWall = (props: MediumWallProps) => {
 
     const newPageNumber = Math.ceil(previousFirstVisibleImageIndex / n);
 
-    onPaginationChangeWrapper({ pageNumber: newPageNumber, pageSize: n })
+    onPaginationChangeWrapper({ pageNumber: newPageNumber, pageSize: n });
   };
 
   const imageLinks = media.items.map((r: MediumWallPaginationItem) => {
@@ -83,7 +85,7 @@ const MediumWall = (props: MediumWallProps) => {
         breakpointCols={{
           default: 4,
           1600: 2,
-          500: 1
+          500: 1,
         }}
         className="beevenue-masonry"
         columnClassName="beevenue-masonry-column"

@@ -3,12 +3,15 @@ import { RefreshStore } from "../storeTypes";
 
 const initialState: RefreshStore = { shouldRefresh: false };
 
-const refresh = (state: RefreshStore = initialState, action: any): RefreshStore => {
+const refresh = (
+  state: RefreshStore = initialState,
+  action: any
+): RefreshStore => {
   switch (action.type) {
     case SET_SHOULD_REFRESH:
       return {
         ...state,
-        shouldRefresh: action.payload
+        shouldRefresh: action.payload,
       };
     default:
       return state;

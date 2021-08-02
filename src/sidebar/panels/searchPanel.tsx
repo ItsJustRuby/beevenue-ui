@@ -13,7 +13,7 @@ const SearchPanel = () => {
   const location = useLocation();
 
   const globalSearchTerms = useBeevenueSelector(
-    store => store.search.searchQuery
+    (store) => store.search.searchQuery
   );
 
   const [searchTerms, setSearchTerms] = useState(globalSearchTerms || "");
@@ -38,7 +38,7 @@ const SearchPanel = () => {
     let newQ = "";
     if (location) {
       const query = qs.parse(location.search, {
-        ignoreQueryPrefix: true
+        ignoreQueryPrefix: true,
       });
       const { pageSize } = query;
       newQ = qs.stringify({ pageSize });
@@ -64,13 +64,13 @@ const SearchPanel = () => {
     <div className="card beevenue-sidebar-card">
       <div className="card-content beevenue-search-card-content">
         <div className="content">
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <input
               className="input"
               type="text"
               placeholder="Search"
               value={searchTerms}
-              onChange={e => onChange(e.currentTarget.value)}
+              onChange={(e) => onChange(e.currentTarget.value)}
             />
           </form>
         </div>

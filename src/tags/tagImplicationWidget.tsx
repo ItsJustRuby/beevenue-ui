@@ -9,7 +9,7 @@ const TagImplicationWidget = () => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    Api.Tags.getImplications().then(res => {
+    Api.Tags.getImplications().then((res) => {
       const implicationData = res.data as ImplicationData;
       createImplicationsSvg(svgRef.current!, implicationData);
     });

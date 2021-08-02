@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useRouteMatch, } from "react-router";
+import { useRouteMatch } from "react-router";
 
 import { useDispatch } from "react-redux";
 
@@ -34,10 +34,10 @@ const SearchResultsPage = () => {
   }, [dispatch, searchTermsFromRoute]);
 
   const apiCall = (params: LoadMediaParameters) => {
-    return Api.Medium.search({...params, q: searchTermsFromRoute})
-  }
+    return Api.Medium.search({ ...params, q: searchTermsFromRoute });
+  };
 
-  return <Album apiCall={apiCall}  />
+  return <Album apiCall={apiCall} />;
 };
 
 export { SearchResultsPage };

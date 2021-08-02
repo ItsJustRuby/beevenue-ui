@@ -27,8 +27,7 @@ const BeevenuePagination = (props: PaginationProps) => {
     initialPageSize = page.pageSize;
   } else if (q.pageSize && typeof q.pageSize === "string") {
     const queryParamPageSize: number = parseInt(q.pageSize);
-    if (!isNaN(queryParamPageSize))
-      initialPageSize = queryParamPageSize;
+    if (!isNaN(queryParamPageSize)) initialPageSize = queryParamPageSize;
   }
 
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -55,7 +54,7 @@ const BeevenuePagination = (props: PaginationProps) => {
       <li>
         <a
           className="pagination-link"
-          onClick={e => props.onPageSelect(n)}
+          onClick={(e) => props.onPageSelect(n)}
           aria-label={`Goto page ${n}`}
         >
           {n}
@@ -92,7 +91,7 @@ const BeevenuePagination = (props: PaginationProps) => {
       </span>
       <span>
         <div className="select">
-          <select value={pageSize} onChange={e => onChange(e)}>
+          <select value={pageSize} onChange={(e) => onChange(e)}>
             <option>10</option>
             <option>20</option>
             <option>50</option>

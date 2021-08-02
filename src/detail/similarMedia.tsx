@@ -14,7 +14,9 @@ interface SimilarMediaProps {
 }
 
 const SimilarMedia = (props: SimilarMediaProps) => {
-  const thumbnailSize = useBeevenueSelector(state => state.client.thumbnailSize);
+  const thumbnailSize = useBeevenueSelector(
+    (state) => state.client.thumbnailSize
+  );
 
   return (
     <div className="beevenue-similar-media">

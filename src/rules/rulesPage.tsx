@@ -15,7 +15,6 @@ import { setTitle } from "redux/actions";
 import { Link } from "react-router-dom";
 import { ConfirmationModal } from "confirmationModal";
 
-
 const RulesPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,7 +27,7 @@ const RulesPage = () => {
   useLoginRequired();
 
   const loadRules = () => {
-    Api.Rules.get().then(res => {
+    Api.Rules.get().then((res) => {
       setRules(res.data);
     });
   };
@@ -37,13 +36,15 @@ const RulesPage = () => {
     loadRules();
   }, []);
 
-  const [ruleIndexToDelete, setRuleIndexToDelete] = useState<number | null>(null);
+  const [ruleIndexToDelete, setRuleIndexToDelete] = useState<number | null>(
+    null
+  );
 
   const startShowingModal = (e: any, c: number) => {
     e.preventDefault();
     setRuleIndexToDelete(c);
     setIsShowingModal(true);
-  }
+  };
 
   const getRules = (rules: Rule[]) => {
     const getRuleElement = (r: Rule, idx: number) => {
@@ -52,24 +53,24 @@ const RulesPage = () => {
           <RuleText {...r} />
           &nbsp;
           <span className="beevenue-icon-container">
-          <Link to={`/search/rule:${idx}`}>
-            <FontAwesomeIcon icon={faSearch} />
-          </Link>
-          <Link to="#" onClick={e => startShowingModal(e, idx) }>
-            <FontAwesomeIcon icon={faTrash} />
-          </Link>
+            <Link to={`/search/rule:${idx}`}>
+              <FontAwesomeIcon icon={faSearch} />
+            </Link>
+            <Link to="#" onClick={(e) => startShowingModal(e, idx)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </Link>
           </span>
         </li>
       );
-    }
+    };
 
     const doConfirm = () => {
       if (ruleIndexToDelete === null) {
         return;
       }
 
-      Api.Rules.delete(ruleIndexToDelete).then(_ => loadRules());
-    }
+      Api.Rules.delete(ruleIndexToDelete).then((_) => loadRules());
+    };
 
     return (
       <>
@@ -84,10 +85,9 @@ const RulesPage = () => {
                   <ConfirmationModal
                     isVisible={isShowingModal}
                     setVisible={setIsShowingModal}
-                    onConfirm={doConfirm} />
-                  <ul>
-                    {rules.map(getRuleElement)}
-                  </ul>
+                    onConfirm={doConfirm}
+                  />
+                  <ul>{rules.map(getRuleElement)}</ul>
                 </div>
               </div>
             </div>

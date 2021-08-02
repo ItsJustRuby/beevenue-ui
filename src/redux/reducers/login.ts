@@ -2,7 +2,7 @@ import {
   LOGIN,
   LOGOUT,
   LOGIN_ANONYMOUS,
-  SET_SFW_SESSION
+  SET_SFW_SESSION,
 } from "../actionTypes";
 import { LoginStore, Unknown, Anonymous } from "../storeTypes";
 
@@ -10,7 +10,7 @@ const initialState: LoginStore = {
   loggedInUser: Unknown,
   loggedInRole: null,
   sfwSession: true,
-  serverVersion: "unknown"
+  serverVersion: "unknown",
 };
 
 const doLogin = (state: LoginStore, action: any) => {
@@ -19,7 +19,7 @@ const doLogin = (state: LoginStore, action: any) => {
     loggedInUser: action.payload.id,
     loggedInRole: action.payload.role,
     serverVersion: action.payload.version,
-    sfwSession: action.payload.sfwSession
+    sfwSession: action.payload.sfwSession,
   };
   return result;
 };
@@ -28,7 +28,7 @@ const doLoginAnonymous = (state: LoginStore) => {
   return {
     ...state,
     loggedInUser: Anonymous,
-    loggedInRole: null
+    loggedInRole: null,
   };
 };
 
@@ -36,7 +36,7 @@ const doLogout = (state: LoginStore) => {
   return {
     ...state,
     loggedInUser: Anonymous,
-    loggedInRole: null
+    loggedInRole: null,
   };
 };
 
@@ -51,7 +51,7 @@ const login = (state: LoginStore = initialState, action: any): LoginStore => {
     case SET_SFW_SESSION: {
       return {
         ...state,
-        sfwSession: action.payload
+        sfwSession: action.payload,
       };
     }
     default: {

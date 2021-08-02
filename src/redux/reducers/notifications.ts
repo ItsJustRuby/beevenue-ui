@@ -1,12 +1,12 @@
 import {
   ADD_NOTIFICATION,
   DISMISS_NOTIFICATION,
-  DISMISS_ALL_NOTIFICATIONS
+  DISMISS_ALL_NOTIFICATIONS,
 } from "../actionTypes";
 import { NotificationStore } from "../storeTypes";
 
 const initialState: NotificationStore = {
-  notifications: {}
+  notifications: {},
 };
 
 const notifications = (
@@ -16,12 +16,12 @@ const notifications = (
   switch (action.type) {
     case ADD_NOTIFICATION: {
       const newNotifications = {
-        ...state.notifications
+        ...state.notifications,
       };
       newNotifications[action.payload.id] = action.payload;
       return {
         ...state,
-        notifications: newNotifications
+        notifications: newNotifications,
       };
     }
     case DISMISS_NOTIFICATION: {

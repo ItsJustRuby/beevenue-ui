@@ -15,7 +15,7 @@ export const zoomAndDrag = (svg: any, g: any, dims: Dims) => {
       .zoom()
       .extent([
         [0, 0],
-        [dims[0], dims[1]]
+        [dims[0], dims[1]],
       ])
       .scaleExtent([1, 8])
       .on("zoom", zoomed)
@@ -34,9 +34,7 @@ export const createRoot = (ref: SVGSVGElement, opts: CreateRootOptions) => {
     .attr("viewBox", `0 0 ${opts.width} ${opts.height}`);
 
   // If SVG was previously added, remove it again so we can replace it
-  d3.select(ref)
-    .selectAll("g")
-    .remove();
+  d3.select(ref).selectAll("g").remove();
 
   const g = svg.append("g");
   zoomAndDrag(svg, g, [opts.width, opts.height]);

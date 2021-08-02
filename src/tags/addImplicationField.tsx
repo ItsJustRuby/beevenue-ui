@@ -33,12 +33,12 @@ const AddImplicationField = (props: AddImplicationFieldProps) => {
     }
 
     func?.call(func).then(
-      res => {
+      (res) => {
         props.onImplicationAdded(name);
         setCurrentName(null);
         setIsSubmitting(false);
       },
-      err => {
+      (err) => {
         setIsSubmitting(false);
       }
     );
@@ -51,13 +51,13 @@ const AddImplicationField = (props: AddImplicationFieldProps) => {
           "beevenue-add-implication-field" + (isSubmitting ? " is-loading" : "")
         }
       >
-        <form onSubmit={e => onSubmit(e)}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <input
             className="input"
             type="text"
             placeholder="New implication"
             value={currentName || ""}
-            onChange={e => setCurrentName(e.currentTarget.value)}
+            onChange={(e) => setCurrentName(e.currentTarget.value)}
             disabled={isSubmitting}
           />
         </form>

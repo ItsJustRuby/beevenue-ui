@@ -18,12 +18,12 @@ const AddAliasField = (props: AddAliasFieldProps) => {
     setIsSubmitting(true);
 
     Api.Tags.addAlias(props.tag, currentAlias).then(
-      _ => {
+      (_) => {
         props.onAliasAdded(currentAlias!);
         setCurrentAlias(null);
         setIsSubmitting(false);
       },
-      _ => {
+      (_) => {
         setIsSubmitting(false);
       }
     );
@@ -37,13 +37,13 @@ const AddAliasField = (props: AddAliasFieldProps) => {
           (isSubmitting ? " is-loading" : "")
         }
       >
-        <form onSubmit={e => onSubmit(e)}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <input
             className="input"
             type="text"
             placeholder="New alias"
             value={currentAlias || ""}
-            onChange={e => setCurrentAlias(e.currentTarget.value)}
+            onChange={(e) => setCurrentAlias(e.currentTarget.value)}
             disabled={isSubmitting}
           />
         </form>

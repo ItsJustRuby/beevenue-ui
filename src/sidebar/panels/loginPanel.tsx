@@ -5,7 +5,7 @@ import { LoggedInPanel } from "./loggedInPanel";
 import { LoggedOutPanel } from "./loggedOutPanel";
 
 const LoginPanel = () => {
-  const loggedInUser = useBeevenueSelector(store => store.login.loggedInUser);
+  const loggedInUser = useBeevenueSelector((store) => store.login.loggedInUser);
 
   if (loggedInUser === Anonymous) {
     return <LoggedOutPanel />;

@@ -6,7 +6,7 @@ const fullRating = (r: Rating): string => {
     u: "Unknown",
     s: "Safe",
     q: "Questionable",
-    e: "Explicit"
+    e: "Explicit",
   };
 
   return dict[r];
@@ -32,7 +32,7 @@ const ratingElementFor = (
         disabled={props.userIsAdmin ? undefined : true}
         checked={props.viewModel.rating === r}
         name="currentRating"
-        onChange={e => props.onRatingChange(e.target.value)}
+        onChange={(e) => props.onRatingChange(e.target.value)}
         value={r}
         id={id}
       />
@@ -55,7 +55,7 @@ const DetailPageRatingCard = (props: DetailPageRatingCardProps) => {
       <div className="card-content">
         <div className="content">
           <div className="field beevenue-ratings">
-            {ratings.map(r => ratingElementFor(props, r))}
+            {ratings.map((r) => ratingElementFor(props, r))}
           </div>
         </div>
       </div>

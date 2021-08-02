@@ -4,14 +4,14 @@ import { dismissNotification, dismissAllNotifications } from "../redux/actions";
 
 import {
   BeevenueNotificationId,
-  BeevenueNotificationLevel
+  BeevenueNotificationLevel,
 } from "../notifications";
 import { useBeevenueSelector } from "../redux/selectors";
 
 const NotificationsPanel = () => {
   const dispatch = useDispatch();
   const notifications = useBeevenueSelector(
-    store => store.notifications.notifications
+    (store) => store.notifications.notifications
   );
 
   const dismiss = (id: BeevenueNotificationId): void => {
@@ -27,7 +27,7 @@ const NotificationsPanel = () => {
     const dict = {
       error: "is-danger",
       warning: "is-warning",
-      info: "is-info"
+      info: "is-info",
     };
 
     return "beevenue-notification notification " + dict[level];
@@ -38,7 +38,7 @@ const NotificationsPanel = () => {
     for (let [key, value] of Object.entries(notifications)) {
       const el = (
         <div className={classFor(value.level)} key={key}>
-          <button className="delete" key={key} onClick={_ => dismiss(key)} />
+          <button className="delete" key={key} onClick={(_) => dismiss(key)} />
           {value.timestamp.toLocaleTimeString()} {value.content}
         </div>
       );
@@ -53,7 +53,7 @@ const NotificationsPanel = () => {
         <a
           href="#"
           className="beevenue-notifications-dismiss-all-link"
-          onClick={e => dismissAll(e)}
+          onClick={(e) => dismissAll(e)}
         >
           Dismiss all
         </a>

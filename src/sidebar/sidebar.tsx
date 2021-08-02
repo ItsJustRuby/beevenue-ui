@@ -12,8 +12,8 @@ import { forceRedirect } from "../redirect";
 import { useHistory } from "react-router-dom";
 
 const Sidebar = () => {
-  const loggedInUser = useBeevenueSelector(store => store.login.loggedInUser);
-  const loggedInRole = useBeevenueSelector(store => store.login.loggedInRole);
+  const loggedInUser = useBeevenueSelector((store) => store.login.loggedInUser);
+  const loggedInRole = useBeevenueSelector((store) => store.login.loggedInRole);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Sidebar = () => {
         <UploadPanel />,
         linksPanel,
         loginPanel,
-        <SpeedTaggerPanel />
+        <SpeedTaggerPanel />,
       ];
     } else if (loggedInUser === Anonymous) {
       return [loginPanel];
@@ -49,7 +49,7 @@ const Sidebar = () => {
       <nav className="level beevenue-home">
         <div className="level-item">
           <h2 className="title">
-            <a href="#" onClick={e => onHomeButtonClicked(e)}>
+            <a href="#" onClick={(e) => onHomeButtonClicked(e)}>
               Home
             </a>
           </h2>

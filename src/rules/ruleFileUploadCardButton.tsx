@@ -16,7 +16,7 @@ interface Validating {
 
 const STATUS_VALIDATING: Validating = {
   status: "validating",
-  description: "Validating..."
+  description: "Validating...",
 };
 
 interface Suspicious {
@@ -37,7 +37,7 @@ interface Initial {
 
 export const STATUS_INITIAL: Initial = {
   status: "initial",
-  description: ""
+  description: "",
 };
 
 export type RuleFileStatus =
@@ -102,13 +102,13 @@ const onFileValidated = (
   if (apiResult.data.ok === false) {
     setStatus({
       status: "invalid",
-      description: `This is not valid: ${apiResult.data.data}`
+      description: `This is not valid: ${apiResult.data.data}`,
     });
   } else {
     setStatus({
       status: "valid",
       description: `This is valid and contains ${apiResult.data.data} rules`,
-      data: parsed
+      data: parsed,
     });
   }
 };
@@ -116,13 +116,13 @@ const onFileValidated = (
 const validateFile = (parsed: string) => {
   return new Promise<ValidationResult>((resolve, reject) => {
     Api.Rules.validateJson(parsed)
-      .then(success =>
+      .then((success) =>
         resolve({
           apiResult: success,
-          parsed
+          parsed,
         })
       )
-      .catch(err => reject(err));
+      .catch((err) => reject(err));
   });
 };
 
@@ -133,12 +133,12 @@ const loadFileAndSetStatus = (
   setStatus(STATUS_VALIDATING);
 
   readFile(f)
-    .then(parsed => validateFile(parsed))
-    .then(success => onFileValidated(success, setStatus))
-    .catch(err =>
+    .then((parsed) => validateFile(parsed))
+    .then((success) => onFileValidated(success, setStatus))
+    .catch((err) =>
       setStatus({
         status: "invalid",
-        description: `This is not valid: ${err}`
+        description: `This is not valid: ${err}`,
       })
     );
 };
@@ -150,13 +150,13 @@ const updateStatus = (
   if (f.size > 500 * 1024) {
     setStatus({
       status: "suspicious",
-      description: "it is bigger than 500 KB"
+      description: "it is bigger than 500 KB",
     });
   }
   if (f.type !== "application/json") {
     setStatus({
       status: "suspicious",
-      description: `it has the Mime-Type '${f.type}' and not 'application/json'.`
+      description: `it has the Mime-Type '${f.type}' and not 'application/json'.`,
     });
   }
 
@@ -194,7 +194,7 @@ export const RuleFileUploadCardButton = (
           multiple={false}
           type="file"
           name="medium"
-          onChange={e => onChange(e.target.files)}
+          onChange={(e) => onChange(e.target.files)}
         />
         <span className="file-cta">
           <FontAwesomeIcon icon={faUpload} />

@@ -15,7 +15,7 @@ import { LoadMediaParameters } from "api/api";
 import { AxiosPromise } from "axios";
 
 interface AlbumProps {
-    apiCall: (params: LoadMediaParameters) => AxiosPromise<any>;
+  apiCall: (params: LoadMediaParameters) => AxiosPromise<any>;
 }
 
 const Album = (props: AlbumProps) => {
@@ -28,16 +28,18 @@ const Album = (props: AlbumProps) => {
     (store) => store.refresh.shouldRefresh
   );
   const lastFileUploaded = useBeevenueSelector(
-    store => store.fileUpload.lastFileUploaded
+    (store) => store.fileUpload.lastFileUploaded
   );
   const isSessionSfw = useIsSessionSfw();
 
   const [doShowSpinner, setDoShowSpinner] = useState(false);
-  const [paginationParams, setPaginationParams] = useState<LoadMediaParameters>(() => {
-    const q = qs.parse(location.search, { ignoreQueryPrefix: true });
-    const paginationParams = paginationParamsFromQuery(q);
-    return paginationParams;
-  });
+  const [paginationParams, setPaginationParams] = useState<LoadMediaParameters>(
+    () => {
+      const q = qs.parse(location.search, { ignoreQueryPrefix: true });
+      const paginationParams = paginationParamsFromQuery(q);
+      return paginationParams;
+    }
+  );
 
   useEffect(() => {
     if (shouldRefresh) {
@@ -47,7 +49,6 @@ const Album = (props: AlbumProps) => {
 
   const loadMedia = useCallback(
     (basePaginationParams: LoadMediaParameters) => {
-
       setDoShowSpinner(true);
       apiCall(basePaginationParams).then(
         (res) => {
@@ -68,8 +69,8 @@ const Album = (props: AlbumProps) => {
       items: [],
       pageNumber: paginationParams.pageNumber,
       pageSize: paginationParams.pageSize,
-      pageCount: paginationParams.pageNumber
-    }
+      pageCount: paginationParams.pageNumber,
+    };
   }, [location.search]);
 
   const [media, setMedia] = useState<MediumWallPagination>(defaultMedia);
@@ -86,10 +87,14 @@ const Album = (props: AlbumProps) => {
   ]);
 
   useEffect(() => {
-    if (location.pathname === "/" && location.search === "" && location.hash === "") {
+    if (
+      location.pathname === "/" &&
+      location.search === "" &&
+      location.hash === ""
+    ) {
       loadMedia({
-          pageNumber: 1,
-          pageSize: 10
+        pageNumber: 1,
+        pageSize: 10,
       });
     }
   }, [location, loadMedia]);
@@ -97,9 +102,9 @@ const Album = (props: AlbumProps) => {
   const changeWrapper = (change: PaginationChange) => {
     setMedia({
       ...media,
-      ...change
+      ...change,
     });
-  }
+  };
 
   let inner = null;
 
@@ -108,7 +113,13 @@ const Album = (props: AlbumProps) => {
   } else if (media.items.length === 0 && !doShowSpinner) {
     inner = () => <h2 className="title is-2">No results found.</h2>;
   } else {
-    inner = () => <MediumWall media={media} onMediaChange={changeWrapper} onPaginationChange={setPaginationParams} />;
+    inner = () => (
+      <MediumWall
+        media={media}
+        onMediaChange={changeWrapper}
+        onPaginationChange={setPaginationParams}
+      />
+    );
   }
 
   return inner();

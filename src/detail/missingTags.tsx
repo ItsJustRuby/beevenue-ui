@@ -18,10 +18,10 @@ const MissingTags = (props: MissingTagsProps) => {
   useEffect(() => {
     setMissing(null);
     Api.Tags.getMissing(props.id).then(
-      res => {
+      (res) => {
         setMissing(res.data[`${props.id}`]);
       },
-      err => {
+      (err) => {
         console.error(err);
       }
     );

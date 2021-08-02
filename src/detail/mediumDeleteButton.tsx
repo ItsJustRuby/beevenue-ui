@@ -13,22 +13,26 @@ interface MediumDeleteButtonProps {
   mediumId: number;
 }
 
-const doConfirm = (history: BrowserHistory, dispatch: (x: any) => void, mediumId: number) => {
+const doConfirm = (
+  history: BrowserHistory,
+  dispatch: (x: any) => void,
+  mediumId: number
+) => {
   Api.Medium.delete(mediumId)
     .then(
-      res => {
+      (res) => {
         dispatch(
           addNotification({
             level: "info",
-            contents: ["Successfully deleted medium."]
+            contents: ["Successfully deleted medium."],
           })
         );
       },
-      err => {
+      (err) => {
         dispatch(
           addNotification({
             level: "error",
-            contents: ["Could not delete medium!"]
+            contents: ["Could not delete medium!"],
           })
         );
       }
@@ -45,17 +49,21 @@ const MediumDeleteButton = (props: MediumDeleteButtonProps) => {
 
   return (
     <>
-    <ConfirmationModal isVisible={isShowingModal} setVisible={setIsShowingModal} onConfirm={() => doConfirm(history, dispatch, props.mediumId)}>
-      <button
-        className="button is-danger beevenue-medium-action-button"
-        title="Delete"
-        onClick={e => {
-          setIsShowingModal(true);
-        }}
+      <ConfirmationModal
+        isVisible={isShowingModal}
+        setVisible={setIsShowingModal}
+        onConfirm={() => doConfirm(history, dispatch, props.mediumId)}
       >
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
-    </ConfirmationModal>
+        <button
+          className="button is-danger beevenue-medium-action-button"
+          title="Delete"
+          onClick={(e) => {
+            setIsShowingModal(true);
+          }}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </ConfirmationModal>
     </>
   );
 };

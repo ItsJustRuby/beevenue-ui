@@ -10,10 +10,10 @@ interface ConfirmationModalProps {
 const renderModalFooter = (onCloseModal: () => void, onConfirm: () => void) => {
   return (
     <footer className="modal-card-foot">
-      <button className="button is-danger" onClick={e => onConfirm()}>
+      <button className="button is-danger" onClick={(e) => onConfirm()}>
         Definitely delete forever
       </button>
-      <button className="button" onClick={e => onCloseModal()}>
+      <button className="button" onClick={(e) => onCloseModal()}>
         Cancel
       </button>
     </footer>
@@ -23,7 +23,7 @@ const renderModalFooter = (onCloseModal: () => void, onConfirm: () => void) => {
 const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
   return (
     <div className="modal is-active">
-      <div className="modal-background" onClick={e => onCloseModal()} />
+      <div className="modal-background" onClick={(e) => onCloseModal()} />
 
       <div className="modal-card">
         <header className="modal-card-head">
@@ -31,7 +31,7 @@ const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
           <button
             className="delete"
             aria-label="close"
-            onClick={e => onCloseModal()}
+            onClick={(e) => onCloseModal()}
           />
         </header>
         <section className="modal-card-body">
@@ -42,7 +42,6 @@ const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
     </div>
   );
 };
-
 
 const ConfirmationModal = (props: ConfirmationModalProps) => {
   const onCloseModal = () => {

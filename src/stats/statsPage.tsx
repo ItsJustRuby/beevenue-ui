@@ -25,22 +25,22 @@ const StatsPage = () => {
   }, []);
 
   const getStats = (stats: Stats) => {
-    const allRatings: Rating[] = ['s', 'q', 'e', 'u'];
+    const allRatings: Rating[] = ["s", "q", "e", "u"];
 
     let total = 0;
-    allRatings.forEach(rating => {total += stats[rating]})
+    allRatings.forEach((rating) => {
+      total += stats[rating];
+    });
 
-    const rows: JSX.Element[] = allRatings.map(rating => {
+    const rows: JSX.Element[] = allRatings.map((rating) => {
       return (
         <tr key={rating}>
           <td>{rating}</td>
           <td>{stats[rating]}</td>
-          <td>
-            {((100 * stats[rating]) / total).toFixed(2)}
-          </td>
+          <td>{((100 * stats[rating]) / total).toFixed(2)}</td>
         </tr>
       );
-    })
+    });
 
     return (
       <table className="beevenue-table table">

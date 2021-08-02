@@ -110,10 +110,7 @@ const useGoButton = (
   tags: string,
   dispatch: (x: any) => void
 ) => {
-
-  const isAbsent = useBeevenueSelector(
-    (store) => store.speedTagging.isAbsent
-  );
+  const isAbsent = useBeevenueSelector((store) => store.speedTagging.isAbsent);
 
   return (
     <div className="field">

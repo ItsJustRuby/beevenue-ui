@@ -42,7 +42,7 @@ export class LinkContent implements BeevenueNotificationContent {
 const convertNotificationContents = (
   models: NotificationContentModel[]
 ): BeevenueNotificationContent => {
-  const contents = models.map(model => {
+  const contents = models.map((model) => {
     if (typeof model === "string") {
       return new TextContent(model);
     } else if (model.type === "link") {

@@ -16,13 +16,13 @@ const useRandomRuleViolation = (): (() => void) => {
   useEffect(() => {
     if (!isChecking) return;
     Api.Tags.getAnyMissing()
-      .then(res => {
+      .then((res) => {
         const mediumIds = Object.keys(res.data);
         if (mediumIds.length === 0) {
           dispatch(
             addNotification({
               level: "info",
-              contents: ["No rule violations found!"]
+              contents: ["No rule violations found!"],
             })
           );
         } else {
@@ -46,7 +46,7 @@ const RandomRuleViolationLink = () => {
   };
 
   return (
-    <Link to="#" onClick={e => onClick(e)}>
+    <Link to="#" onClick={(e) => onClick(e)}>
       Random rule violation
     </Link>
   );

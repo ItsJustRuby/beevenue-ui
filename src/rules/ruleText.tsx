@@ -72,7 +72,7 @@ function _arrayToFragment<T1, T2>(
   const localOptions = {
     separator: ", ",
     finalSeparator: " or ",
-    ...options
+    ...options,
   };
 
   const n = terms.length;
@@ -119,11 +119,17 @@ const RuleText = (props: Rule) => {
     );
   };
 
-  const renderThenAbsentOrPresent = (rulePart: HasAllTagsAbsentOrPresentRulePart) => {
+  const renderThenAbsentOrPresent = (
+    rulePart: HasAllTagsAbsentOrPresentRulePart
+  ) => {
     return (
       <>
         should have all of the following tags marked as present or absent:&nbsp;
-        {_arrayToFragment(rulePart.data, {finalSeparator: " and "}, linkSelector)}
+        {_arrayToFragment(
+          rulePart.data,
+          { finalSeparator: " and " },
+          linkSelector
+        )}
       </>
     );
   };
@@ -161,7 +167,9 @@ const RuleText = (props: Rule) => {
       case "hasAnyTagsIn":
         return renderThenTagsIn(then as HasAnyTagsInRulePart);
       case "hasAllAbsentOrPresent":
-          return renderThenAbsentOrPresent(then as HasAllTagsAbsentOrPresentRulePart);
+        return renderThenAbsentOrPresent(
+          then as HasAllTagsAbsentOrPresentRulePart
+        );
       case "hasAnyTagsLike":
         return `should have a tag like ${_arrayToFragment(
           (then as HasAnyTagsLikeRulePart).data

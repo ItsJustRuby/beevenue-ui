@@ -19,8 +19,8 @@ interface CreateSvgOptions2 {
 }
 
 const preprocess = (data: ImplicationData) => {
-  let nodes: NodeDatum[] = Object.keys(data.nodes).map(k => ({
-    id: k
+  let nodes: NodeDatum[] = Object.keys(data.nodes).map((k) => ({
+    id: k,
   }));
 
   let links: LinkDatum[] = [];
@@ -30,10 +30,10 @@ const preprocess = (data: ImplicationData) => {
   for (let [key, value] of Object.entries(data.links)) {
     roots.splice(roots.indexOf(key), 1);
 
-    value.forEach(right => {
+    value.forEach((right) => {
       links.push({
         source: key,
-        target: right
+        target: right,
       });
     });
   }
@@ -60,7 +60,7 @@ const linkForce = (links: LinkDatum[]) => {
       "link",
       d3
         .forceLink<NodeDatum, LinkDatum>(links)
-        .id(d => d.id)
+        .id((d) => d.id)
         .strength(2)
     );
   };
@@ -155,7 +155,7 @@ const createSimulation = (
     chargeForce,
     collisionForce(isRoot),
     xForce(isRoot, rootPositions, opts),
-    yForce(isRoot, rootPositions, opts)
+    yForce(isRoot, rootPositions, opts),
   ];
 
   return forces
@@ -235,7 +235,7 @@ export const createImplicationsSvg = (
 ) => {
   const defaultOptions: CreateSvgOptions2 = {
     width: 800,
-    height: 800
+    height: 800,
   };
   const opts: CreateSvgOptions2 = { ...defaultOptions, ...options };
   const { nodes, links, rootPositions } = preprocess(data);

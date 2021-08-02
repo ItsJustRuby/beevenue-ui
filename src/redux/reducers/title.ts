@@ -7,7 +7,7 @@ const title = (state: TitleStore = initialState, action: any): TitleStore => {
   switch (action.type) {
     case NEW_TITLE: {
       return {
-        title: action.payload
+        title: action.payload,
       };
     }
     default: {

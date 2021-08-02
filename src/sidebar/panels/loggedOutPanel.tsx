@@ -17,7 +17,7 @@ const useLoginSubmission = () => {
     setLoginInProgress(true);
 
     Api.Session.login({ username, password })
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           // The session cookie is set now.
           dispatch(login(res.data));
@@ -41,7 +41,7 @@ const getUsernameField = (setUsername: (p: string) => void) => {
         type="text"
         name="beevenue-username"
         placeholder="Username"
-        onChange={e => setUsername(e.currentTarget.value)}
+        onChange={(e) => setUsername(e.currentTarget.value)}
       />
     </div>
   );
@@ -56,7 +56,7 @@ const getPasswordField = (setPassword: (p: string) => void) => {
         type="password"
         name="beevenue-password"
         placeholder="Password"
-        onChange={e => setPassword(e.currentTarget.value)}
+        onChange={(e) => setPassword(e.currentTarget.value)}
       />
     </div>
   );
@@ -67,7 +67,7 @@ const useForm = (onSubmit: any, isMounted: boolean) => {
   const [password, setPassword] = useState("");
 
   return (
-    <form onSubmit={e => onSubmit(e, isMounted, username, password)}>
+    <form onSubmit={(e) => onSubmit(e, isMounted, username, password)}>
       {getUsernameField(setUsername)}
       {getPasswordField(setPassword)}
       <div className="field">

@@ -14,9 +14,11 @@ import { useHistory } from "react-router-dom";
 const LoggedInPanel = () => {
   const [loginInProgress, setLoginInProgress] = useState(false);
 
-  const serverVersion = useBeevenueSelector(store => store.login.serverVersion);
+  const serverVersion = useBeevenueSelector(
+    (store) => store.login.serverVersion
+  );
 
-    const history = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const isMounted = useRef(true);
@@ -31,7 +33,7 @@ const LoggedInPanel = () => {
     setLoginInProgress(true);
 
     Api.Session.logout()
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           // The session cookie is unset now.
           dispatch(logout());
@@ -53,7 +55,7 @@ const LoggedInPanel = () => {
             <div>Server version: {serverVersion}</div>
             <div>UI version: {commitId}</div>
             <div>
-              <form onSubmit={e => submitLogout(e)}>
+              <form onSubmit={(e) => submitLogout(e)}>
                 <div className="field">
                   <button className="button">Logout</button>
                 </div>

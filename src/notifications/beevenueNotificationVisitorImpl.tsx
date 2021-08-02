@@ -4,14 +4,15 @@ import {
   BeevenueNotificationVisitor,
   CompositeContent,
   TextContent,
-  LinkContent
+  LinkContent,
 } from "./impl";
 
 export class BeevenueNotificationVisitorImpl
-  implements BeevenueNotificationVisitor {
+  implements BeevenueNotificationVisitor
+{
   readonly elements: (string | JSX.Element)[] = [];
   visitComposite(c: CompositeContent): void {
-    c.contents.forEach(cc => cc.visit(this));
+    c.contents.forEach((cc) => cc.visit(this));
   }
   visitText(c: TextContent): void {
     this.elements.push(c.text);

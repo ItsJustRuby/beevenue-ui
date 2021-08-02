@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   RuleFileUploadCardButton,
   RuleFileStatus,
-  STATUS_INITIAL
+  STATUS_INITIAL,
 } from "./ruleFileUploadCardButton";
 
 interface RuleFileUploadCardProps {
@@ -24,7 +24,7 @@ const onAcceptWrapper = (
     return;
   }
 
-  Api.Rules.uploadJson(s.data).then(success => {
+  Api.Rules.uploadJson(s.data).then((success) => {
     setStatus(STATUS_INITIAL);
     onUploaded();
   });
@@ -57,7 +57,7 @@ const useAcceptButtonStyling = (s: RuleFileStatus) => {
 
   return {
     acceptButtonClassName,
-    isAcceptButtonDisabled
+    isAcceptButtonDisabled,
   };
 };
 
@@ -67,15 +67,13 @@ const useForm = (
   onUploaded: () => void,
   onAccept: typeof onAcceptWrapper
 ) => {
-  const {
-    acceptButtonClassName,
-    isAcceptButtonDisabled
-  } = useAcceptButtonStyling(s);
+  const { acceptButtonClassName, isAcceptButtonDisabled } =
+    useAcceptButtonStyling(s);
   return (
     <form>
       <button
         className={acceptButtonClassName}
-        onClick={e => onAccept(s, setStatus, onUploaded, e)}
+        onClick={(e) => onAccept(s, setStatus, onUploaded, e)}
         disabled={isAcceptButtonDisabled}
       >
         <span className="icon">
