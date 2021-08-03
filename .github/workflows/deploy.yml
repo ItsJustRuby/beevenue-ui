@@ -1,0 +1,24 @@
+name: Deploy
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  deploy:
+    environment: bulbasaur
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Build
+        run: sed -i 's/\%\%COMMIT_ID\%\%/'${GITHUB_SHA:0:8}'/g' src/config.json && npm install && npm run build
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y rsync
+      - name: Register target's public key
+        run: mkdir -p ~/.ssh/ && echo "${{ secrets.BEEVENUE_CI_SERVER_PUBLIC_KEY}}" > ~/.ssh/known_hosts
+      - name: Temporarily store private key
+        run: echo -n "${{ secrets.BEEVENUE_CI_PKEY }}" > ./id_rsa && chmod 600 ./id_rsa
+      - name: Transfer files to bulbasaur
+        run: rsync -e "ssh -i ./id_rsa" "build/*" -avz . ${{ secrets.BEEVENUE_CI_ADDRESS }}:${{ secrets.BEEVENUE_CI_FOLDER }}
