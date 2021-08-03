@@ -5,6 +5,8 @@ import { BeevenueSpinner } from "../beevenueSpinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
+import { Violation } from "./violation";
+import { ViolationViewModel } from "api/api";
 
 interface MissingTagsProps {
   id: number;
@@ -13,13 +15,14 @@ interface MissingTagsProps {
 }
 
 const MissingTags = (props: MissingTagsProps) => {
-  const [missing, setMissing] = useState<string[] | null>(null);
+  const [violations, setViolations] = useState<ViolationViewModel[] | null>(
+    null
+  );
 
   useEffect(() => {
-    setMissing(null);
-    Api.Tags.getMissing(props.id).then(
+    Api.Tags.getViolations(props.id).then(
       (res) => {
-        setMissing(res.data[`${props.id}`]);
+        setViolations(res.data.violations);
       },
       (err) => {
         console.error(err);
@@ -28,9 +31,9 @@ const MissingTags = (props: MissingTagsProps) => {
   }, [props.id, props.tags, props.rating]);
 
   let inner = null;
-  if (missing === null) {
+  if (violations === null) {
     inner = <BeevenueSpinner />;
-  } else if (missing.length === 0) {
+  } else if (violations.length === 0) {
     inner = (
       <FontAwesomeIcon
         title="Tags are consistent!"
@@ -40,18 +43,17 @@ const MissingTags = (props: MissingTagsProps) => {
       />
     );
   } else {
-    inner = missing.map((m, idx) => (
+    inner = violations.map((violation, idx) => (
       <div className="beevenue-missing-tag" key={`missing-${idx}`}>
-        <span>
+        <span className="beevenue-missing-tag-icon">
           <FontAwesomeIcon
-            title="Tags are inconsistent"
+            title={violation.text}
             size="2x"
             icon={faTimes}
             color="red"
           />
         </span>
-        &nbsp;
-        <span>{m}</span>
+        <Violation {...violation} />
       </div>
     ));
   }

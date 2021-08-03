@@ -10,7 +10,7 @@ const Medium = (props: MediumProps) => {
   let kind = "";
 
   let innerComponent;
-  switch (props.mime_type) {
+  switch (props.mimeType) {
     case "video/mp4":
     case "video/webm":
     case "video/x-matroska":

@@ -105,7 +105,7 @@ const PickAlternateThumbnailWidget = (props: ShowViewModel) => {
     pickCount
   );
 
-  if (!/^video/.test(props.mime_type)) {
+  if (!/^video/.test(props.mimeType)) {
     return null;
   }
 

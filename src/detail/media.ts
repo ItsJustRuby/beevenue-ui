@@ -23,11 +23,11 @@ export const MimeTypeToExtension = (id: MimeType): Extension => {
 };
 
 interface MediumContext {
-  mime_type: MimeType;
+  mimeType: MimeType;
   hash: string;
 }
 
 export const mediaSource = (ctx: MediumContext) => {
-  const extension = MimeTypeToExtension(ctx.mime_type);
+  const extension = MimeTypeToExtension(ctx.mimeType);
   return `${backendUrl}/files/${ctx.hash}${extension}`;
 };

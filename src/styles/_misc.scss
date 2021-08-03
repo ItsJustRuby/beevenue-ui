@@ -67,15 +67,34 @@
   background-color: #757575;
 }
 
-.beevenue-missing-tags {
-  min-height: 4rem;
+.beevenue-missing-tag {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
+  margin-bottom: 1rem;
 }
 
-.beevenue-medium-action-button {
-  margin-right: 1rem;
+.beevenue-missing-tag-icon {
+  flex-shrink: 0.2;
+  flex-grow: 0.2;
+  flex-basis: 10%;
+}
+
+.beevenue-missing-tag-column {
+  // as a flexbox child
+  flex-basis: 18%;
+  flex-grow: 1;
+  flex-shrink: 0;
+
+  // as a flexbox parent (to center actual <button>s)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.beevenue-missing-tag-button {
+  flex-basis: 20%;
+  flex-grow: 0.5;
 }
 
 .beevenue-icon-container a {

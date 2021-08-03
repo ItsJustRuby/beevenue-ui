@@ -15,6 +15,7 @@ import { DetailPageRatingCard } from "./detailPageRatingCard";
 import { DetailPageAdminCard } from "./detailPageAdminCard";
 import { forceRedirect } from "../redirect";
 import { useHistory } from "react-router-dom";
+import { useViolationReducer } from "./violationsReducer";
 
 interface DetailPageParams {
   id: string;
@@ -142,6 +143,10 @@ const useSetup = () => {
   };
 };
 
+export const ViolationsDispatch = React.createContext<any>(null);
+
+// TODO This whole component re-renders way too often due to too-general props.
+// Switch to useReducer etc. to make this less wasteful and flickery.
 const DetailPage = () => {
   const loggedInRole = useBeevenueSelector((store) => store.login.loggedInRole);
   const {
@@ -159,33 +164,44 @@ const DetailPage = () => {
     dispatch(setTitle(`${id}`));
   }, [dispatch, id]);
 
+  const violationsDispatch = useViolationReducer(
+    viewModel,
+    setViewModel,
+    onTagsChange,
+    onAbsentTagsChange
+  );
+
   let view;
   if (viewModel !== null) {
     view = (
       <>
-        <Medium {...viewModel} />
-        <DetailPageTagsCard
-          {...{
-            className: "beevenue-medium-tags",
-            tags: viewModel.tags,
-            userIsAdmin,
-            onTagsChange,
-            placeholder: "Add tags",
-          }}
-        />
-        <DetailPageTagsCard
-          {...{
-            className: "beevenue-medium-absent-tags",
-            tags: viewModel.absentTags,
-            userIsAdmin,
-            onTagsChange: onAbsentTagsChange,
-            placeholder: "Add absent tags",
-          }}
-        />
-        <DetailPageRatingCard {...{ viewModel, userIsAdmin, onRatingChange }} />
-        <DetailPageAdminCard
-          {...{ viewModel, setViewModel, userIsAdmin, mediumId: id }}
-        />
+        <ViolationsDispatch.Provider value={violationsDispatch}>
+          <Medium {...viewModel} />
+          <DetailPageTagsCard
+            {...{
+              className: "beevenue-medium-tags",
+              tags: viewModel.tags,
+              userIsAdmin,
+              onTagsChange,
+              placeholder: "Add tags",
+            }}
+          />
+          <DetailPageTagsCard
+            {...{
+              className: "beevenue-medium-absent-tags",
+              tags: viewModel.absentTags,
+              userIsAdmin,
+              onTagsChange: onAbsentTagsChange,
+              placeholder: "Add absent tags",
+            }}
+          />
+          <DetailPageRatingCard
+            {...{ viewModel, userIsAdmin, onRatingChange }}
+          />
+          <DetailPageAdminCard
+            {...{ viewModel, setViewModel, userIsAdmin, mediumId: id }}
+          />
+        </ViolationsDispatch.Provider>
       </>
     );
   } else {

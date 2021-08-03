@@ -38,6 +38,22 @@ interface UpdateMediumParameters {
   tags: Array<string>;
 }
 
+export type QuickFixKind = "addTag" | "addAbsentTag";
+
+export interface QuickFix {
+  kind: QuickFixKind;
+  tag: string;
+}
+
+export interface ViolationViewModel {
+  fixes: QuickFix[];
+  text: string;
+}
+
+interface ViolationsViewModel {
+  violations: ViolationViewModel[];
+}
+
 const dispatcher = (x: any) => {
   if ((x as BeevenueNotificationTemplate).level) {
     store.dispatch(addNotification(x));
@@ -176,7 +192,7 @@ const Api = {
       return _notification_wrapper(axiosClient.get("tags"));
     },
 
-    getMissing(mediumId: number): AxiosPromise<any> {
+    getViolations(mediumId: number): AxiosPromise<ViolationsViewModel> {
       return _notification_wrapper(axiosClient.get(`tags/missing/${mediumId}`));
     },
 
