@@ -6,6 +6,9 @@ import { DetailPageTagsCard } from "./detailPageTagsCard";
 import { DetailPageRatingCard } from "./detailPageRatingCard";
 import { DetailPageAdminCard } from "./detailPageAdminCard";
 import { ImmediateUpdate, useImmediateUpdates } from "./immediateUpdateReducer";
+import { useClosePageOnSfw } from "hooks/closePageOnSfw";
+import { useRefreshOnSfwChange } from "hooks/refreshOnSfwChange";
+import { useEffect } from "react";
 
 interface DetailPageInnerProps {
   initialViewModel: ShowViewModel;
@@ -25,6 +28,16 @@ const DetailPageInner = (props: DetailPageInnerProps) => {
   const { currentViewModel, dispatch } = useImmediateUpdates(
     props.initialViewModel
   );
+
+  useEffect(() => {
+    dispatch({
+      action: "overwrite",
+      payload: props.initialViewModel,
+    });
+  }, [props.initialViewModel, dispatch]);
+
+  useClosePageOnSfw(currentViewModel);
+  useRefreshOnSfwChange(currentViewModel.id, dispatch);
 
   const { hash, mimeType, rating, similar } = currentViewModel;
   const mediumProps = { hash, mimeType, similar };

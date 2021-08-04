@@ -34,10 +34,12 @@ const Violation = (props: ViolationProps) => {
   const getFixButtons = (): JSX.Element[] => {
     return props.fixes.map((fix, idx) => {
       return (
-        <div className="beevenue-missing-tag-column">
+        <div
+          className="beevenue-missing-tag-column"
+          key={`violation-fix-${idx}`}
+        >
           <button
             className="button beevenue-missing-tag-button"
-            key={`violation-fix-${idx}`}
             onClick={(_) => run(fix)}
           >
             <span className="icon">{icon(fix)}</span>

@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addNotLoggedInNotification, setTitle } from "../redux/actions";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
-import { useBeevenueSelector, useIsSessionSfw } from "../redux/selectors";
+import { useBeevenueSelector } from "../redux/selectors";
 import { forceRedirect } from "../redirect";
 import { useHistory } from "react-router-dom";
 import { DetailPageInner } from "./detailPageInner";
@@ -16,25 +16,9 @@ interface DetailPageParams {
   id: string;
 }
 
-const useClosePageOnSfw = (viewModel: ShowViewModel | null) => {
-  const dispatch = useDispatch();
-  const isSessionSfw = useIsSessionSfw();
-  const history = useHistory();
-
-  useEffect(() => {
-    if (isSessionSfw && viewModel !== null) {
-      if (viewModel.rating !== "s") {
-        forceRedirect(history, "/");
-      }
-    }
-  }, [history, isSessionSfw, viewModel, dispatch]);
-};
-
-const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
+const useInitialLoad = (setViewModel: (vm: ShowViewModel) => void) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const isSessionSfw = useIsSessionSfw();
 
   const globalSearchTerms = useBeevenueSelector(
     (store) => store.search.searchQuery
@@ -63,7 +47,7 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
         }
       }
     );
-  }, [dispatch, globalSearchTerms, history, id, isSessionSfw, setViewModel]);
+  }, [dispatch, globalSearchTerms, history, id, setViewModel]);
 
   return id;
 };
@@ -72,8 +56,7 @@ const useSetup = () => {
   const [initialViewModel, setInitialViewModel] =
     useState<ShowViewModel | null>(null);
 
-  const id = useRefreshOnUpdate(setInitialViewModel);
-  useClosePageOnSfw(initialViewModel);
+  const id = useInitialLoad(setInitialViewModel);
 
   return { id, initialViewModel };
 };
