@@ -30,7 +30,6 @@ const AppRouter = () => {
   useEffect(() => {
     Api.Session.amILoggedIn()
       .then((res) => {
-        console.log("Got answer:", res.data);
         if (res.data) {
           dispatch(login(res.data));
         } else {
