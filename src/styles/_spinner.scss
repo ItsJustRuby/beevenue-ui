@@ -1,21 +1,22 @@
 .full-page-spinner {
   height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .full-page-spinner-inner {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  // as flex child element
+  flex-basis: 25%;
+
+  // as flex parent element
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.full-page-spinner-innermost > div {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.full-page-spinner-status-retrying {
+.full-page-spinner-status-failed {
   visibility: visible;
 }
 

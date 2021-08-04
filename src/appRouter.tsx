@@ -23,13 +23,14 @@ const StatsPage = React.lazy(() => import("./stats/statsPage"));
 const WildcardPage = React.lazy(() => import("./routing/wildcardPage"));
 
 const AppRouter = () => {
-  const [countdown, setCountdown] = useState<number>(-1);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [hasUser, setHasUser] = useState(false);
   const dispatch = useDispatch();
 
-  const tryLoggingIn = () => {
+  useEffect(() => {
     Api.Session.amILoggedIn()
       .then((res) => {
+        console.log("Got answer:", res.data);
         if (res.data) {
           dispatch(login(res.data));
         } else {
@@ -38,20 +39,10 @@ const AppRouter = () => {
         setHasUser(true);
       })
       .catch((err) => {
-        let count = 10;
-
-        const interval = setInterval(() => {
-          if (count > 0) {
-            setCountdown(--count);
-          } else {
-            tryLoggingIn();
-            clearInterval(interval);
-          }
-        }, 1000);
+        setHasError(true);
       });
-  };
+  }, [dispatch, setHasError]);
 
-  useEffect(tryLoggingIn, [dispatch, tryLoggingIn]);
   useEffect(() => {
     const browser = Bowser.getParser(window.navigator.userAgent);
     const platformType = browser.getPlatformType();
@@ -62,22 +53,18 @@ const AppRouter = () => {
     }
   }, [dispatch]);
 
-  const statusText =
-    countdown > 0
-      ? `Could not connect to backend. Retrying in ${countdown}s…`
-      : "Placeholder text";
+  const statusText = hasError
+    ? `Could not connect to backend.`
+    : "Placeholder text";
 
-  const statusClassName =
-    countdown > 0
-      ? "full-page-spinner-status-retrying"
-      : "full-page-spinner-status-none";
+  const statusClassName = hasError
+    ? "full-page-spinner-status-failed"
+    : "full-page-spinner-status-none";
 
   const fallback = (
     <div className="full-page-spinner">
       <div className="full-page-spinner-inner">
-        <div className="full-page-spinner-innermost">
-          <BeevenueSpinner />
-        </div>
+        <BeevenueSpinner />
         <div>
           <p className={statusClassName}>{statusText}</p>
         </div>
