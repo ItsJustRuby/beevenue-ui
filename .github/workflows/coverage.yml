@@ -1,0 +1,26 @@
+name: Coverage
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "feature/**"
+
+jobs:
+  build:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Gather coverage
+        run:
+          echo -n '${{ secrets.BEEVENUE_CI_PR_BUILD_CONFIG }}' > src/config.json &&
+          npm install && npm test -- --coverage --watchAll=false
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

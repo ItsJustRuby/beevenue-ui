@@ -14,9 +14,11 @@ import { AppRouter } from "./appRouter";
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    </React.StrictMode>
   );
 };
 
