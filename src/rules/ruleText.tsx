@@ -47,8 +47,8 @@ interface HasAllTagsAbsentOrPresentRulePart extends RulePart {
 }
 
 export interface Rule {
-  if: IfRulePart;
-  then: ThenRulePart[];
+  if: IfRulePart | IfRulePart[];
+  then: ThenRulePart | ThenRulePart[];
 }
 
 interface Selector<T1, T2> {
@@ -104,7 +104,7 @@ const RuleText = (props: Rule) => {
   const renderIffTagsIn = (rulePart: HasAnyTagsInRulePart) => {
     return (
       <>
-        All media with the tag&nbsp;
+        has the tag&nbsp;
         {_arrayToFragment(rulePart.data, {}, linkSelector)}
       </>
     );
@@ -137,13 +137,13 @@ const RuleText = (props: Rule) => {
   const renderIf = (iff: IfRulePart) => {
     switch (iff.type) {
       case "all":
-        return "All media";
+        return "exists";
       case "hasRating":
-        return `All media with rating ${(iff as HasRatingRulePart).data}`;
+        return `has a rating of ${(iff as HasRatingRulePart).data}`;
       case "hasAnyTagsIn":
         return renderIffTagsIn(iff as HasAnyTagsInRulePart);
       case "hasAnyTagsLike":
-        return `All media with a tag like ${_arrayToFragment(
+        return `has a tag like ${_arrayToFragment(
           (iff as HasAnyTagsLikeRulePart).data
         )}`;
     }
@@ -177,16 +177,25 @@ const RuleText = (props: Rule) => {
     }
   };
 
-  const renderThens = (thens: ThenRulePart[]) => {
+  const renderIfs = (iffs: IfRulePart | IfRulePart[]) => {
+    if (!Array.isArray(iffs)) {
+      iffs = [iffs];
+    }
+    const iffsTexts = iffs.map(renderIf);
+    return _arrayToFragment(iffsTexts, { finalSeparator: " and " });
+  };
+
+  const renderThens = (thens: ThenRulePart | ThenRulePart[]) => {
+    if (!Array.isArray(thens)) {
+      thens = [thens];
+    }
     const thensTexts = thens.map(renderThen);
     return _arrayToFragment(thensTexts, { finalSeparator: " and " });
   };
 
   return (
     <>
-      {renderIf(props.if)}
-      &nbsp;
-      {renderThens(props.then)}.
+      If a medium {renderIfs(props.if)}, then it {renderThens(props.then)}.
     </>
   );
 };
