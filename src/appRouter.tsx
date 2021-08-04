@@ -9,6 +9,8 @@ import { login, loginAnonymous, setClientThumbnailSize } from "./redux/actions";
 import { BeevenuePage } from "./routing/beevenuePage";
 
 import { IndexPage } from "./wall/indexPage";
+
+import SearchRedirectPage from "routing/searchRedirectPage";
 const SearchResultsPage = React.lazy(() => import("./wall/searchResultsPage"));
 
 const TagStatisticsPage = React.lazy(() => import("./tags/tagStatisticsPage"));
@@ -82,6 +84,7 @@ const AppRouter = () => {
           <Switch>
             <Route path="/" exact component={IndexPage} />
             <Route path="/search/:extra(.+)" component={SearchResultsPage} />
+            <Route path="/search" component={SearchRedirectPage} />
             <Route path="/show/:id" component={DetailPage} />
             <Route path="/tags" component={TagsPage} />
             <Route path="/tagStats" component={TagStatisticsPage} />
