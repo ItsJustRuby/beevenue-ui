@@ -76,9 +76,6 @@ const useHelper = (
   apiDeleteCall: (a: string, tagName: string) => Promise<any>
 ) => {
   const { tagName } = props;
-  // TODO: A props change in tagName doesn't lead to a refresh.
-  // Do we actually need to add a state var for it?
-
   const [currentTagName, setCurrentTagName] = useState<string>(tagName);
 
   useEffect(() => {

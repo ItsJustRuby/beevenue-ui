@@ -1,6 +1,5 @@
 import { MimeType } from "../detail/media";
-
-export type Rating = "u" | "s" | "q" | "e";
+import { Rating } from "../types";
 
 export interface PartialShowViewModel {
   id: number;

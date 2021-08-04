@@ -1,5 +1,7 @@
-import React from "react";
-import { ShowViewModel, Rating } from "../api/show";
+import React, { useContext } from "react";
+import { Rating } from "../types";
+import { ImmediateUpdateDispatch } from "./detailPageInner";
+import { ImmediateUpdate } from "./immediateUpdateReducer";
 
 const fullRating = (r: Rating): string => {
   const dict = {
@@ -13,12 +15,12 @@ const fullRating = (r: Rating): string => {
 };
 
 interface DetailPageRatingCardProps {
-  viewModel: ShowViewModel;
+  rating: Rating;
   userIsAdmin: boolean;
-  onRatingChange: (x: any) => void;
 }
 
 const ratingElementFor = (
+  dispatch: React.Dispatch<ImmediateUpdate>,
   props: DetailPageRatingCardProps,
   r: Rating
 ): JSX.Element => {
@@ -30,9 +32,14 @@ const ratingElementFor = (
         className="is-checkradio"
         type="radio"
         disabled={props.userIsAdmin ? undefined : true}
-        checked={props.viewModel.rating === r}
+        checked={props.rating === r}
         name="currentRating"
-        onChange={(e) => props.onRatingChange(e.target.value)}
+        onChange={(e) => {
+          dispatch({
+            action: "setRating",
+            rating: r,
+          });
+        }}
         value={r}
         id={id}
       />
@@ -42,11 +49,7 @@ const ratingElementFor = (
 };
 
 const DetailPageRatingCard = (props: DetailPageRatingCardProps) => {
-  const { viewModel } = props;
-
-  if (!viewModel.rating) {
-    return null;
-  }
+  const dispatch = useContext(ImmediateUpdateDispatch)!;
 
   const ratings: Rating[] = ["s", "q", "e"];
 
@@ -55,7 +58,7 @@ const DetailPageRatingCard = (props: DetailPageRatingCardProps) => {
       <div className="card-content">
         <div className="content">
           <div className="field beevenue-ratings">
-            {ratings.map((r) => ratingElementFor(props, r))}
+            {ratings.map((r) => ratingElementFor(dispatch, props, r))}
           </div>
         </div>
       </div>

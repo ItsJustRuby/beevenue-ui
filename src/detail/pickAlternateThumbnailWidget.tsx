@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Api } from "api";
 import { BeevenueSpinner } from "../beevenueSpinner";
-import { ShowViewModel } from "../api/show";
 
 const usePickCount = () => {
   const [pickCount, setPickCount] = useState(5);
@@ -98,7 +97,14 @@ const renderContent = (
   );
 };
 
-const PickAlternateThumbnailWidget = (props: ShowViewModel) => {
+interface PickAlternateThumbnailWidgetProps {
+  id: number;
+  mimeType: string;
+}
+
+const PickAlternateThumbnailWidget = (
+  props: PickAlternateThumbnailWidgetProps
+) => {
   const { pickCount, pickCountSelect } = usePickCount();
   const { goButton, picks, choosePick, isLoading } = usePicks(
     props.id,

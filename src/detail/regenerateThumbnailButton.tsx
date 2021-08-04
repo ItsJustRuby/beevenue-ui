@@ -6,14 +6,14 @@ import { addNotification } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 interface RegenerateThumbnailButtonProps {
-  mediumId: number;
+  id: number;
 }
 
 const RegenerateThumbnailButton = (props: RegenerateThumbnailButtonProps) => {
   const dispatch = useDispatch();
 
   const onClick = () => {
-    Api.Medium.regenerateThumbnail(props.mediumId).then((res: any) => {
+    Api.Medium.regenerateThumbnail(props.id).then((res: any) => {
       dispatch(
         addNotification({
           level: "info",

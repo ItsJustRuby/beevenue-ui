@@ -1,32 +1,38 @@
 import React from "react";
-import { ShowViewModel } from "../api/show";
 import { MissingTags } from "./missingTags";
 import { PickAlternateThumbnailWidget } from "./pickAlternateThumbnailWidget";
 import { ReplaceMediumWidget } from "./replaceMediumWidget";
 import { MediumDeleteButton } from "./mediumDeleteButton";
 import { RegenerateThumbnailButton } from "./regenerateThumbnailButton";
+import { TemporaryViewModel } from "./immediateUpdateReducer";
 
 interface DetailPageAdminCardProps {
-  viewModel: ShowViewModel;
-  setViewModel: (m: ShowViewModel) => void;
+  viewModel: TemporaryViewModel;
   userIsAdmin: boolean;
-  mediumId: number;
 }
 
 const DetailPageAdminCard = (props: DetailPageAdminCardProps) => {
-  const { viewModel, setViewModel, userIsAdmin } = props;
+  const { viewModel, userIsAdmin } = props;
 
   return userIsAdmin ? (
     <>
-      <MissingTags {...viewModel} />
-      <PickAlternateThumbnailWidget {...viewModel} />
-      <ReplaceMediumWidget {...{ viewModel, setViewModel }} />
+      <MissingTags
+        id={viewModel.id}
+        isCanonical={viewModel.isCanonical}
+        tags={viewModel.tags}
+        rating={viewModel.rating}
+      />
+      <PickAlternateThumbnailWidget
+        id={viewModel.id}
+        mimeType={viewModel.mimeType}
+      />
+      <ReplaceMediumWidget id={viewModel.id} />
 
       <div className="card beevenue-sidebar-card">
         <div className="card-content">
           <div className="content">
-            <MediumDeleteButton {...props} />
-            <RegenerateThumbnailButton {...props} />
+            <MediumDeleteButton id={viewModel.id} />
+            <RegenerateThumbnailButton id={viewModel.id} />
           </div>
         </div>
       </div>

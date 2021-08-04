@@ -11,11 +11,11 @@ import { paginationParamsFromQuery } from "./pagination";
 import { BeevenueSpinner } from "../beevenueSpinner";
 import { useBeevenueSelector, useIsSessionSfw } from "../redux/selectors";
 import { MediumWall, PaginationChange } from "./mediumWall";
-import { LoadMediaParameters } from "api/api";
 import { AxiosPromise } from "axios";
+import { PaginationParameters } from "api/parameterTypes";
 
 interface AlbumProps {
-  apiCall: (params: LoadMediaParameters) => AxiosPromise<any>;
+  apiCall: (params: PaginationParameters) => AxiosPromise<any>;
 }
 
 const Album = (props: AlbumProps) => {
@@ -33,13 +33,12 @@ const Album = (props: AlbumProps) => {
   const isSessionSfw = useIsSessionSfw();
 
   const [doShowSpinner, setDoShowSpinner] = useState(false);
-  const [paginationParams, setPaginationParams] = useState<LoadMediaParameters>(
-    () => {
+  const [paginationParams, setPaginationParams] =
+    useState<PaginationParameters>(() => {
       const q = qs.parse(location.search, { ignoreQueryPrefix: true });
       const paginationParams = paginationParamsFromQuery(q);
       return paginationParams;
-    }
-  );
+    });
 
   useEffect(() => {
     if (shouldRefresh) {
@@ -48,7 +47,7 @@ const Album = (props: AlbumProps) => {
   }, [dispatch, shouldRefresh]);
 
   const loadMedia = useCallback(
-    (basePaginationParams: LoadMediaParameters) => {
+    (basePaginationParams: PaginationParameters) => {
       setDoShowSpinner(true);
       apiCall(basePaginationParams).then(
         (res) => {

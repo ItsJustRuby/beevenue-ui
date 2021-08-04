@@ -2,15 +2,17 @@ import React, { FormEvent, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons/faUpload";
 import { Api } from "api";
-import { ShowViewModel } from "../api/show";
+import { useContext } from "react";
+import { ImmediateUpdateDispatch } from "./detailPageInner";
+import { ImmediateUpdate } from "./immediateUpdateReducer";
 
 interface ReplaceMediumWidgetProps {
-  viewModel: ShowViewModel;
-  setViewModel: (m: ShowViewModel) => void;
+  id: number;
 }
 
 const onSubmit = (
-  props: ReplaceMediumWidgetProps,
+  dispatch: React.Dispatch<ImmediateUpdate>,
+  id: number,
   e: FormEvent,
   file: File | null,
   setIsUploading: (b: boolean) => void
@@ -21,9 +23,12 @@ const onSubmit = (
 
   setIsUploading(true);
 
-  Api.Medium.replace(props.viewModel.id, file)
+  Api.Medium.replace(id, file)
     .then((success) => {
-      props.setViewModel(success.data);
+      dispatch({
+        action: "overwrite",
+        payload: success.data,
+      });
     })
     .finally(() => {
       setIsUploading(false);
@@ -41,15 +46,17 @@ const onChange = (
   }
 };
 
-const useContent = (props: ReplaceMediumWidgetProps) => {
+const useContent = (id: number) => {
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+
+  const dispatch = useContext(ImmediateUpdateDispatch)!;
 
   return (
     <>
       <form
         method="POST"
-        onSubmit={(e) => onSubmit(props, e, file, setIsUploading)}
+        onSubmit={(e) => onSubmit(dispatch, id, e, file, setIsUploading)}
       >
         <div className="field">
           <div className="file is-boxed">
@@ -89,7 +96,7 @@ const ReplaceMediumWidget = (props: ReplaceMediumWidgetProps) => {
         <p className="card-header-title">Replace medium</p>
       </header>
       <div className="card-content">
-        <div className="content">{useContent(props)}</div>
+        <div className="content">{useContent(props.id)}</div>
       </div>
     </div>
   );

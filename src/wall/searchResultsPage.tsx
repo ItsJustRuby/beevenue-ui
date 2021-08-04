@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import { setSearchQuery, setTitle } from "../redux/actions";
 
 import { Api } from "api";
-import { LoadMediaParameters } from "api/api";
 import Album from "./album";
+import { PaginationParameters } from "api/parameterTypes";
 
 interface SearchResultsPageParams {
   extra: string;
@@ -33,7 +33,7 @@ const SearchResultsPage = () => {
     dispatch(setTitle(`Search: ${searchTermsFromRoute}`));
   }, [dispatch, searchTermsFromRoute]);
 
-  const apiCall = (params: LoadMediaParameters) => {
+  const apiCall = (params: PaginationParameters) => {
     return Api.Medium.search({ ...params, q: searchTermsFromRoute });
   };
 

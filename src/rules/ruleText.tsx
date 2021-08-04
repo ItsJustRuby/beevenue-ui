@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Rating } from "../api/show";
+import { Rating } from "../types";
 
 type IffRulePartKind = "all" | "hasRating" | "hasAnyTagsIn" | "hasAnyTagsLike";
 

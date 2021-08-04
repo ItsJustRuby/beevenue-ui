@@ -4,7 +4,7 @@ import { Api } from "api";
 import { useLoginRequired } from "../routing/loginRequired";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
-import { Rating } from "api/show";
+import { Rating } from "types";
 
 export type RatingStats = Record<Rating, number>;
 

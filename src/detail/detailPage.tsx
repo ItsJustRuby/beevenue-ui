@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouteMatch } from "react-router";
 
 import { Api } from "api";
-import { ShowViewModel, Rating } from "../api/show";
-import { Medium } from "./medium";
+import { ShowViewModel } from "../api/show";
 import { useDispatch } from "react-redux";
 import { addNotLoggedInNotification, setTitle } from "../redux/actions";
-import pick from "lodash-es/pick";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
 import { useBeevenueSelector, useIsSessionSfw } from "../redux/selectors";
-import { DetailPageTagsCard } from "./detailPageTagsCard";
-import { DetailPageRatingCard } from "./detailPageRatingCard";
-import { DetailPageAdminCard } from "./detailPageAdminCard";
 import { forceRedirect } from "../redirect";
 import { useHistory } from "react-router-dom";
-import { useViolationReducer } from "./violationsReducer";
+import { DetailPageInner } from "./detailPageInner";
 
 interface DetailPageParams {
   id: string;
@@ -73,137 +68,32 @@ const useRefreshOnUpdate = (setViewModel: (vm: ShowViewModel) => void) => {
   return id;
 };
 
-const updateMedium = (
-  setViewModel: (vm: ShowViewModel) => void,
-  newViewModel: ShowViewModel
-): void => {
-  const params = pick(newViewModel, ["id", "absentTags", "tags", "rating"]);
-  setViewModel(newViewModel);
-  Api.Medium.update(params).then((res) => {
-    setViewModel(res.data as ShowViewModel);
-  });
-};
-
-const onChange = (
-  viewModel: ShowViewModel | null,
-  setViewModel: (vm: ShowViewModel) => void
-) => {
-  const cleanTags = (unclean: string[]) => {
-    // Technically, the user can't manually enter these characters.
-    // However, by pasting them, they can still occur in here.
-    return unclean.map((s) => s.replace(/[\t\r\n ]/g, ""));
-  };
-
-  const tagChangeHelper = (
-    setter: (vm: ShowViewModel, tags: string[]) => void
-  ) => {
-    const f = (tags: string[]) => {
-      const cleanedTags = cleanTags(tags);
-      const newViewModel = { ...viewModel } as ShowViewModel;
-      setter(newViewModel, cleanedTags);
-      updateMedium(setViewModel, newViewModel);
-    };
-    return f;
-  };
-
-  const onTagsChange = tagChangeHelper((vm, t) => {
-    vm.tags = t;
-  });
-  const onAbsentTagsChange = tagChangeHelper((vm, t) => {
-    vm.absentTags = t;
-  });
-
-  const onRatingChange = (value: string) => {
-    const newRating = value as Rating;
-    if (!newRating) return;
-
-    const newViewModel = { ...viewModel } as ShowViewModel;
-    newViewModel.rating = newRating;
-    updateMedium(setViewModel, newViewModel);
-  };
-  return { onAbsentTagsChange, onTagsChange, onRatingChange };
-};
-
 const useSetup = () => {
-  const [viewModel, setViewModel] = useState<ShowViewModel | null>(null);
-  const id = useRefreshOnUpdate(setViewModel);
-  useClosePageOnSfw(viewModel);
+  const [initialViewModel, setInitialViewModel] =
+    useState<ShowViewModel | null>(null);
 
-  const { onAbsentTagsChange, onTagsChange, onRatingChange } = onChange(
-    viewModel,
-    setViewModel
-  );
-  return {
-    viewModel,
-    setViewModel,
-    id,
-    onAbsentTagsChange,
-    onTagsChange,
-    onRatingChange,
-  };
+  const id = useRefreshOnUpdate(setInitialViewModel);
+  useClosePageOnSfw(initialViewModel);
+
+  return { id, initialViewModel };
 };
 
-export const ViolationsDispatch = React.createContext<any>(null);
-
-// TODO This whole component re-renders way too often due to too-general props.
-// Switch to useReducer etc. to make this less wasteful and flickery.
 const DetailPage = () => {
-  const loggedInRole = useBeevenueSelector((store) => store.login.loggedInRole);
-  const {
-    viewModel,
-    setViewModel,
-    id,
-    onAbsentTagsChange,
-    onTagsChange,
-    onRatingChange,
-  } = useSetup();
-  const userIsAdmin = loggedInRole === "admin";
+  const { initialViewModel, id } = useSetup();
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setTitle(`${id}`));
   }, [dispatch, id]);
 
-  const violationsDispatch = useViolationReducer(
-    viewModel,
-    setViewModel,
-    onTagsChange,
-    onAbsentTagsChange
-  );
+  const inner = useMemo(() => {
+    if (initialViewModel === null) return null;
+    return <DetailPageInner initialViewModel={initialViewModel} />;
+  }, [initialViewModel]);
 
   let view;
-  if (viewModel !== null) {
-    view = (
-      <>
-        <ViolationsDispatch.Provider value={violationsDispatch}>
-          <Medium {...viewModel} />
-          <DetailPageTagsCard
-            {...{
-              className: "beevenue-medium-tags",
-              tags: viewModel.tags,
-              userIsAdmin,
-              onTagsChange,
-              placeholder: "Add tags",
-            }}
-          />
-          <DetailPageTagsCard
-            {...{
-              className: "beevenue-medium-absent-tags",
-              tags: viewModel.absentTags,
-              userIsAdmin,
-              onTagsChange: onAbsentTagsChange,
-              placeholder: "Add absent tags",
-            }}
-          />
-          <DetailPageRatingCard
-            {...{ viewModel, userIsAdmin, onRatingChange }}
-          />
-          <DetailPageAdminCard
-            {...{ viewModel, setViewModel, userIsAdmin, mediumId: id }}
-          />
-        </ViolationsDispatch.Provider>
-      </>
-    );
+  if (initialViewModel !== null) {
+    view = inner;
   } else {
     view = <BeevenueSpinner />;
   }

@@ -1,42 +1,25 @@
 import axios, { AxiosPromise } from "axios";
 
 import { backendUrl, backendTimeoutMs } from "../config.json";
-import { Rating } from "./show.js";
+import { ShowViewModel } from "./show";
 import pick from "lodash-es/pick";
 import store from "../redux/store";
 import { addNotification } from "../redux/actions";
 import { BeevenueNotificationTemplate } from "../notifications/index";
 import { SimilarityData } from "./similarity";
 import { ImplicationData } from "./implications";
+import {
+  LoginParameters,
+  PaginationParameters,
+  SearchParameters,
+  UpdateMediumParameters,
+} from "./parameterTypes";
 
 const axiosClient = axios.create({
   baseURL: `${backendUrl}/`,
   timeout: backendTimeoutMs,
   withCredentials: true,
 });
-
-interface LoginParameters {
-  username: string;
-  password: string;
-}
-
-interface PaginationParameters {
-  pageNumber: number;
-  pageSize: number;
-}
-
-export interface LoadMediaParameters extends PaginationParameters {}
-
-export interface SearchParameters extends PaginationParameters {
-  q: string;
-}
-
-interface UpdateMediumParameters {
-  id: number;
-  rating: Rating;
-
-  tags: Array<string>;
-}
 
 export type QuickFixKind = "addTag" | "addAbsentTag";
 
@@ -89,7 +72,7 @@ const Api = {
         timeout: 0,
       });
     },
-    load(params: LoadMediaParameters): AxiosPromise<any> {
+    load(params: PaginationParameters): AxiosPromise<any> {
       return _notification_wrapper(axiosClient.get(`media`, { params }));
     },
     regenerateThumbnail(mediumId: number): AxiosPromise<any> {
@@ -127,7 +110,7 @@ const Api = {
     show(id: number): AxiosPromise<any> {
       return _notification_wrapper(axiosClient.get(`medium/${id}`));
     },
-    update(params: UpdateMediumParameters): AxiosPromise<any> {
+    update(params: UpdateMediumParameters): AxiosPromise<ShowViewModel> {
       return _notification_wrapper(
         axiosClient.patch(
           `medium/${params.id}/metadata`,

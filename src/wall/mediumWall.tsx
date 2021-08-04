@@ -10,7 +10,7 @@ import {
 } from "./mediumWallTypes";
 import { useHistory, useLocation } from "react-router-dom";
 import { paginationParamsFromQuery } from "./pagination";
-import { LoadMediaParameters } from "api/api";
+import { PaginationParameters } from "api/parameterTypes";
 
 type PaginationChange = Partial<
   Pick<MediumWallPagination, "pageNumber" | "pageSize">
@@ -19,7 +19,7 @@ type PaginationChange = Partial<
 interface MediumWallProps {
   media: MediumWallPagination;
   onMediaChange: (p: PaginationChange) => void;
-  onPaginationChange: (paginationParams: LoadMediaParameters) => void;
+  onPaginationChange: (paginationParams: PaginationParameters) => void;
 }
 
 const MediumWall = (props: MediumWallProps) => {

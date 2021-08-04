@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { BrowserHistory } from "history";
 
 interface MediumDeleteButtonProps {
-  mediumId: number;
+  id: number;
 }
 
 const doConfirm = (
@@ -52,7 +52,7 @@ const MediumDeleteButton = (props: MediumDeleteButtonProps) => {
       <ConfirmationModal
         isVisible={isShowingModal}
         setVisible={setIsShowingModal}
-        onConfirm={() => doConfirm(history, dispatch, props.mediumId)}
+        onConfirm={() => doConfirm(history, dispatch, props.id)}
       >
         <button
           className="button is-danger beevenue-medium-action-button"

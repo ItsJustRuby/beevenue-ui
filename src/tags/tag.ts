@@ -1,4 +1,4 @@
-import { Rating } from "../api/show";
+import { Rating } from "../types";
 
 export interface Tag {
   rating: Rating;
