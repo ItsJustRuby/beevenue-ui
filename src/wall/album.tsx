@@ -47,10 +47,15 @@ const Album = (props: AlbumProps) => {
   }, [dispatch, shouldRefresh]);
 
   const loadMedia = useCallback(
-    (basePaginationParams: PaginationParameters) => {
+    (
+      getIsMounted: () => boolean,
+      basePaginationParams: PaginationParameters
+    ) => {
+      if (!getIsMounted()) return;
       setDoShowSpinner(true);
       apiCall(basePaginationParams).then(
         (res) => {
+          if (!getIsMounted()) return;
           setMedia(res.data);
           setDoShowSpinner(false);
         },
@@ -75,7 +80,11 @@ const Album = (props: AlbumProps) => {
   const [media, setMedia] = useState<MediumWallPagination>(defaultMedia);
 
   useEffect(() => {
-    loadMedia(paginationParams);
+    let isMounted = true;
+    loadMedia(() => isMounted, paginationParams);
+    return () => {
+      isMounted = false;
+    };
   }, [
     dispatch,
     lastFileUploaded,
@@ -86,16 +95,21 @@ const Album = (props: AlbumProps) => {
   ]);
 
   useEffect(() => {
+    let isMounted = true;
     if (
       location.pathname === "/" &&
       location.search === "" &&
       location.hash === ""
     ) {
-      loadMedia({
+      loadMedia(() => isMounted, {
         pageNumber: 1,
         pageSize: 10,
       });
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [location, loadMedia]);
 
   const changeWrapper = (change: PaginationChange) => {

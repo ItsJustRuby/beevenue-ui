@@ -29,7 +29,10 @@ export class BeevenueNotificationVisitorImpl
       <>
         {this.elements.map((el, idx) => {
           if (typeof el !== "string") {
-            return el;
+            return {
+              ...el,
+              key: idx,
+            };
           }
           let result = "";
           if (idx !== 0) {

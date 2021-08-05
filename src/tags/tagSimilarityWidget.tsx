@@ -51,8 +51,12 @@ const useHideSingletonNodes = () => {
   return { hideSingletonNodes, hideSingletonNodesField };
 };
 
-const useAutoUpdate = (simThreshold: number, hideSingletonNodes: boolean) => {
+const useAutoUpdate = (
+  simThreshold: number,
+  hideSingletonNodes: boolean
+): [React.RefObject<SVGSVGElement>, boolean] => {
   const [similarity, setSimilarity] = useState<SimilarityData | null>(null);
+  const [isDoneRendering, setIsDoneRendering] = useState<boolean>(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
   const isSessionSfw = useIsSessionSfw();
@@ -68,9 +72,10 @@ const useAutoUpdate = (simThreshold: number, hideSingletonNodes: boolean) => {
       hideSingletonNodes,
       simThreshold,
     });
-  }, [similarity, hideSingletonNodes, simThreshold]);
+    setIsDoneRendering(true);
+  }, [similarity, hideSingletonNodes, setIsDoneRendering, simThreshold]);
 
-  return svgRef;
+  return [svgRef, isDoneRendering];
 };
 
 const TagSimilarityWidget = () => {
@@ -78,7 +83,14 @@ const TagSimilarityWidget = () => {
   const { hideSingletonNodes, hideSingletonNodesField } =
     useHideSingletonNodes();
 
-  const svgRef = useAutoUpdate(simThreshold, hideSingletonNodes);
+  const [svgRef, isDoneRendering] = useAutoUpdate(
+    simThreshold,
+    hideSingletonNodes
+  );
+
+  const label = isDoneRendering
+    ? "similarity-rendered"
+    : "similarity-rendering";
 
   return (
     <div className="card beevenue-sidebar-card">
@@ -86,7 +98,7 @@ const TagSimilarityWidget = () => {
         <p className="card-header-title">Similarity</p>
       </header>
       <div className="card-content">
-        <div className="content">
+        <div className="content" data-testid={label}>
           {hideSingletonNodesField}
           {simThresholdField}
           <svg ref={svgRef}></svg>

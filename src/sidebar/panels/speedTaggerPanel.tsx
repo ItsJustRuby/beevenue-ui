@@ -20,6 +20,7 @@ const useTagsInputField = () => {
       <input
         className="input"
         type="text"
+        aria-label="speedtagger-input"
         placeholder="Tags"
         value={tags}
         onChange={(e) => setTags(e.currentTarget.value)}

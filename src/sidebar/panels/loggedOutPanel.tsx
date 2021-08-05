@@ -40,6 +40,7 @@ const getUsernameField = (setUsername: (p: string) => void) => {
         className="input"
         type="text"
         name="beevenue-username"
+        aria-label="Username"
         placeholder="Username"
         onChange={(e) => setUsername(e.currentTarget.value)}
       />
@@ -55,6 +56,7 @@ const getPasswordField = (setPassword: (p: string) => void) => {
         autoComplete="current-password"
         type="password"
         name="beevenue-password"
+        aria-label="Password"
         placeholder="Password"
         onChange={(e) => setPassword(e.currentTarget.value)}
       />

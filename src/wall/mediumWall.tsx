@@ -70,7 +70,11 @@ const MediumWall = (props: MediumWallProps) => {
 
     return (
       <div className="beevenue-masonry-item" key={r.id}>
-        <ProgressiveThumbnail src={maybeSrc} medium={r} />
+        <ProgressiveThumbnail
+          ariaLabel={`medium-${r.id}`}
+          src={maybeSrc}
+          medium={r}
+        />
       </div>
     );
   });
@@ -88,6 +92,7 @@ const MediumWall = (props: MediumWallProps) => {
           500: 1,
         }}
         className="beevenue-masonry"
+        data-testid="beevenue-masonry"
         columnClassName="beevenue-masonry-column"
       >
         {imageLinks}

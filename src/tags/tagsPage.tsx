@@ -56,13 +56,17 @@ const maybeRenderTooltip = (t: SimpleTag): React.ReactNode => {
   return null;
 };
 
-const tagLink = (t: SimpleTag, isAdmin: boolean) => {
+const tagLink = (prefix: string, t: SimpleTag, isAdmin: boolean) => {
   let url = `/search/${t.tag}`;
   if (isAdmin) {
     url = `/tag/${t.tag}`;
   }
 
-  return <Link to={url}>{t.tag}</Link>;
+  return (
+    <Link aria-label={`${prefix}-tag-link-${t.tag}`} to={url}>
+      {t.tag}
+    </Link>
+  );
 };
 
 const onRatingChange = (
@@ -103,7 +107,7 @@ const renderTag = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
 
   return (
     <tr key={t.tag} className={t.rating === "u" ? "is-error" : undefined}>
-      <td>{tagLink(t, isAdmin)}</td>
+      <td>{tagLink("large", t, isAdmin)}</td>
       <td>{maybeRenderTooltip(t)}</td>
       <td>{ratingCell}</td>
       <td className="has-text-centered">{t.mediaCount}</td>
@@ -120,7 +124,7 @@ const renderTagMobile = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
       <div className={classNames.join(" ")}>
         <header className="card-header">
           <p className="card-header-title">
-            {tagLink(t, isAdmin)}
+            {tagLink("small", t, isAdmin)}
             {maybeRenderTooltip(t)}
           </p>
         </header>

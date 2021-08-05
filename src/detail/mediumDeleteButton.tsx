@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { Api } from "api";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/actions";
 import { forceRedirect } from "../redirect";
-import { ConfirmationModal } from "confirmationModal";
 import { useHistory } from "react-router-dom";
 import { BrowserHistory } from "history";
+import { WrappingConfirmationModal } from "modals/wrappingConfirmationModal";
 
 interface MediumDeleteButtonProps {
   id: number;
@@ -42,28 +42,32 @@ const doConfirm = (
     });
 };
 
+interface WrappedButtonProps {
+  onClick: () => void;
+}
+
+const WrappedButton = (props: WrappedButtonProps) => {
+  return (
+    <button
+      className="button is-danger beevenue-medium-action-button"
+      title="Delete"
+      onClick={props.onClick}
+    >
+      <FontAwesomeIcon icon={faTrash} />
+    </button>
+  );
+};
+
 const MediumDeleteButton = (props: MediumDeleteButtonProps) => {
-  const [isShowingModal, setIsShowingModal] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
   return (
     <>
-      <ConfirmationModal
-        isVisible={isShowingModal}
-        setVisible={setIsShowingModal}
+      <WrappingConfirmationModal
         onConfirm={() => doConfirm(history, dispatch, props.id)}
-      >
-        <button
-          className="button is-danger beevenue-medium-action-button"
-          title="Delete"
-          onClick={(e) => {
-            setIsShowingModal(true);
-          }}
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      </ConfirmationModal>
+        WrappedComponent={WrappedButton}
+      />
     </>
   );
 };

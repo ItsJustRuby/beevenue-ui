@@ -1,12 +1,5 @@
 import React from "react";
 
-interface ConfirmationModalProps {
-  children?: any;
-  isVisible: boolean;
-  setVisible: (b: boolean) => void;
-  onConfirm: () => void;
-}
-
 const renderModalFooter = (onCloseModal: () => void, onConfirm: () => void) => {
   return (
     <footer className="modal-card-foot">
@@ -23,7 +16,11 @@ const renderModalFooter = (onCloseModal: () => void, onConfirm: () => void) => {
 const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
   return (
     <div className="modal is-active">
-      <div className="modal-background" onClick={(e) => onCloseModal()} />
+      <div
+        className="modal-background"
+        data-testid="confirmation-modal-background"
+        onClick={(e) => onCloseModal()}
+      />
 
       <div className="modal-card">
         <header className="modal-card-head">
@@ -43,22 +40,13 @@ const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
   );
 };
 
+interface ConfirmationModalProps {
+  onCloseModal: () => void;
+  onConfirm: () => void;
+}
+
 const ConfirmationModal = (props: ConfirmationModalProps) => {
-  const onCloseModal = () => {
-    props.setVisible(false);
-  };
-
-  const onConfirm = () => {
-    props.onConfirm();
-    onCloseModal();
-  };
-
-  return (
-    <>
-      {props.isVisible ? renderModal(onCloseModal, onConfirm) : null}
-      {props.children}
-    </>
-  );
+  return renderModal(props.onCloseModal, props.onConfirm);
 };
 
 export { ConfirmationModal };

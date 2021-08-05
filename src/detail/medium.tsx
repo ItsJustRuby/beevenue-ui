@@ -16,7 +16,13 @@ const Medium = (props: MediumProps) => {
     case "video/x-matroska":
       kind = "video";
       innerComponent = (
-        <video autoPlay={true} controls loop src={mediaSource(props)} />
+        <video
+          autoPlay={true}
+          controls
+          loop
+          aria-label="Medium"
+          src={mediaSource(props)}
+        />
       );
       break;
     case "image/jpeg":
@@ -24,7 +30,7 @@ const Medium = (props: MediumProps) => {
     case "image/gif":
     case "image/png":
       kind = "image";
-      innerComponent = <img src={mediaSource(props)} />;
+      innerComponent = <img aria-label="Medium" src={mediaSource(props)} />;
       break;
   }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Api } from "api";
-import { useLoginRequired } from "../routing/loginRequired";
+import { useLoginRequired } from "../hooks/loginRequired";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
 import { RuleFileUploadCard } from "./ruleFileUploadCard";
@@ -13,7 +13,7 @@ import { Rule, RuleText } from "./ruleText";
 import { useDispatch } from "react-redux";
 import { setTitle } from "redux/actions";
 import { Link } from "react-router-dom";
-import { ConfirmationModal } from "confirmationModal";
+import { IntrusiveConfirmationModal } from "modals/intrusiveConfirmationModal";
 
 const RulesPage = () => {
   const dispatch = useDispatch();
@@ -36,6 +36,8 @@ const RulesPage = () => {
     loadRules();
   }, []);
 
+  // This is only initially null. It never gets reset to null, since its value only gets accessed
+  // after being overwritten again anyway.
   const [ruleIndexToDelete, setRuleIndexToDelete] = useState<number | null>(
     null
   );
@@ -82,9 +84,9 @@ const RulesPage = () => {
               </header>
               <div className="card-content">
                 <div className="content">
-                  <ConfirmationModal
+                  <IntrusiveConfirmationModal
                     isVisible={isShowingModal}
-                    setVisible={setIsShowingModal}
+                    setIsVisible={setIsShowingModal}
                     onConfirm={doConfirm}
                   />
                   <ul>{rules.map(getRuleElement)}</ul>

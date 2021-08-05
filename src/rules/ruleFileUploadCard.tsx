@@ -72,6 +72,7 @@ const useForm = (
   return (
     <form>
       <button
+        aria-label="rule-upload-confirm-button"
         className={acceptButtonClassName}
         onClick={(e) => onAccept(s, setStatus, onUploaded, e)}
         disabled={isAcceptButtonDisabled}

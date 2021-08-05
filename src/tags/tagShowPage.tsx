@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 
 import { Api } from "api";
-import { useLoginRequired } from "../routing/loginRequired";
+import { useLoginRequired } from "../hooks/loginRequired";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
 import { ImplicationsCard } from "./implicationsCard";

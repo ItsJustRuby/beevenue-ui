@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Api } from "api";
-import { useLoginRequired } from "../routing/loginRequired";
+import { useLoginRequired } from "../hooks/loginRequired";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
 import { Rating } from "types";

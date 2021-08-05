@@ -17,6 +17,7 @@ const RuleFileDownloadCard = () => {
                 <a
                   className="button"
                   download
+                  arial-label="rule-download-button"
                   href={`${backendUrl}/rules/rules.json`}
                 >
                   <span className="icon">

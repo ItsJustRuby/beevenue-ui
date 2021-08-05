@@ -55,7 +55,7 @@ const BeevenuePagination = (props: PaginationProps) => {
         <a
           className="pagination-link"
           onClick={(e) => props.onPageSelect(n)}
-          aria-label={`Goto page ${n}`}
+          aria-label={`Go to page ${n}`}
         >
           {n}
         </a>

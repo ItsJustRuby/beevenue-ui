@@ -41,6 +41,7 @@ const AddAliasField = (props: AddAliasFieldProps) => {
           <input
             className="input"
             type="text"
+            aria-label="new-alias"
             placeholder="New alias"
             value={currentAlias || ""}
             onChange={(e) => setCurrentAlias(e.currentTarget.value)}

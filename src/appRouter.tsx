@@ -30,8 +30,13 @@ const AppRouter = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Only handle API response if this component is still mounted
+    // (this might happen in production, but especially unbreaks tests).
+    let isMounted = true;
+
     Api.Session.amILoggedIn()
       .then((res) => {
+        if (!isMounted) return;
         if (res.data) {
           dispatch(login(res.data));
         } else {
@@ -40,8 +45,13 @@ const AppRouter = () => {
         setHasUser(true);
       })
       .catch((err) => {
+        if (!isMounted) return;
         setHasError(true);
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, setHasError]);
 
   useEffect(() => {
@@ -63,7 +73,7 @@ const AppRouter = () => {
     : "full-page-spinner-status-none";
 
   const fallback = (
-    <div className="full-page-spinner">
+    <div data-testid="full-page-spinner" className="full-page-spinner">
       <div className="full-page-spinner-inner">
         <BeevenueSpinner />
         <div>

@@ -10,6 +10,7 @@ interface Medium {
 }
 
 interface ProgressiveThumbnailProps {
+  ariaLabel: string;
   src?: string;
   medium: Medium;
 }
@@ -69,7 +70,7 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
   }
 
   return (
-    <Link to={`/show/${props.medium.id}`}>
+    <Link to={`/show/${props.medium.id}`} aria-label={props.ariaLabel}>
       <div className="beevenue-thumb-container">
         <img width="50vw" className={className} src={src} />
       </div>
