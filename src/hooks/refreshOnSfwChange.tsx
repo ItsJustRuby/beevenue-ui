@@ -21,14 +21,19 @@ const useRefreshOnSfwChange = (
   );
 
   useEffect(() => {
+    let isMounted = true;
+
     Api.Medium.show(id).then(
       (res) => {
+        if (!isMounted) return;
         immediateDispatch({
           action: "overwrite",
           payload: res.data,
         });
       },
       (err) => {
+        if (!isMounted) return;
+
         if (err.response.status === 401) {
           dispatch(addNotLoggedInNotification());
         }
@@ -43,6 +48,10 @@ const useRefreshOnSfwChange = (
         }
       }
     );
+
+    return () => {
+      isMounted = false;
+    };
   }, [
     dispatch,
     globalSearchTerms,

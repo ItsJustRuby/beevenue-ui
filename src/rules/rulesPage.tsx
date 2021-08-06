@@ -26,14 +26,21 @@ const RulesPage = () => {
 
   useLoginRequired();
 
-  const loadRules = () => {
+  const loadRules = (getIsMounted: () => boolean = () => true) => {
+    if (!getIsMounted()) return;
     Api.Rules.get().then((res) => {
+      if (!getIsMounted()) return;
       setRules(res.data);
     });
   };
 
   useEffect(() => {
-    loadRules();
+    let isMounted = true;
+    loadRules(() => isMounted);
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // This is only initially null. It never gets reset to null, since its value only gets accessed

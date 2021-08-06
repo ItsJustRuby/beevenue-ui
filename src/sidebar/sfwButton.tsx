@@ -27,6 +27,7 @@ const SfwButton = () => {
         type="checkbox"
         id="sfw-switch"
         name="sfw-switch"
+        aria-label="sfw-switch"
         className="switch"
         defaultChecked={initialSfw}
         onChange={(_) => onChange()}

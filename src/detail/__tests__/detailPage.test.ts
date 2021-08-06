@@ -1,17 +1,15 @@
-import { fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import given from "mocks/given";
 
-test("detail page renders itself", async () => {
-  given.loggedInAs({ role: "admin", sfwSession: true });
-  given.indexPageListsMedium(1234);
-  given.medium({ id: 1234 });
+test("detail page switches away when toggled to SFW", async () => {
+  given.loggedInAs({ role: "admin", sfwSession: false });
+  const { findByRole, findByTestId } = await given.navigationTo.detailPage({
+    id: 2222,
+    rating: "q",
+  });
 
-  const { findByRole } = given.app();
+  userEvent.click(await findByRole("checkbox", { name: /sfw-switch/i }));
 
-  fireEvent.click(await findByRole("link", { name: "medium-1234" }));
-
-  const mediumImg = await findByRole("img", { name: "Medium" });
-  expect(mediumImg).toBeVisible();
+  const masonry = await findByTestId("beevenue-masonry");
+  expect(masonry).toBeVisible();
 });
-
-// TODO Go to detail page for medium rated 'q'. Toggle SFW ON. Expect to be somewhere else.

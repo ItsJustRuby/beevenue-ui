@@ -90,6 +90,7 @@ const tagRatingControl = (prefix: string, t: SimpleTag): JSX.Element => {
           type="radio"
           defaultChecked={t.rating === rating}
           name={name}
+          aria-label={id}
           onChange={(e) => onRatingChange(t.tag, e.target, e.target.value)}
           value={rating}
           id={id}
@@ -144,6 +145,7 @@ const renderFilter = (filter: string, setFilter: (s: string) => void) => {
         className="input"
         type="text"
         placeholder="Filter"
+        aria-label="tags-filter"
         value={filter}
         onChange={(e) => setFilter(e.currentTarget.value)}
       />

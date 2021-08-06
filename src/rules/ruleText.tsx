@@ -5,7 +5,6 @@ import { Rating } from "../types";
 type IffRulePartKind = "all" | "hasRating" | "hasAnyTagsIn" | "hasAnyTagsLike";
 
 type ThenRulePartKind =
-  | "all"
   | "fail"
   | "hasRating"
   | "hasAnyTagsIn"
@@ -160,8 +159,6 @@ const RuleText = (props: Rule) => {
     switch (then.type) {
       case "fail":
         return "should not exist";
-      case "all":
-        return "should never happen";
       case "hasRating":
         return _thenTextHasRating(then as HasRatingRulePart);
       case "hasAnyTagsIn":

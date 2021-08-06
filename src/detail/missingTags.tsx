@@ -30,17 +30,25 @@ const MissingTags = (props: MissingTagsProps) => {
   useEffect(() => {
     if (!isCanonical) return;
 
+    let isMounted = true;
+
     Api.Tags.getViolations(props.id).then(
       (res) => {
+        if (!isMounted) return;
         const extended = res.data.violations.map((v) => {
           return { ...v, hasRun: false };
         });
         setViolations(extended);
       },
       (err) => {
+        if (!isMounted) return;
         console.error(err);
       }
     );
+
+    return () => {
+      isMounted = false;
+    };
   }, [isCanonical, props.id]);
 
   const onHasRun = (idx: number) => {

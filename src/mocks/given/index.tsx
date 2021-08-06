@@ -5,6 +5,9 @@ import { Rating } from "types";
 import { server } from "../server";
 
 import navigation from "./navigation";
+import ruleViolations from "./ruleViolations";
+import rules from "./rules";
+import search from "./search";
 
 const indexPageListsMedium = (id: number) => {
   server.use(
@@ -71,9 +74,10 @@ interface OptionalMediumOptions {
   rating: Rating;
 }
 
-const medium = (
-  options: RequiredMediumOptions & Partial<OptionalMediumOptions>
-) => {
+export type AllMediumOptions = RequiredMediumOptions &
+  Partial<OptionalMediumOptions>;
+
+const medium = (options: AllMediumOptions) => {
   const actualOptions: RequiredMediumOptions & OptionalMediumOptions = {
     ...{
       rating: "s",
@@ -125,14 +129,6 @@ const medium = (
   );
 };
 
-const noRuleViolations = () => {
-  server.use(
-    rest.get("/tags/missing/any", (req, res, ctx) => {
-      return res(ctx.json({}));
-    })
-  );
-};
-
 const app = () => render(<App />);
 
 export default {
@@ -142,5 +138,7 @@ export default {
   loggedOut,
   medium,
   navigationTo: navigation,
-  noRuleViolations,
+  ruleViolations,
+  rules,
+  search,
 };

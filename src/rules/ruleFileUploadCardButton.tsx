@@ -61,7 +61,6 @@ const useSelectedFile = () => {
 
   const onChange = (f: FileList | null) => {
     if (!f || f.length !== 1) return;
-    // props.onStatusChanged(f[0]);
     setSelectedFile(f[0]);
   };
 
@@ -143,26 +142,6 @@ const loadFileAndSetStatus = (
     );
 };
 
-const updateStatus = (
-  f: File,
-  setStatus: (s: RuleFileStatus) => void
-): void => {
-  if (f.size > 500 * 1024) {
-    setStatus({
-      status: "suspicious",
-      description: "it is bigger than 500 KB",
-    });
-  }
-  if (f.type !== "application/json") {
-    setStatus({
-      status: "suspicious",
-      description: `it has the Mime-Type '${f.type}' and not 'application/json'.`,
-    });
-  }
-
-  loadFileAndSetStatus(f, setStatus);
-};
-
 const useSelectedFileHandler = (
   selectedFile: File | null,
   callback: (status: RuleFileStatus) => void
@@ -171,7 +150,7 @@ const useSelectedFileHandler = (
 
   useEffect(() => {
     if (selectedFile === null) return;
-    updateStatus(selectedFile, setStatus);
+    loadFileAndSetStatus(selectedFile, setStatus);
   }, [selectedFile]);
 
   useEffect(() => {
@@ -193,6 +172,7 @@ export const RuleFileUploadCardButton = (
           className="file-input"
           multiple={false}
           type="file"
+          aria-label="rule-upload-input"
           name="medium"
           onChange={(e) => onChange(e.target.files)}
         />

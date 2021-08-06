@@ -68,6 +68,7 @@ const SearchPanel = () => {
             <input
               className="input"
               type="text"
+              aria-label="search-input"
               placeholder="Search"
               value={searchTerms}
               onChange={(e) => onChange(e.currentTarget.value)}

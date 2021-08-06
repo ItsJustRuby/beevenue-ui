@@ -1,30 +1,32 @@
 import { rest } from "msw";
 
+const mediaHandler = (req: any, res: any, ctx: any) => {
+  const pageNrString = req.url.searchParams.get("pageNumber");
+  const pageNumber = pageNrString ? parseInt(pageNrString, 10) : 1;
+  return res(
+    ctx.json({
+      items: [
+        {
+          hash: "9762152070fd76452299c84c8658893e",
+          id: 1,
+          tinyThumbnail: "Zm9vYmFyCg==",
+        },
+      ],
+      pageCount: 5,
+      pageNumber: pageNumber,
+      pageSize: 10,
+    })
+  );
+};
+
 export const defaultHandlers = [
   rest.get("/login", (req, res, ctx) => {
     // Persist user's authentication in the session
     // sessionStorage.setItem("is-authenticated", "true");
     return res(ctx.status(500));
   }),
-  rest.get("/media", (req, res, ctx) => {
-    const pageNrString = req.url.searchParams.get("pageNumber");
-    console.log(pageNrString);
-    const pageNumber = pageNrString ? parseInt(pageNrString, 10) : 1;
-    return res(
-      ctx.json({
-        items: [
-          {
-            hash: "9762152070fd76452299c84c8658893e",
-            id: 1,
-            tinyThumbnail: "Zm9vYmFyCg==",
-          },
-        ],
-        pageCount: 5,
-        pageNumber: pageNumber,
-        pageSize: 10,
-      })
-    );
-  }),
+  rest.get("/media", mediaHandler),
+  rest.get("/search", mediaHandler),
   rest.get("/rules", (req, res, ctx) => {
     return res(
       ctx.json([
@@ -42,6 +44,9 @@ export const defaultHandlers = [
         },
       ])
     );
+  }),
+  rest.patch("/sfw", (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
   rest.get("/stats", (req, res, ctx) => {
     return res(
@@ -61,6 +66,19 @@ export const defaultHandlers = [
         implied_by_this: [],
         implying_this: [],
         rating: "e",
+        tag: "A",
+      })
+    );
+  }),
+  rest.patch("/tag/A", (req, res, ctx) => {
+    const { rating } = req.params;
+    return res(
+      ctx.json({
+        aliases: [],
+        count: 429,
+        implied_by_this: [],
+        implying_this: [],
+        rating: rating,
         tag: "A",
       })
     );
