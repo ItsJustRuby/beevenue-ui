@@ -17,16 +17,15 @@ const useRandomRuleViolation = (): (() => void) => {
     if (!isChecking) return;
     Api.Tags.getAnyMissing()
       .then((res) => {
-        const mediumIds = Object.keys(res.data);
-        if (mediumIds.length === 0) {
+        if (Object.keys(res.data).length === 0) {
           dispatch(
             addNotification({
               level: "info",
               contents: ["No rule violations found!"],
             })
           );
-        } else {
-          forceRedirect(history, `/show/${mediumIds[0]}`);
+        } else if (res.data.id) {
+          forceRedirect(history, `/show/${res.data.id}`);
         }
       })
       .finally(() => {

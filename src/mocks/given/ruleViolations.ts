@@ -5,7 +5,7 @@ const forMedium = (id: number) => {
   server.use(
     rest.get("/tags/missing/any", (req, res, ctx) => {
       const json: any = {};
-      json[`${id}`] = [];
+      json["id"] = id;
 
       return res(ctx.json(json));
     })
