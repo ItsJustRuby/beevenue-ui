@@ -70,11 +70,7 @@ const MediumWall = (props: MediumWallProps) => {
 
     return (
       <div className="beevenue-masonry-item" key={r.id}>
-        <ProgressiveThumbnail
-          ariaLabel={`medium-${r.id}`}
-          src={maybeSrc}
-          medium={r}
-        />
+        <ProgressiveThumbnail src={maybeSrc} medium={r} />
       </div>
     );
   });

@@ -6,17 +6,19 @@ import "bulma-checkradio/dist/css/bulma-checkradio.min.css";
 import "bulma-tagsinput/dist/css/bulma-tagsinput.min.css";
 import "react-tagsinput/react-tagsinput.css";
 import "./styles/index.scss";
-
-import { Provider } from "react-redux";
+import { AppRouter } from "./appRouter";
+import { BrowserRouter } from "react-router-dom";
 
 import store from "./redux/store";
-import { AppRouter } from "./appRouter";
+import { Provider } from "react-redux";
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    </BrowserRouter>
   );
 };
 

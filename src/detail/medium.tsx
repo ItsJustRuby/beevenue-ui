@@ -16,13 +16,7 @@ const Medium = (props: MediumProps) => {
     case "video/x-matroska":
       kind = "video";
       innerComponent = (
-        <video
-          autoPlay={true}
-          controls
-          loop
-          aria-label="Medium"
-          src={mediaSource(props)}
-        />
+        <video autoPlay={true} controls loop src={mediaSource(props)} />
       );
       break;
     case "image/jpeg":
@@ -30,7 +24,7 @@ const Medium = (props: MediumProps) => {
     case "image/gif":
     case "image/png":
       kind = "image";
-      innerComponent = <img aria-label="Medium" src={mediaSource(props)} />;
+      innerComponent = <img src={mediaSource(props)} />;
       break;
   }
 
@@ -55,7 +49,9 @@ const Medium = (props: MediumProps) => {
   return (
     <>
       <div className="beevenue-medium-container" onClick={onClick}>
-        <div className={mediumClass}>{innerComponent}</div>
+        <div className={mediumClass} aria-label="medium">
+          {innerComponent}
+        </div>
       </div>
       <SimilarMedia media={props.similar} />
     </>

@@ -12,7 +12,7 @@ mockBackendUrl.backendUrl = "/";
 jest.setTimeout(20_000);
 
 configure({
-  // TODO: Some pages are slow AF (Looking at you, TagsPage).
+  // Some pages are slow AF (Looking at you, TagsPage).
   // Set this as low as possible.
   asyncUtilTimeout: 5000,
   throwSuggestions: true,

@@ -18,10 +18,7 @@ test("handles rating change", async () => {
   });
   fireEvent.change(qCheckbox);
 
-  // TODO: Turns out this doesn't actually happen to the DOM.
-  // await waitFor(() => {
-  //   expect(qCheckbox).toHaveAttribute("checked");
-  // });
+  await new Promise((res) => setTimeout(res, 1000));
 });
 
 test("has a filter that works", async () => {

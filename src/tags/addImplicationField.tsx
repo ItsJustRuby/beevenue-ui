@@ -55,6 +55,7 @@ const AddImplicationField = (props: AddImplicationFieldProps) => {
           <input
             className="input"
             type="text"
+            aria-label={`add-implication-input-${props.mode}`}
             placeholder="New implication"
             value={currentName || ""}
             onChange={(e) => setCurrentName(e.currentTarget.value)}

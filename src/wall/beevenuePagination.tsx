@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import qs from "qs";
 import { useLocation } from "react-router-dom";
+import { paginationParamsFromQuery } from "./pagination";
 
 interface Page {
   pageNumber: number;
@@ -17,17 +18,15 @@ interface PaginationProps {
 
 const BeevenuePagination = (props: PaginationProps) => {
   const location = useLocation();
-
-  const q = qs.parse(location.search, { ignoreQueryPrefix: true });
-  let initialPageSize = 10;
-
   const { page } = props;
+
+  let initialPageSize = 10;
 
   if (page && page.pageSize) {
     initialPageSize = page.pageSize;
-  } else if (q.pageSize && typeof q.pageSize === "string") {
-    const queryParamPageSize: number = parseInt(q.pageSize);
-    if (!isNaN(queryParamPageSize)) initialPageSize = queryParamPageSize;
+  } else {
+    const q = qs.parse(location.search, { ignoreQueryPrefix: true });
+    initialPageSize = paginationParamsFromQuery(q).pageSize;
   }
 
   const [pageSize, setPageSize] = useState(initialPageSize);

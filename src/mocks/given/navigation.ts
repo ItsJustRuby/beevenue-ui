@@ -1,6 +1,20 @@
 import { fireEvent } from "@testing-library/dom";
 import given, { AllMediumOptions } from ".";
 
+const tagShowPage = async (tag: string) => {
+  const app = await tagsPage();
+  const { findByRole } = app;
+
+  fireEvent.click(await findByRole("link", { name: `large-tag-link-${tag}` }));
+
+  const newAliasTextbox = await findByRole("textbox", {
+    name: /add-alias-input/i,
+  });
+  expect(newAliasTextbox).toBeVisible();
+
+  return app;
+};
+
 const tagsPage = async () => {
   const app = given.app();
   const { findByRole } = app;
@@ -18,13 +32,12 @@ const detailPage = async (options: AllMediumOptions) => {
   given.medium(options);
 
   const app = given.app();
-  const { findByRole } = app;
+  const { findByRole, findByLabelText } = app;
 
-  console.log("Looking for", `medium-${options.id}`);
   fireEvent.click(await findByRole("link", { name: `medium-${options.id}` }));
 
-  const mediumImg = await findByRole("img", { name: "Medium" });
-  expect(mediumImg).toBeVisible();
+  const mediumContainer = await findByLabelText("medium");
+  expect(mediumContainer).toBeVisible();
   return app;
 };
 
@@ -42,4 +55,4 @@ const rulesPage = async () => {
   return app;
 };
 
-export default { detailPage, rulesPage, tagsPage };
+export default { detailPage, rulesPage, tagShowPage, tagsPage };

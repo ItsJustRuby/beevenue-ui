@@ -14,21 +14,32 @@ const SpeedTaggingItem = (props: SpeedTaggingItemProps) => {
   );
   const dispatch = useDispatch();
 
-  const toggle = () => {
+  const toggle = (e: any) => {
+    e.preventDefault();
     dispatch(toggleSpeedTaggingItem(props.id));
   };
 
+  const isSelected = speedTaggingItems.indexOf(props.id) > -1;
+
   const className = (() => {
-    if (speedTaggingItems.indexOf(props.id) > -1) {
-      return "beevenue-speed-tagger-selected";
+    if (isSelected) {
+      return "beevenue-speed-tagger beevenue-speed-tagger-selected";
     }
 
-    return undefined;
+    return "beevenue-speed-tagger";
   })();
 
   return (
-    <div className={className} key={props.id} onClick={(e) => toggle()}>
-      {props.children}
+    <div className={className} key={props.id}>
+      <a
+        aria-label={`speed-tagger-medium-${props.id}`}
+        className={
+          isSelected ? "beevenue-speed-tagger-medium-selected" : "null"
+        }
+        onClick={(e) => toggle(e)}
+      >
+        {props.children}
+      </a>
     </div>
   );
 };

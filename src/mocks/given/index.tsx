@@ -8,6 +8,12 @@ import navigation from "./navigation";
 import ruleViolations from "./ruleViolations";
 import rules from "./rules";
 import search from "./search";
+import store from "redux/store";
+import { Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createMemoryHistory } from "history";
+import { AppRouter } from "appRouter";
+import { MimeType } from "detail/media";
 
 const indexPageListsMedium = (id: number) => {
   server.use(
@@ -72,6 +78,7 @@ interface RequiredMediumOptions {
 
 interface OptionalMediumOptions {
   rating: Rating;
+  mimeType: MimeType;
 }
 
 export type AllMediumOptions = RequiredMediumOptions &
@@ -80,6 +87,7 @@ export type AllMediumOptions = RequiredMediumOptions &
 const medium = (options: AllMediumOptions) => {
   const actualOptions: RequiredMediumOptions & OptionalMediumOptions = {
     ...{
+      mimeType: "image/jpeg",
       rating: "s",
     },
     ...options,
@@ -92,7 +100,7 @@ const medium = (options: AllMediumOptions) => {
           absentTags: [],
           hash: "ffff",
           id: actualOptions.id,
-          mimeType: "image/jpeg",
+          mimeType: actualOptions.mimeType,
           rating: actualOptions.rating,
           similar: [
             {
@@ -124,9 +132,52 @@ const medium = (options: AllMediumOptions) => {
 
   server.use(
     rest.get(`/tags/missing/${options.id}`, (req, res, ctx) => {
-      return res(ctx.json({ violations: [] }));
+      return res(
+        ctx.json({
+          violations: [
+            {
+              fixes: [
+                {
+                  kind: "addTag",
+                  tag: "A",
+                },
+                {
+                  kind: "addAbsentTag",
+                  tag: "A",
+                },
+              ],
+              text: "Invisible text here.",
+            },
+            {
+              fixes: [],
+              text: "Visible placeholder text here.",
+            },
+          ],
+        })
+      );
     })
   );
+};
+
+const landingViaUrl = async (urlFragment: string) => {
+  const history = createMemoryHistory();
+
+  history.push(urlFragment);
+  const app = render(
+    <Router history={history}>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    </Router>
+  );
+  const { findByRole } = app;
+
+  const arbitrarySidebarLink = await findByRole("link", {
+    name: /^Configure rules$/i,
+  });
+  expect(arbitrarySidebarLink).toBeVisible();
+
+  return { app, history };
 };
 
 const app = () => render(<App />);
@@ -134,6 +185,7 @@ const app = () => render(<App />);
 export default {
   app,
   indexPageListsMedium,
+  landingViaUrl,
   loggedInAs,
   loggedOut,
   medium,

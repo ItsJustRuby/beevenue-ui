@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import given from "mocks/given";
 
 test("shows logout panel and album when logged in", async () => {
@@ -11,6 +12,20 @@ test("shows logout panel and album when logged in", async () => {
 
   const masonry = await findByTestId("beevenue-masonry");
   expect(masonry).toBeVisible();
+});
+
+test("shows login panel after logging out", async () => {
+  given.loggedInAs({ role: "admin", sfwSession: true });
+  const { findByRole, findByTestId } = given.app();
+
+  const logoutButton = await findByRole("button", { name: /logout/i });
+  expect(logoutButton).toBeVisible();
+
+  given.loggedOut();
+  userEvent.click(logoutButton);
+
+  const loginButton = await findByRole("button", { name: /login/i });
+  expect(loginButton).toBeVisible();
 });
 
 test("shows index page when clicking the Home button", async () => {
@@ -35,7 +50,7 @@ test("Does not show speed tagger panel when logged in as user", async () => {
   const { findByRole } = given.app();
 
   await expect(
-    findByRole("textbox", { name: /speedtagger-input/i })
+    findByRole("textbox", { name: /speed-tagger-input/i })
   ).rejects.toBeTruthy();
 });
 
@@ -49,4 +64,26 @@ test("shows login panel when not logged in", async () => {
 
   const loginButton = await findByRole("button", { name: /login/i });
   expect(loginButton).toBeVisible();
+});
+
+test("login panel logs people in, duh.", async () => {
+  given.loggedOut();
+
+  const { findByPlaceholderText, findByRole } = given.app();
+
+  // When entering some user details and clicking "login"
+  const usernameField = await findByRole("textbox", { name: /username/i });
+  expect(usernameField).toBeVisible();
+  userEvent.type(usernameField, "irrelevant");
+
+  const passwordField = await findByPlaceholderText(/password/i);
+  expect(passwordField).toBeVisible();
+  userEvent.type(passwordField, "completelymeaningless");
+
+  const loginButton = await findByRole("button", { name: /login/i });
+  expect(loginButton).toBeVisible();
+  userEvent.click(loginButton);
+
+  // Then sidebar is fully visible
+  expect(await findByRole("checkbox", { name: /sfw-switch/i })).toBeVisible();
 });

@@ -20,7 +20,7 @@ const useTagsInputField = () => {
       <input
         className="input"
         type="text"
-        aria-label="speedtagger-input"
+        aria-label="speed-tagger-input"
         placeholder="Tags"
         value={tags}
         onChange={(e) => setTags(e.currentTarget.value)}
@@ -44,6 +44,7 @@ const useMarkCheckbox = (dispatch: (x: any) => void) => {
     <div className="field">
       <input
         type="checkbox"
+        aria-label="speed-tagger-active-switch"
         id="speed-tagger-switch"
         name="speed-tagger-switch"
         className="switch"
@@ -72,6 +73,7 @@ const useAbsentCheckbox = (dispatch: (x: any) => void) => {
     <div className="field">
       <input
         type="checkbox"
+        aria-label="speed-tagger-absent-switch"
         id="speed-tagger-absent-switch"
         name="speed-tagger-absent-switch"
         className="switch"
@@ -116,6 +118,7 @@ const useGoButton = (
   return (
     <div className="field">
       <a
+        aria-label="speed-tagger-go-link"
         className="button"
         onClick={(_) => go(isAbsent, speedTaggingItems, tags, dispatch)}
       >

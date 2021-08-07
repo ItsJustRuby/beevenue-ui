@@ -33,6 +33,7 @@ const ratingElementFor = (
         type="radio"
         disabled={props.userIsAdmin ? undefined : true}
         checked={props.rating === r}
+        aria-label={`medium-set-rating-${r}`}
         name="currentRating"
         onChange={(e) => {
           dispatch({

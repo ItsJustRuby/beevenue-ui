@@ -1,7 +1,7 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Bowser from "bowser";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { BeevenueSpinner } from "./beevenueSpinner";
 
 import { Api } from "api";
@@ -88,24 +88,22 @@ const AppRouter = () => {
   }
 
   return (
-    <BrowserRouter>
-      <BeevenuePage>
-        <Suspense fallback={fallback}>
-          <Switch>
-            <Route path="/" exact component={IndexPage} />
-            <Route path="/search/:extra(.+)" component={SearchResultsPage} />
-            <Route path="/search" component={SearchRedirectPage} />
-            <Route path="/show/:id" component={DetailPage} />
-            <Route path="/tags" component={TagsPage} />
-            <Route path="/tagStats" component={TagStatisticsPage} />
-            <Route path="/stats" component={StatsPage} />
-            <Route path="/tag/:name" component={TagDetailPage} />
-            <Route path="/rules" component={RulesPage} />
-            <Route path="/:whatever" component={WildcardPage} />
-          </Switch>
-        </Suspense>
-      </BeevenuePage>
-    </BrowserRouter>
+    <BeevenuePage>
+      <Suspense fallback={fallback}>
+        <Switch>
+          <Route path="/" exact component={IndexPage} />
+          <Route path="/search/:extra(.+)" component={SearchResultsPage} />
+          <Route path="/search" component={SearchRedirectPage} />
+          <Route path="/show/:id" component={DetailPage} />
+          <Route path="/tags" component={TagsPage} />
+          <Route path="/tagStats" component={TagStatisticsPage} />
+          <Route path="/stats" component={StatsPage} />
+          <Route path="/tag/:name" component={TagDetailPage} />
+          <Route path="/rules" component={RulesPage} />
+          <Route path="/:whatever" component={WildcardPage} />
+        </Switch>
+      </Suspense>
+    </BeevenuePage>
   );
 };
 

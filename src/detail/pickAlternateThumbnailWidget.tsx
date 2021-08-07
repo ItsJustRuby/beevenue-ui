@@ -8,6 +8,7 @@ const usePickCount = () => {
   const pickCountSelect = (
     <div className="select">
       <select
+        aria-label="medium-alternate-thumbnail-pick-count-select"
         defaultValue="5"
         value={pickCount}
         onChange={(e) => setPickCount(Number(e.currentTarget.value))}
@@ -45,7 +46,11 @@ const usePicks = (id: number, pickCount: number) => {
   };
 
   const goButton = (
-    <button className="button is-primary" onClick={(e) => onClick()}>
+    <button
+      aria-label="medium-alternate-thumbnail-go-button"
+      className="button is-primary"
+      onClick={(e) => onClick()}
+    >
       Go
     </button>
   );
@@ -64,6 +69,7 @@ const renderPicks = (picks: string[] | null, choosePick: (p: any) => void) => {
         return (
           <img
             key={`pick${i}`}
+            aria-label={`medium-alternate-thumbnail-pick-${i}`}
             onClick={(_) => choosePick(i)}
             src={`data:image/png;base64, ${p}`}
           />

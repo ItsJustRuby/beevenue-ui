@@ -45,6 +45,7 @@ const listHelper = (list: string[], callback: (s: string) => void) => {
             <Link to={`/tag/${a}`}>{a}</Link>
             <a
               className="beevenue-alias-delete delete is-small"
+              aria-label={`tag-delete-implication-${a}`}
               onClick={(e) => callback(a)}
             />
           </li>

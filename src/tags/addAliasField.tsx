@@ -19,7 +19,7 @@ const AddAliasField = (props: AddAliasFieldProps) => {
 
     Api.Tags.addAlias(props.tag, currentAlias).then(
       (_) => {
-        props.onAliasAdded(currentAlias!);
+        props.onAliasAdded(currentAlias);
         setCurrentAlias(null);
         setIsSubmitting(false);
       },
@@ -41,7 +41,7 @@ const AddAliasField = (props: AddAliasFieldProps) => {
           <input
             className="input"
             type="text"
-            aria-label="new-alias"
+            aria-label="add-alias-input"
             placeholder="New alias"
             value={currentAlias || ""}
             onChange={(e) => setCurrentAlias(e.currentTarget.value)}

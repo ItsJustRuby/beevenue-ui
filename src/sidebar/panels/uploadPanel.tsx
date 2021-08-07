@@ -107,6 +107,7 @@ const renderBox = (
             className="file-input"
             multiple={true}
             type="file"
+            aria-label="medium-upload-input"
             name="medium"
             onChange={(e) => onChange(e.target.files)}
           />
@@ -117,6 +118,7 @@ const renderBox = (
 
           {files === null || files.length === 0 ? null : (
             <progress
+              aria-label="upload-panel-progress-bar"
               className={getProgressBarClasses(doneCount, files)}
               value={doneCount}
               max={files.length}
@@ -143,6 +145,7 @@ const UploadPanel = () => {
           <div className="field">
             <input
               type="submit"
+              aria-label="medium-upload-submit-button"
               className="button"
               disabled={files === null || files.length === 0}
               value="Go"

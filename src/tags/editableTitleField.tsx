@@ -57,6 +57,7 @@ const EditableTitleField = (props: EditableTitleFieldProps) => {
       <form onSubmit={(e) => onSubmit(e)} className="beevenue-editable-title">
         <input
           className="input"
+          aria-label="tag-title-input"
           onBlur={(e) => stopEditing()}
           type="text"
           autoFocus
@@ -67,7 +68,11 @@ const EditableTitleField = (props: EditableTitleFieldProps) => {
       </form>
     );
   } else {
-    content = <span onClick={(e) => beginEditing()}>"{currentTitle}" tag</span>;
+    content = (
+      <span aria-label="tag-title" onClick={(e) => beginEditing()}>
+        "{currentTitle}" tag
+      </span>
+    );
   }
 
   return <>{content}</>;

@@ -31,8 +31,6 @@ test("renders", async () => {
   await given.navigationTo.rulesPage();
 });
 
-// TODO Test rule delete buttons, upload button
-
 test("only accepts json files", async () => {
   given.loggedInAs({ role: "admin", sfwSession: false });
   const app = await given.navigationTo.rulesPage();

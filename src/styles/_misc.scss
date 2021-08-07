@@ -21,6 +21,10 @@
   display: inline-flex;
 }
 
+.beevenue-speed-tagger a {
+  cursor: default;
+}
+
 .beevenue-speed-tagger-selected {
   box-shadow: 0 0 0 0.2rem blue;
 }

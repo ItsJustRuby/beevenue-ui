@@ -27,8 +27,8 @@ test("redirects to violation if there is one", async () => {
   given.medium({ id: 123 });
   given.ruleViolations.forMedium(123);
 
-  const { findByRole } = await whenClickingRandomRuleViolation();
+  const { findByLabelText } = await whenClickingRandomRuleViolation();
 
-  const mediumImg = await findByRole("img", { name: "Medium" });
-  expect(mediumImg).toBeVisible();
+  const mediumContainer = await findByLabelText("medium");
+  expect(mediumContainer).toBeVisible();
 });

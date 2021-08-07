@@ -1,5 +1,38 @@
 import { rest } from "msw";
 
+const defaultMedium = (id: number) => {
+  return {
+    absentTags: [],
+    hash: "ffff",
+    id,
+    mimeType: "image/jpeg",
+    rating: "s",
+    similar: [
+      {
+        hash: "aaaa",
+        id: 414,
+      },
+      {
+        hash: "bbbb",
+        id: 52,
+      },
+      {
+        hash: "cccc",
+        id: 342,
+      },
+      {
+        hash: "dddd",
+        id: 63,
+      },
+      {
+        hash: "eeee",
+        id: 90,
+      },
+    ],
+    tags: ["A", "B"],
+  };
+};
+
 const mediaHandler = (req: any, res: any, ctx: any) => {
   const pageNrString = req.url.searchParams.get("pageNumber");
   const pageNumber = pageNrString ? parseInt(pageNrString, 10) : 1;
@@ -20,10 +53,67 @@ const mediaHandler = (req: any, res: any, ctx: any) => {
 };
 
 export const defaultHandlers = [
+  rest.post("/logout", (req, res, ctx) => {
+    return res(ctx.json(""));
+  }),
+  rest.post("/login", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        id: "testing",
+        role: "admin",
+        version: "ffffffff",
+        sfwSession: true,
+      })
+    );
+  }),
   rest.get("/login", (req, res, ctx) => {
     // Persist user's authentication in the session
     // sessionStorage.setItem("is-authenticated", "true");
     return res(ctx.status(500));
+  }),
+  rest.delete("/medium/:whatever", (req, res, ctx) => {
+    return res(ctx.json(""));
+  }),
+  rest.get("/medium/:id/thumbnail/picks/:n", (req, res, ctx) => {
+    const { n } = req.params;
+    return res(
+      ctx.json({
+        thumbs: [Array(n).fill("/9j/example")],
+      })
+    );
+  }),
+  rest.patch("/medium/:id/thumbnail/pick/:i/:n", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        contents: [
+          {
+            type: "text",
+            data: "New thumnbail",
+          },
+        ],
+        level: "info",
+      })
+    );
+  }),
+  rest.post("/medium", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        contents: [
+          {
+            type: "link",
+            data: { location: "/medium/55", text: "Upload success" },
+          },
+        ],
+        level: "info",
+      })
+    );
+  }),
+  rest.patch("/medium/:id/file", (req, res, ctx) => {
+    return res(ctx.json(defaultMedium(req.params.id)));
+  }),
+  rest.patch("/medium/:id/metadata", (req, res, ctx) => {
+    const patchedMedium = { ...defaultMedium(req.params.id), ...req.params };
+    return res(ctx.json(patchedMedium));
   }),
   rest.get("/media", mediaHandler),
   rest.get("/search", mediaHandler),
@@ -45,6 +135,9 @@ export const defaultHandlers = [
       ])
     );
   }),
+  rest.delete("/rules/:whatever", (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
   rest.patch("/sfw", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
@@ -58,7 +151,8 @@ export const defaultHandlers = [
       })
     );
   }),
-  rest.get("/tag/A", (req, res, ctx) => {
+  rest.get("/tag/:tag", (req, res, ctx) => {
+    const { tag } = req.params;
     return res(
       ctx.json({
         aliases: [],
@@ -66,12 +160,12 @@ export const defaultHandlers = [
         implied_by_this: [],
         implying_this: [],
         rating: "e",
-        tag: "A",
+        tag,
       })
     );
   }),
-  rest.patch("/tag/A", (req, res, ctx) => {
-    const { rating } = req.params;
+  rest.patch("/tag/:anything", (req, res, ctx) => {
+    const { rating, tag } = req.params;
     return res(
       ctx.json({
         aliases: [],
@@ -79,7 +173,7 @@ export const defaultHandlers = [
         implied_by_this: [],
         implying_this: [],
         rating: rating,
-        tag: "A",
+        tag: tag || "A",
       })
     );
   }),
@@ -170,5 +264,30 @@ export const defaultHandlers = [
         },
       })
     );
+  }),
+  rest.delete("/tag/:implying/implications/:implied", async (req, res, ctx) => {
+    return res(ctx.json(""));
+  }),
+  rest.patch("/tag/:implying/implications/:implied", async (req, res, ctx) => {
+    return res(ctx.json(""));
+  }),
+  rest.post("/tag/:t/aliases/:alias", async (req, res, ctx) => {
+    return res(ctx.json(""));
+  }),
+  rest.post("/tags/batch", async (req, res, ctx) => {
+    return res(
+      ctx.json({
+        contents: [
+          {
+            type: "text",
+            data: "Yep, that went well!",
+          },
+        ],
+        level: "info",
+      })
+    );
+  }),
+  rest.patch("/thumbnail/:id", async (req, res, ctx) => {
+    return res(ctx.json(""));
   }),
 ];

@@ -6,6 +6,7 @@ import { QuickFix } from "api/api";
 import { ImmediateUpdateDispatch } from "./detailPageInner";
 
 interface ViolationProps {
+  prefix: string;
   fixes: QuickFix[];
   onHasRun: () => void;
   text: string;
@@ -33,12 +34,13 @@ const Violation = (props: ViolationProps) => {
 
   const getFixButtons = (): JSX.Element[] => {
     return props.fixes.map((fix, idx) => {
+      const uniqueIdentifier = `medium-quick-fix-${props.prefix}-${idx}`;
       return (
-        <div
-          className="beevenue-missing-tag-column"
-          key={`violation-fix-${idx}`}
-        >
+        <div className="beevenue-missing-tag-column" key={uniqueIdentifier}>
           <button
+            aria-label={uniqueIdentifier}
+            id={uniqueIdentifier}
+            name={uniqueIdentifier}
             className="button beevenue-missing-tag-button"
             onClick={(_) => run(fix)}
           >

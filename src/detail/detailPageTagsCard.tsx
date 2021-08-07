@@ -86,7 +86,11 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
         value={tags.sort()}
         disabled={userIsAdmin ? undefined : true}
         className="tagsinput field is-grouped is-grouped-multiline input"
-        inputProps={{ className: "react-tagsinput-input", placeholder }}
+        inputProps={{
+          "aria-label": className,
+          className: "react-tagsinput-input",
+          placeholder,
+        }}
         tagProps={{ className: "tags has-addons" }}
         renderTag={renderTag}
         renderLayout={getRenderLayout(userIsAdmin)}

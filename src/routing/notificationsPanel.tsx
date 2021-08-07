@@ -38,7 +38,12 @@ const NotificationsPanel = () => {
     for (let [key, value] of Object.entries(notifications)) {
       const el = (
         <div className={classFor(value.level)} key={key}>
-          <button className="delete" key={key} onClick={(_) => dismiss(key)} />
+          <button
+            aria-label={`notifications-dismiss-button-${key}`}
+            className="delete"
+            key={key}
+            onClick={(_) => dismiss(key)}
+          />
           {value.timestamp.toLocaleTimeString()} {value.content}
         </div>
       );
@@ -52,6 +57,7 @@ const NotificationsPanel = () => {
       return (
         <a
           href="#"
+          aria-label="notifications-dismiss-all-link"
           className="beevenue-notifications-dismiss-all-link"
           onClick={(e) => dismissAll(e)}
         >

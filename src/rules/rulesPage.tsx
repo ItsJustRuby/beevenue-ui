@@ -65,9 +65,13 @@ const RulesPage = () => {
             <Link to={`/search/rule:${idx}`}>
               <FontAwesomeIcon icon={faSearch} />
             </Link>
-            <Link to="#" onClick={(e) => startShowingModal(e, idx)}>
+            <a
+              aria-label={`rules-delete-link-${idx}`}
+              href="#"
+              onClick={(e) => startShowingModal(e, idx)}
+            >
               <FontAwesomeIcon icon={faTrash} />
-            </Link>
+            </a>
           </span>
         </li>
       );

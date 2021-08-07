@@ -51,6 +51,7 @@ const WrappedButton = (props: WrappedButtonProps) => {
     <button
       className="button is-danger beevenue-medium-action-button"
       title="Delete"
+      aria-label="medium-delete-button"
       onClick={props.onClick}
     >
       <FontAwesomeIcon icon={faTrash} />

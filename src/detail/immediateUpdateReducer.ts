@@ -112,11 +112,16 @@ const useImmediateUpdates = (initialViewModel: ShowViewModel): any => {
   // This way, we get a very reactive UI which might "jump back" a bit if the
   // user makes invalid changes.
   useEffect(() => {
+    let isMounted = true;
+
     if (currentViewModel.isCanonical) {
-      return;
+      return () => {
+        isMounted = true;
+      };
     }
 
     Api.Medium.update(currentViewModel).then((res) => {
+      if (!isMounted) return;
       const apiViewModel = res.data;
 
       immediateUpdateDispatch({
@@ -124,6 +129,10 @@ const useImmediateUpdates = (initialViewModel: ShowViewModel): any => {
         payload: apiViewModel,
       });
     });
+
+    return () => {
+      isMounted = true;
+    };
   }, [currentViewModel]);
 
   return {

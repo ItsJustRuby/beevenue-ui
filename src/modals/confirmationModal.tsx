@@ -3,10 +3,18 @@ import React from "react";
 const renderModalFooter = (onCloseModal: () => void, onConfirm: () => void) => {
   return (
     <footer className="modal-card-foot">
-      <button className="button is-danger" onClick={(e) => onConfirm()}>
+      <button
+        aria-label="modal-delete-button"
+        className="button is-danger"
+        onClick={(e) => onConfirm()}
+      >
         Definitely delete forever
       </button>
-      <button className="button" onClick={(e) => onCloseModal()}>
+      <button
+        aria-label="modal-cancel-button"
+        className="button"
+        onClick={(e) => onCloseModal()}
+      >
         Cancel
       </button>
     </footer>
@@ -27,7 +35,7 @@ const renderModal = (onCloseModal: () => void, onConfirm: () => void) => {
           <p className="modal-card-title">Confirm</p>
           <button
             className="delete"
-            aria-label="close"
+            aria-label="modal-close-button"
             onClick={(e) => onCloseModal()}
           />
         </header>

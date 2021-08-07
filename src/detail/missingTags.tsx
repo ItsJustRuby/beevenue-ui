@@ -85,6 +85,7 @@ const MissingTags = (props: MissingTagsProps) => {
             />
           </span>
           <Violation
+            prefix={`${idx}`}
             text={violation.text}
             fixes={violation.fixes}
             onHasRun={() => onHasRun(idx)}

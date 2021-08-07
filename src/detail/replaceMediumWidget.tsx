@@ -67,6 +67,7 @@ const useContent = (id: number) => {
                 disabled={isUploading}
                 type="file"
                 name="medium"
+                aria-label="medium-replace-input"
                 onChange={(e) => onChange(setFile, e.target.files)}
               />
               <span className="file-cta">
@@ -79,6 +80,7 @@ const useContent = (id: number) => {
         <div className="field">
           <input
             type="submit"
+            aria-label="medium-replace-go-button"
             className="button"
             disabled={isUploading || file === null}
             value="Go"
