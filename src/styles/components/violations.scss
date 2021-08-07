@@ -1,0 +1,30 @@
+// TODO Rename to violations/fixes
+.beevenue-ViolationsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+}
+
+.beevenue-ViolationsContainer-Icon {
+  flex-grow: 0.2;
+  flex-shrink: 0.2;
+  flex-basis: 10%;
+}
+
+.beevenue-ViolationsContainer-Column {
+  // as a flexbox child
+  flex-basis: 18%;
+  flex-grow: 1;
+  flex-shrink: 0;
+
+  // as a flexbox parent (to center actual <button>s)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.beevenue-ViolationsContainer-Button {
+  flex-basis: 20%;
+  flex-grow: 0.5;
+}

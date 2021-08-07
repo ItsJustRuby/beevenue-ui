@@ -28,7 +28,7 @@ const DetailPageAdminCard = (props: DetailPageAdminCardProps) => {
       />
       <ReplaceMediumWidget id={viewModel.id} />
 
-      <div className="card beevenue-sidebar-card">
+      <div className="card beevenue-ShowPage-Card">
         <div className="card-content">
           <div className="content">
             <MediumDeleteButton id={viewModel.id} />

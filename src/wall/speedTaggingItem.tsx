@@ -23,10 +23,10 @@ const SpeedTaggingItem = (props: SpeedTaggingItemProps) => {
 
   const className = (() => {
     if (isSelected) {
-      return "beevenue-speed-tagger beevenue-speed-tagger-selected";
+      return "beevenue-u-SpeedTagger beevenue-u-SpeedTaggerSelected";
     }
 
-    return "beevenue-speed-tagger";
+    return "beevenue-u-SpeedTagger";
   })();
 
   return (

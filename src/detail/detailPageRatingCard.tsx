@@ -27,7 +27,7 @@ const ratingElementFor = (
   const rating = fullRating(r);
   const id = `currentRating${rating}`;
   return (
-    <div className="beevenue-rating" key={id}>
+    <div className="beevenue-Ratings-Rating" key={id}>
       <input
         className="is-checkradio"
         type="radio"
@@ -55,10 +55,10 @@ const DetailPageRatingCard = (props: DetailPageRatingCardProps) => {
   const ratings: Rating[] = ["s", "q", "e"];
 
   return (
-    <div className="card">
+    <div className="card beevenue-ShowPage-Card">
       <div className="card-content">
         <div className="content">
-          <div className="field beevenue-ratings">
+          <div className="field beevenue-Ratings">
             {ratings.map((r) => ratingElementFor(dispatch, props, r))}
           </div>
         </div>

@@ -65,16 +65,16 @@ const AppRouter = () => {
   }, [dispatch]);
 
   const statusText = hasError
-    ? `Could not connect to backend.`
+    ? "Could not connect to backend."
     : "Placeholder text";
 
   const statusClassName = hasError
-    ? "full-page-spinner-status-failed"
-    : "full-page-spinner-status-none";
+    ? "beevenue-FullPageSpinner-Status beevenue-FullPageSpinner-Status--failed"
+    : "beevenue-FullPageSpinner-Status beevenue-FullPageSpinner-Status--none";
 
   const fallback = (
-    <div data-testid="full-page-spinner" className="full-page-spinner">
-      <div className="full-page-spinner-inner">
+    <div data-testid="full-page-spinner" className="beevenue-FullPageSpinner">
+      <div className="beevenue-FullPageSpinner-Inner">
         <BeevenueSpinner />
         <div>
           <p className={statusClassName}>{statusText}</p>

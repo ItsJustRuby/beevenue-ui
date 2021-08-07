@@ -67,7 +67,7 @@ const BeevenuePagination = (props: PaginationProps) => {
 
   const pagination = (
     <nav
-      className="pagination beevenue-pagination"
+      className="pagination beevenue-Pagination"
       role="navigation"
       aria-label="pagination"
     >

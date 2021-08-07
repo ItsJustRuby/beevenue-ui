@@ -36,12 +36,15 @@ const Violation = (props: ViolationProps) => {
     return props.fixes.map((fix, idx) => {
       const uniqueIdentifier = `medium-quick-fix-${props.prefix}-${idx}`;
       return (
-        <div className="beevenue-missing-tag-column" key={uniqueIdentifier}>
+        <div
+          className="beevenue-ViolationsContainer-Column"
+          key={uniqueIdentifier}
+        >
           <button
             aria-label={uniqueIdentifier}
             id={uniqueIdentifier}
             name={uniqueIdentifier}
-            className="button beevenue-missing-tag-button"
+            className="button beevenue-ViolationsContainer-Button"
             onClick={(_) => run(fix)}
           >
             <span className="icon">{icon(fix)}</span>

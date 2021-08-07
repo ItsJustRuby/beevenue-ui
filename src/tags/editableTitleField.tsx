@@ -54,7 +54,10 @@ const EditableTitleField = (props: EditableTitleFieldProps) => {
   let content = null;
   if (isBeingEdited) {
     content = (
-      <form onSubmit={(e) => onSubmit(e)} className="beevenue-editable-title">
+      <form
+        onSubmit={(e) => onSubmit(e)}
+        className="beevenue-TagDetail-EditableTitle"
+      >
         <input
           className="input"
           aria-label="tag-title-input"

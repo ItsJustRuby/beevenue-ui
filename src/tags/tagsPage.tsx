@@ -84,7 +84,7 @@ const tagRatingControl = (prefix: string, t: SimpleTag): JSX.Element => {
   const ratingElement = (rating: string) => {
     const id = `${name}-rating-${rating}`;
     return (
-      <div className="beevenue-tag-rating" key={id}>
+      <div className="beevenue-TagRating" key={id}>
         <input
           className="is-checkradio"
           type="radio"
@@ -107,7 +107,10 @@ const renderTag = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
   const ratingCell = isAdmin ? tagRatingControl("large", t) : <p>{t.rating}</p>;
 
   return (
-    <tr key={t.tag} className={t.rating === "u" ? "is-error" : undefined}>
+    <tr
+      key={t.tag}
+      className={t.rating === "u" ? "beevenue-u-TagMissingRating" : undefined}
+    >
       <td>{tagLink("large", t, isAdmin)}</td>
       <td>{maybeRenderTooltip(t)}</td>
       <td>{ratingCell}</td>
@@ -118,7 +121,7 @@ const renderTag = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
 
 const renderTagMobile = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
   const classNames = ["card"];
-  if (t.rating === "u") classNames.push("beevenue-tag-missing-rating");
+  if (t.rating === "u") classNames.push("beevenue-u-TagMissingRating");
 
   return (
     <nav className="level" key={t.tag}>
@@ -140,7 +143,7 @@ const renderTagMobile = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
 
 const renderFilter = (filter: string, setFilter: (s: string) => void) => {
   return (
-    <div className="content beevenue-tags-filter">
+    <div className="content beevenue-TagsFilter">
       <input
         className="input"
         type="text"

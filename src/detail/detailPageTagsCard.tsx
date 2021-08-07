@@ -80,6 +80,12 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
     : "beevenue-medium-tags";
   const placeholder = isAbsentTags ? "Add absent tags" : "Add tags";
 
+  const tagProps = {
+    className: isAbsentTags
+      ? "beevenue-AbsentTag tags has-addons"
+      : "tags has-addons",
+  };
+
   return (
     <nav className={`level ${className}`}>
       <TagsInput
@@ -88,10 +94,10 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
         className="tagsinput field is-grouped is-grouped-multiline input"
         inputProps={{
           "aria-label": className,
-          className: "react-tagsinput-input",
+          className: "react-tagsinput-input beevenue-TagsInput-Input",
           placeholder,
         }}
-        tagProps={{ className: "tags has-addons" }}
+        tagProps={tagProps}
         renderTag={renderTag}
         renderLayout={getRenderLayout(userIsAdmin)}
         onlyUnique={true}

@@ -12,14 +12,10 @@ const TagStatisticsPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <nav className="level" key="similarity">
-        <TagSimilarityWidget />
-      </nav>
-      <nav className="level" key="implication">
-        <TagImplicationWidget />
-      </nav>
-    </div>
+    <>
+      <TagSimilarityWidget />
+      <TagImplicationWidget />
+    </>
   );
 };
 

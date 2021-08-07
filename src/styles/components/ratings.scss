@@ -1,19 +1,21 @@
-.beevenue-rating {
+/** @define Ratings */
+
+.beevenue-Ratings-Rating {
   line-height: 1.25em;
 }
 
-.beevenue-ratings {
+.beevenue-Ratings {
   display: flex;
 }
 
 @media screen and (max-width: 768px) {
-  .beevenue-ratings {
+  .beevenue-Ratings {
     flex-direction: column;
   }
 }
 
 @media screen and (min-width: 769px) {
-  .beevenue-ratings {
+  .beevenue-Ratings {
     flex-direction: row;
   }
 }

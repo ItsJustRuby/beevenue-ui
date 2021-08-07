@@ -44,7 +44,7 @@ const listHelper = (list: string[], callback: (s: string) => void) => {
           <li>
             <Link to={`/tag/${a}`}>{a}</Link>
             <a
-              className="beevenue-alias-delete delete is-small"
+              className="beevenue-TagDetail-AliasDelete delete is-small"
               aria-label={`tag-delete-implication-${a}`}
               onClick={(e) => callback(a)}
             />
@@ -125,7 +125,7 @@ const ImplicationsCard = (props: ImplicationsCardProps) => {
   );
 
   return (
-    <div className="card beevenue-sidebar-card">
+    <div className="card beevenue-Card">
       <header className="card-header">
         <p className="card-header-title">Implications</p>
       </header>

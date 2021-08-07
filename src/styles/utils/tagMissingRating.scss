@@ -1,0 +1,8 @@
+$tag-missing-rating-color: hsl(48, 100%, 67%);
+
+.table.is-striped tbody tr:nth-child(even).beevenue-u-TagMissingRating {
+  background-color: $tag-missing-rating-color;
+}
+.table.is-striped tbody tr:nth-child(odd).beevenue-u-TagMissingRating {
+  background-color: $tag-missing-rating-color;
+}

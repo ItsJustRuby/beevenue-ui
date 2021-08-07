@@ -1,9 +1,16 @@
-@import "./spinner.scss";
-@import "./ratings.scss";
-@import "./sidebar.scss";
-@import "./similar.scss";
-@import "./batchUpload.scss";
-@import "./masonry.scss";
-@import "./misc.scss";
-@import "./picks.scss";
-@import "./tables.scss";
+@import "./components/masonry";
+@import "./components/mediumContainer";
+@import "./components/notifications";
+@import "./components/pagination";
+@import "./components/spinner";
+@import "./components/ratings";
+@import "./components/sidebar";
+@import "./components/similarMedia";
+@import "./components/tagDetail";
+@import "./components/thumbnailPicks";
+@import "./components/violations";
+
+@import "./utils/tagMissingRating";
+
+@import "./components/misc";
+@import "./utils/misc";

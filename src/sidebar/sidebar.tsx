@@ -45,7 +45,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="beevenue-sidebar">
+    <div className="beevenue-Sidebar">
       <nav className="level beevenue-home">
         <div className="level-item">
           <h2 className="title">

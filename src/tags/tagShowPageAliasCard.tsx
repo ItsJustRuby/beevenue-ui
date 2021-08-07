@@ -51,7 +51,7 @@ const useAliases = (props: TagDetailPageAliasCardProps) => {
           <li key={a}>
             {a}
             <a
-              className="beevenue-alias-delete delete is-small"
+              className="beevenue-TagDetail-AliasDelete delete is-small"
               onClick={(e) =>
                 removeAlias(props.tagName, a, setAliases, props.onAliasRemoved)
               }
@@ -67,8 +67,8 @@ const useAliases = (props: TagDetailPageAliasCardProps) => {
 const TagDetailPageAliasCard = (props: TagDetailPageAliasCardProps) => {
   const { currentAliases, setAliases } = useAliases(props);
 
-  const aliasesCard = (
-    <div className="card beevenue-sidebar-card">
+  return (
+    <div className="card beevenue-Card">
       <header className="card-header">
         <p className="card-header-title">Aliases</p>
       </header>
@@ -84,12 +84,6 @@ const TagDetailPageAliasCard = (props: TagDetailPageAliasCardProps) => {
         </div>
       </div>
     </div>
-  );
-
-  return (
-    <nav className="level">
-      <div className="level-item">{aliasesCard}</div>
-    </nav>
   );
 };
 

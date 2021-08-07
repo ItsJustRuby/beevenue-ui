@@ -1,0 +1,22 @@
+/** @define Sidebar */
+
+.beevenue-Sidebar > .level {
+  margin-bottom: 1rem;
+}
+
+.beevenue-Sidebar > .level.beevenue-home {
+  margin-bottom: 1.5rem;
+}
+
+.beevenue-Sidebar .level-item {
+  flex-shrink: 1;
+}
+
+.beevenue-Sidebar p {
+  word-break: break-word;
+}
+
+.beevenue-Sidebar-Card {
+  flex-grow: 1;
+  flex-shrink: 1;
+}

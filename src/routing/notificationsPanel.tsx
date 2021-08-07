@@ -30,7 +30,7 @@ const NotificationsPanel = () => {
       info: "is-info",
     };
 
-    return "beevenue-notification notification " + dict[level];
+    return "beevenue-Notifications-Notification notification " + dict[level];
   };
 
   const getNotificationElements = () => {
@@ -58,7 +58,6 @@ const NotificationsPanel = () => {
         <a
           href="#"
           aria-label="notifications-dismiss-all-link"
-          className="beevenue-notifications-dismiss-all-link"
           onClick={(e) => dismissAll(e)}
         >
           Dismiss all
@@ -73,11 +72,9 @@ const NotificationsPanel = () => {
   const maybeDismissAll = getDismissAllLink(notificationElements.length);
 
   return (
-    <div className="beevenue-notifications-outer">
-      <div className="beevenue-notifications-dismiss-all">
-        {maybeDismissAll}
-      </div>
-      <div className="beevenue-notifications">{notificationElements}</div>
+    <div className="beevenue-Notifications">
+      <div className="beevenue-Notifications-DismissAll">{maybeDismissAll}</div>
+      <div className="beevenue-Notifications-Inner">{notificationElements}</div>
     </div>
   );
 };

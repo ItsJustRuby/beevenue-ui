@@ -87,18 +87,14 @@ const useForm = (
 
 const wrap = (inner: JSX.Element): JSX.Element => {
   return (
-    <nav className="level">
-      <div className="level-item">
-        <div className="card beevenue-sidebar-card">
-          <header className="card-header">
-            <p className="card-header-title">Upload rules file</p>
-          </header>
-          <div className="card-content">
-            <div className="content">{inner}</div>
-          </div>
-        </div>
+    <div className="card beevenue-Card">
+      <header className="card-header">
+        <p className="card-header-title">Upload rules file</p>
+      </header>
+      <div className="card-content">
+        <div className="content">{inner}</div>
       </div>
-    </nav>
+    </div>
   );
 };
 

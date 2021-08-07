@@ -86,7 +86,7 @@ const LoggedOutPanel = () => {
 
   const renderLogin = () => {
     return (
-      <div className="card beevenue-sidebar-card">
+      <div className="card beevenue-Sidebar-Card">
         <div className="card-header">
           <p className="card-header-title">Login</p>
         </div>

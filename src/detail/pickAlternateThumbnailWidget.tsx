@@ -64,7 +64,7 @@ const renderPicks = (picks: string[] | null, choosePick: (p: any) => void) => {
   }
 
   return (
-    <div className="beevenue-picks">
+    <div className="beevenue-ThumbnailPicks">
       {picks.map((p: any, i: number) => {
         return (
           <img
@@ -122,7 +122,7 @@ const PickAlternateThumbnailWidget = (
   }
 
   return (
-    <div className="card beevenue-sidebar-card">
+    <div className="card beevenue-ShowPage-Card">
       <header className="card-header">
         <p className="card-header-title">Pick alternate thumbnail</p>
       </header>

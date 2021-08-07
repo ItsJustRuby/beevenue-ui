@@ -40,15 +40,15 @@ const Medium = (props: MediumProps) => {
 
   useEffect(() => {
     if (fitHeight) {
-      setMediumClass((c) => `${c} beevenue-medium-fit`);
+      setMediumClass((c) => `${c} beevenue-MediumContainer-Medium--fit`);
     } else {
-      setMediumClass("beevenue-medium");
+      setMediumClass("beevenue-MediumContainer-Medium");
     }
   }, [fitHeight]);
 
   return (
     <>
-      <div className="beevenue-medium-container" onClick={onClick}>
+      <div className="beevenue-MediumContainer" onClick={onClick}>
         <div className={mediumClass} aria-label="medium">
           {innerComponent}
         </div>

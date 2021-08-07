@@ -159,7 +159,7 @@ const SpeedTaggerPanel = () => {
   };
 
   return (
-    <div className="card beevenue-sidebar-card">
+    <div className="card beevenue-Sidebar-Card">
       <div className="card-header">
         <p className="card-header-title">{getCardTitle()}</p>
       </div>

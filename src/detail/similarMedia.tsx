@@ -19,9 +19,9 @@ const SimilarMedia = (props: SimilarMediaProps) => {
   );
 
   return (
-    <div className="beevenue-similar-media">
+    <div className="beevenue-SimilarMedia">
       {props.media.map((s) => (
-        <div className="beevenue-similar-medium" key={s.id}>
+        <div className="beevenue-SimilarMedia-SimilarMedium" key={s.id}>
           <Link to={`/show/${s.id}`}>
             <img src={`${backendUrl}/thumbs/${s.hash}.${thumbnailSize}.jpg`} />
           </Link>

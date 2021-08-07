@@ -61,7 +61,7 @@ const useSubmitHandler = () => {
 };
 
 const getProgressBarClasses = (doneCount: number, files: FileList | null) => {
-  let result = "beevenue-batch-upload progress";
+  let result = "beevenue-BatchUpload progress";
   if (!files) {
     return result;
   }
@@ -135,7 +135,7 @@ const UploadPanel = () => {
   const { files, onChange, doneCount, onSubmit } = useSubmitHandler();
 
   return (
-    <div className="card beevenue-sidebar-card">
+    <div className="card beevenue-Sidebar-Card">
       <div className="card-header">
         <p className="card-header-title">Upload</p>
       </div>

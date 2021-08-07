@@ -61,7 +61,7 @@ const RulesPage = () => {
         <li key={`rule${idx}`}>
           <RuleText {...r} />
           &nbsp;
-          <span className="beevenue-icon-container">
+          <span className="beevenue-RulesPage-RuleIcons">
             <Link to={`/search/rule:${idx}`}>
               <FontAwesomeIcon icon={faSearch} />
             </Link>
@@ -87,25 +87,21 @@ const RulesPage = () => {
 
     return (
       <>
-        <nav className="level">
-          <div className="level-item beevenue-level-item-fullwidth">
-            <div className="card beevenue-sidebar-card">
-              <header className="card-header">
-                <p className="card-header-title">Rules</p>
-              </header>
-              <div className="card-content">
-                <div className="content">
-                  <IntrusiveConfirmationModal
-                    isVisible={isShowingModal}
-                    setIsVisible={setIsShowingModal}
-                    onConfirm={doConfirm}
-                  />
-                  <ul>{rules.map(getRuleElement)}</ul>
-                </div>
-              </div>
+        <div className="card beevenue-Card">
+          <header className="card-header">
+            <p className="card-header-title">Rules</p>
+          </header>
+          <div className="card-content">
+            <div className="content">
+              <IntrusiveConfirmationModal
+                isVisible={isShowingModal}
+                setIsVisible={setIsShowingModal}
+                onConfirm={doConfirm}
+              />
+              <ul>{rules.map(getRuleElement)}</ul>
             </div>
           </div>
-        </nav>
+        </div>
       </>
     );
   };

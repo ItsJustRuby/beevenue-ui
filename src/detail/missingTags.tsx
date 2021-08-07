@@ -75,8 +75,8 @@ const MissingTags = (props: MissingTagsProps) => {
     inner = violations.map((violation, idx) => {
       if (violation.hasRun) return null;
       return (
-        <div className="beevenue-missing-tag" key={`missing-${idx}`}>
-          <span className="beevenue-missing-tag-icon">
+        <div className="beevenue-ViolationsContainer" key={`missing-${idx}`}>
+          <span className="beevenue-ViolationsContainer-Icon">
             <FontAwesomeIcon
               title={violation.text}
               size="2x"
@@ -98,9 +98,9 @@ const MissingTags = (props: MissingTagsProps) => {
   }
 
   return (
-    <div className="card">
+    <div className="card beevenue-ShowPage-Card">
       <div className="card-content">
-        <div className="content beevenue-missing-tags">{inner}</div>
+        <div className="content">{inner}</div>
       </div>
     </div>
   );

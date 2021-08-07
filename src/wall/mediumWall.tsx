@@ -69,7 +69,7 @@ const MediumWall = (props: MediumWallProps) => {
       : undefined;
 
     return (
-      <div className="beevenue-masonry-item" key={r.id}>
+      <div className="beevenue-Masonry-Item" key={r.id}>
         <ProgressiveThumbnail src={maybeSrc} medium={r} />
       </div>
     );
@@ -87,9 +87,9 @@ const MediumWall = (props: MediumWallProps) => {
           1600: 2,
           500: 1,
         }}
-        className="beevenue-masonry"
+        className="beevenue-Masonry"
         data-testid="beevenue-masonry"
-        columnClassName="beevenue-masonry-column"
+        columnClassName="beevenue-Masonry-Column"
       >
         {imageLinks}
       </Masonry>

@@ -22,7 +22,7 @@ const TagImplicationWidget = () => {
     : "implications-rendering";
 
   return (
-    <div className="card beevenue-sidebar-card">
+    <div className="card beevenue-Card">
       <header className="card-header">
         <p className="card-header-title">Implications</p>
       </header>

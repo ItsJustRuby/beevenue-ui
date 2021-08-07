@@ -1,0 +1,17 @@
+/** @define Notifications */
+
+.beevenue-Notifications-Inner {
+  margin-bottom: 1rem;
+  max-height: 14rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.beevenue-Notifications-DismissAll {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.notification.beevenue-Notifications-Notification {
+  margin-bottom: 0.5rem;
+}

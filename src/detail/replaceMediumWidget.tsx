@@ -93,7 +93,7 @@ const useContent = (id: number) => {
 
 const ReplaceMediumWidget = (props: ReplaceMediumWidgetProps) => {
   return (
-    <div className="card beevenue-sidebar-card">
+    <div className="card beevenue-ShowPage-Card">
       <header className="card-header">
         <p className="card-header-title">Replace medium</p>
       </header>

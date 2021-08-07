@@ -113,7 +113,10 @@ const TagDetailPage = () => {
     <>
       <h3 className="title is-2">
         <EditableTitleField initialTitle={tagName} />
-        <Link to={`/search/${tagName}`} className="beevenue-h2-link">
+        <Link
+          to={`/search/${tagName}`}
+          className="beevenue-TagDetail-SearchLink"
+        >
           <FontAwesomeIcon icon={faSearch} />
         </Link>
       </h3>

@@ -1,0 +1,14 @@
+/** @define MediumContainer */
+
+.beevenue-MediumContainer {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.beevenue-MediumContainer-Medium--fit {
+  img,
+  video {
+    max-height: 90vh;
+  }
+}

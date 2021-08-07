@@ -61,8 +61,8 @@ const SearchPanel = () => {
   };
 
   return (
-    <div className="card beevenue-sidebar-card">
-      <div className="card-content beevenue-search-card-content">
+    <div className="card beevenue-Sidebar-Card">
+      <div className="card-content beevenue-SearchCard">
         <div className="content">
           <form onSubmit={(e) => onSubmit(e)}>
             <input

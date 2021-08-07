@@ -1,4 +1,6 @@
-.full-page-spinner {
+/** @define FullPageSpinner */
+
+.beevenue-FullPageSpinner {
   height: 100vh;
   display: flex;
   flex-direction: row;
@@ -6,7 +8,7 @@
   justify-content: center;
 }
 
-.full-page-spinner-inner {
+.beevenue-FullPageSpinner-Inner {
   // as flex child element
   flex-basis: 25%;
 
@@ -16,10 +18,10 @@
   align-items: center;
 }
 
-.full-page-spinner-status-failed {
+.beevenue-FullPageSpinner-Status--failed {
   visibility: visible;
 }
 
-.full-page-spinner-status-none {
+.beevenue-FullPageSpinner-Status--none {
   visibility: hidden;
 }
