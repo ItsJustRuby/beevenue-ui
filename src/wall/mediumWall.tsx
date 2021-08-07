@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import qs from "qs";
 import Masonry from "react-masonry-css";
 
@@ -27,6 +27,7 @@ const MediumWall = (props: MediumWallProps) => {
 
   const history = useHistory();
   const location = useLocation();
+  const scrollRef = useRef<HTMLSpanElement>(null);
 
   const onPaginationChangeWrapper = (change: PaginationChange) => {
     onMediaChange(change);
@@ -42,6 +43,7 @@ const MediumWall = (props: MediumWallProps) => {
   };
 
   const onPageSelect = (n: number) => {
+    scrollRef.current?.scrollIntoView(false);
     onPaginationChangeWrapper({ pageNumber: n });
   };
 
@@ -76,24 +78,27 @@ const MediumWall = (props: MediumWallProps) => {
   });
 
   return (
-    <BeevenuePagination
-      page={media}
-      onPageSelect={onPageSelect}
-      onPageSizeSelect={onPageSizeSelect}
-    >
-      <Masonry
-        breakpointCols={{
-          default: 4,
-          1600: 2,
-          500: 1,
-        }}
-        className="beevenue-Masonry"
-        data-testid="beevenue-masonry"
-        columnClassName="beevenue-Masonry-Column"
+    <>
+      <span ref={scrollRef} />
+      <BeevenuePagination
+        page={media}
+        onPageSelect={onPageSelect}
+        onPageSizeSelect={onPageSizeSelect}
       >
-        {imageLinks}
-      </Masonry>
-    </BeevenuePagination>
+        <Masonry
+          breakpointCols={{
+            default: 4,
+            1600: 2,
+            500: 1,
+          }}
+          className="beevenue-Masonry"
+          data-testid="beevenue-masonry"
+          columnClassName="beevenue-Masonry-Column"
+        >
+          {imageLinks}
+        </Masonry>
+      </BeevenuePagination>
+    </>
   );
 };
 
