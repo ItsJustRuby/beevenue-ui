@@ -7,9 +7,11 @@ test("shows details", async () => {
   await given.navigationTo.tagShowPage("A");
 });
 
-test("can add alias", async () => {
+test("can add and remove alias", async () => {
   given.loggedInAs({ role: "admin", sfwSession: false });
-  const { findByRole } = await given.navigationTo.tagShowPage("A");
+  const { findByLabelText, findByRole } = await given.navigationTo.tagShowPage(
+    "A"
+  );
 
   const aliasField = await findByRole("textbox", {
     name: /add-alias-input/i,
@@ -18,6 +20,11 @@ test("can add alias", async () => {
   userEvent.type(aliasField, "CoolerA{enter}");
   await waitFor(() => expect(aliasField).toHaveAttribute("disabled"));
   await waitFor(() => expect(aliasField).not.toHaveAttribute("disabled"));
+
+  const deleteLink = await findByLabelText(/tag-delete-alias-0/i);
+  expect(deleteLink).toBeVisible();
+  userEvent.click(deleteLink);
+  await waitFor(() => expect(deleteLink).not.toBeInTheDocument());
 });
 
 test("can add implications going either way", async () => {

@@ -274,6 +274,9 @@ export const defaultHandlers = [
   rest.post("/tag/:t/aliases/:alias", async (req, res, ctx) => {
     return res(ctx.json(""));
   }),
+  rest.delete("/tag/:t/aliases/:alias", async (req, res, ctx) => {
+    return res(ctx.json(""));
+  }),
   rest.post("/tags/batch", async (req, res, ctx) => {
     return res(
       ctx.json({

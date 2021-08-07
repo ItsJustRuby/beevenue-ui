@@ -13,18 +13,18 @@ interface TagDetailPageAliasCardProps {
 
 const removeAlias = (
   tagName: string,
-  a: string,
+  alias: string,
   setAliases: (f: (aliases: string[]) => string[]) => void,
   onAliasRemoved: (a: string) => void
 ): void => {
-  setAliases((x) => {
-    const indexOfAliasToRemove = x.indexOf(a);
-    x.splice(indexOfAliasToRemove);
-    return x.slice();
+  setAliases((currentAliases) => {
+    const newAliases = currentAliases.slice();
+    newAliases.splice(newAliases.indexOf(alias));
+    return newAliases;
   });
 
-  Api.Tags.removeAlias(tagName, a).then((_) => {
-    onAliasRemoved(a);
+  Api.Tags.removeAlias(tagName, alias).then((_) => {
+    onAliasRemoved(alias);
   });
 };
 
@@ -47,11 +47,12 @@ const useAliases = (props: TagDetailPageAliasCardProps) => {
   const currentAliases =
     aliases.length === 0 ? null : (
       <ul>
-        {aliases.sort().map((a) => (
+        {aliases.sort().map((a, idx) => (
           <li key={a}>
             {a}
             <a
               className="beevenue-TagDetail-AliasDelete delete is-small"
+              aria-label={`tag-delete-alias-${idx}`}
               onClick={(e) =>
                 removeAlias(props.tagName, a, setAliases, props.onAliasRemoved)
               }
