@@ -49,7 +49,7 @@ interface WrappedButtonProps {
 const WrappedButton = (props: WrappedButtonProps) => {
   return (
     <button
-      className="button is-danger beevenue-medium-action-button"
+      className="button is-danger beevenue-Button"
       title="Delete"
       aria-label="medium-delete-button"
       onClick={props.onClick}

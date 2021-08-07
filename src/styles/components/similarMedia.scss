@@ -1,12 +1,16 @@
 /** @define SimilarMedia */
 
 .beevenue-SimilarMedia {
+  margin-bottom: 1rem;
   max-height: 15rem;
   display: flex;
   justify-content: space-between;
-  overflow: hidden;
 }
 
 .beevenue-SimilarMedia-SimilarMedium {
   flex-basis: 19%;
+}
+
+.beevenue-SimilarMedia-SimilarMedium img {
+  max-height: 100%;
 }

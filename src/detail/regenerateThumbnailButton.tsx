@@ -26,7 +26,7 @@ const RegenerateThumbnailButton = (props: RegenerateThumbnailButtonProps) => {
   return (
     <button
       aria-label="medium-regenerate-thumbnail-button"
-      className="button is-primary beevenue-medium-action-button"
+      className="button is-primary beevenue-Button"
       title="Regenerate thumbnail"
       onClick={(e) => onClick()}
     >

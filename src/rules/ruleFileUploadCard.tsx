@@ -71,16 +71,18 @@ const useForm = (
     useAcceptButtonStyling(s);
   return (
     <form>
-      <button
-        aria-label="rule-upload-confirm-button"
-        className={acceptButtonClassName}
-        onClick={(e) => onAccept(s, setStatus, onUploaded, e)}
-        disabled={isAcceptButtonDisabled}
-      >
-        <span className="icon">
-          <FontAwesomeIcon icon={faCheck} />
-        </span>
-      </button>
+      <div className="field">
+        <button
+          aria-label="rule-upload-confirm-button"
+          className={acceptButtonClassName}
+          onClick={(e) => onAccept(s, setStatus, onUploaded, e)}
+          disabled={isAcceptButtonDisabled}
+        >
+          <span className="icon">
+            <FontAwesomeIcon icon={faCheck} />
+          </span>
+        </button>
+      </div>
     </form>
   );
 };
@@ -105,8 +107,10 @@ const RuleFileUploadCard = (props: RuleFileUploadCardProps) => {
   const getUploadBox = () => {
     return (
       <>
-        <RuleFileUploadCardButton onStatusChanged={setStatus} />
-        <div>{status?.description}</div>
+        <div className="field">
+          <RuleFileUploadCardButton onStatusChanged={setStatus} />
+        </div>
+        {status.description ? <div>{status.description}</div> : null}
         {form}
       </>
     );
