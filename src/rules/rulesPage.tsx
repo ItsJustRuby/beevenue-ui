@@ -9,11 +9,12 @@ import { RuleFileDownloadCard } from "./ruleFileDownloadCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
-import { Rule, RuleText } from "./ruleText";
+import { RuleText } from "./ruleText";
 import { useDispatch } from "react-redux";
 import { setTitle } from "redux/actions";
 import { Link } from "react-router-dom";
 import { IntrusiveConfirmationModal } from "modals/intrusiveConfirmationModal";
+import { SummaryRule } from "api/api";
 
 const RulesPage = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,14 @@ const RulesPage = () => {
     dispatch(setTitle("Rules"));
   }, [dispatch]);
 
-  const [rules, setRules] = useState<any[] | null>(null);
+  const [rules, setRules] = useState<SummaryRule[] | null>(null);
   const [isShowingModal, setIsShowingModal] = useState(false);
 
   useLoginRequired();
 
   const loadRules = (getIsMounted: () => boolean = () => true) => {
     if (!getIsMounted()) return;
-    Api.Rules.get().then((res) => {
+    Api.Rules.getSummary().then((res) => {
       if (!getIsMounted()) return;
       setRules(res.data);
     });
@@ -55,12 +56,13 @@ const RulesPage = () => {
     setIsShowingModal(true);
   };
 
-  const getRules = (rules: Rule[]) => {
-    const getRuleElement = (r: Rule, idx: number) => {
+  const getRules = (rules: SummaryRule[]) => {
+    const getRuleElement = (r: SummaryRule, idx: number) => {
+      console.log(r.definition);
       return (
         <li key={`rule${idx}`}>
-          <RuleText {...r} />
-          &nbsp;
+          <RuleText {...r.definition} />
+          <> ({(100 * r.adherence).toFixed(2)}% adherent)</>
           <span className="beevenue-RulesPage-RuleIcons">
             <Link to={`/search/rule:${idx}`}>
               <FontAwesomeIcon icon={faSearch} />

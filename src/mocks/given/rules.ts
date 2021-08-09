@@ -3,85 +3,100 @@ import { rest } from "msw";
 
 const complicated = [
   {
-    if: [
-      {
-        data: "e",
-        type: "hasRating",
-      },
-      {
-        data: ["a:.*"],
-        type: "hasAnyTagsLike",
-      },
-    ],
-    then: [
-      {
-        data: ["x:.*", "y:.*"],
-        type: "hasAnyTagsLike",
-      },
-      {
-        data: ["z:.*"],
-        type: "hasAnyTagsLike",
-      },
-    ],
+    definition: {
+      if: [
+        {
+          data: "e",
+          type: "hasRating",
+        },
+        {
+          data: ["a:.*"],
+          type: "hasAnyTagsLike",
+        },
+      ],
+      then: [
+        {
+          data: ["x:.*", "y:.*"],
+          type: "hasAnyTagsLike",
+        },
+        {
+          data: ["z:.*"],
+          type: "hasAnyTagsLike",
+        },
+      ],
+    },
+    adherence: 0.1,
   },
   {
-    if: {
-      data: "q",
-      type: "hasRating",
-    },
-    then: {
-      data: ["A", "B", "C"],
-      type: "hasAllAbsentOrPresent",
-    },
-  },
-  {
-    if: {
-      data: ["x:.*"],
-      type: "hasAnyTagsLike",
-    },
-    then: [
-      {
-        data: ["A", "B"],
-        type: "hasAnyTagsIn",
-      },
-      {
+    definition: {
+      if: {
         data: "q",
         type: "hasRating",
       },
-    ],
+      then: {
+        data: ["A", "B", "C"],
+        type: "hasAllAbsentOrPresent",
+      },
+    },
+    adherence: 0.2,
   },
   {
-    if: {
-      type: "all",
-    },
-    then: [
-      {
+    definition: {
+      if: {
         data: ["x:.*"],
         type: "hasAnyTagsLike",
       },
-      {
-        data: ["C", "D"],
-        type: "hasAnyTagsIn",
-      },
-      {
-        type: "hasRating",
-      },
-    ],
+      then: [
+        {
+          data: ["A", "B"],
+          type: "hasAnyTagsIn",
+        },
+        {
+          data: "q",
+          type: "hasRating",
+        },
+      ],
+    },
+    adherence: 0.3,
   },
   {
-    if: {
-      data: ["E", "F"],
-      type: "hasAnyTagsIn",
+    definition: {
+      if: {
+        type: "all",
+      },
+      then: [
+        {
+          data: ["x:.*"],
+          type: "hasAnyTagsLike",
+        },
+        {
+          data: ["C", "D"],
+          type: "hasAnyTagsIn",
+        },
+        {
+          type: "hasRating",
+        },
+      ],
     },
-    then: {
-      type: "fail",
+    adherence: 0.4,
+  },
+  {
+    definition: {
+      if: {
+        data: ["E", "F"],
+        type: "hasAnyTagsIn",
+      },
+      then: {
+        type: "fail",
+      },
     },
+    adherence: 0.5,
   },
 ];
 
 const areCurrently = (r: any) => {
   server.use(
-    rest.get("/rules", (req, res, ctx) => {
+    rest.get("/rules/summary", (req, res, ctx) => {
       return res(ctx.json(r));
     })
   );

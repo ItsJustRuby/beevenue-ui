@@ -117,20 +117,23 @@ export const defaultHandlers = [
   }),
   rest.get("/media", mediaHandler),
   rest.get("/search", mediaHandler),
-  rest.get("/rules", (req, res, ctx) => {
+  rest.get("/rules/summary", (req, res, ctx) => {
     return res(
       ctx.json([
         {
-          if: {
-            data: "s",
-            type: "hasRating",
-          },
-          then: [
-            {
-              data: ["A"],
-              type: "hasAnyTagsLike",
+          definition: {
+            if: {
+              data: "s",
+              type: "hasRating",
             },
-          ],
+            then: [
+              {
+                data: ["A"],
+                type: "hasAnyTagsLike",
+              },
+            ],
+          },
+          adherence: 0.5,
         },
       ])
     );

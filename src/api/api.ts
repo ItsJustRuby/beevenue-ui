@@ -14,12 +14,18 @@ import {
   SearchParameters,
   UpdateMediumParameters,
 } from "./parameterTypes";
+import { Rule } from "rules/ruleText";
 
 const axiosClient = axios.create({
   baseURL: `${backendUrl}/`,
   timeout: backendTimeoutMs,
   withCredentials: true,
 });
+
+export interface SummaryRule {
+  definition: Rule;
+  adherence: number;
+}
 
 export type QuickFixKind = "addTag" | "addAbsentTag";
 
@@ -206,8 +212,8 @@ const Api = {
   },
 
   Rules: {
-    get(): AxiosPromise<any> {
-      return _notification_wrapper(axiosClient.get(`rules`));
+    getSummary(): AxiosPromise<any> {
+      return _notification_wrapper(axiosClient.get(`rules/summary`));
     },
 
     delete(index: number): AxiosPromise<any> {
