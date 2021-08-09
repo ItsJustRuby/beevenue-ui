@@ -26,8 +26,14 @@
   margin-top: 0.5rem;
 }
 
+.beevenue-TagRatings {
+  display: flex;
+}
+
 .beevenue-TagRating {
-  display: inline;
+  flex-basis: 4rem;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .beevenue-AbsentTag .tag {
@@ -37,4 +43,16 @@
 
 .beevenue-RulesPage-RuleIcons a {
   padding: 0.3rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .beevenue-TagsTable {
+    width: 60%;
+  }
+}
+
+.beevenue-TagsTable td:first-child {
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

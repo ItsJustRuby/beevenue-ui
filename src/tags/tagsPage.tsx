@@ -100,7 +100,11 @@ const tagRatingControl = (prefix: string, t: SimpleTag): JSX.Element => {
     );
   };
 
-  return <>{["s", "q", "e"].map(ratingElement)}</>;
+  return (
+    <div className="beevenue-TagRatings">
+      {["s", "q", "e"].map(ratingElement)}
+    </div>
+  );
 };
 
 const renderTag = (t: SimpleTag, isAdmin: boolean): JSX.Element => {
@@ -159,7 +163,7 @@ const renderFilter = (filter: string, setFilter: (s: string) => void) => {
 const renderTable = (filteredTags: SimpleTag[], isAdmin: boolean) => {
   return (
     <div>
-      <table className="beevenue-table table is-hidden-mobile is-striped is-narrow is-hoverable">
+      <table className="beevenue-TagsTable table is-hidden-mobile is-striped is-narrow is-hoverable">
         <thead>
           <tr>
             <th>Tag</th>
