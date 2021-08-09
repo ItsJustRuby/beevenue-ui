@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import hash from "object-hash";
 import { Api } from "api";
 import { Rating } from "../types";
 import { BeevenueSpinner } from "../beevenueSpinner";
@@ -74,6 +75,7 @@ const MissingTags = (props: MissingTagsProps) => {
   } else {
     inner = violations.map((violation, idx) => {
       if (violation.hasRun) return null;
+
       return (
         <div className="beevenue-ViolationsContainer" key={`missing-${idx}`}>
           <span className="beevenue-ViolationsContainer-Icon">
@@ -85,7 +87,7 @@ const MissingTags = (props: MissingTagsProps) => {
             />
           </span>
           <Violation
-            prefix={`${idx}`}
+            prefix={hash(violation).substr(0, 8)}
             text={violation.text}
             fixes={violation.fixes}
             onHasRun={() => onHasRun(idx)}

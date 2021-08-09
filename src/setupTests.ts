@@ -11,6 +11,9 @@ mockBackendUrl.backendUrl = "/";
 
 jest.setTimeout(20_000);
 
+// https://github.com/jsdom/jsdom/issues/1695
+Element.prototype.scrollIntoView = jest.fn();
+
 configure({
   // Some pages are slow AF (Looking at you, TagsPage).
   // Set this as low as possible.

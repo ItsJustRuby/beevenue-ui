@@ -4,14 +4,16 @@ import given from "mocks/given";
 
 test("quick fix buttons disappear immediately", async () => {
   given.loggedInAs({ role: "admin", sfwSession: false });
-  const { findByRole } = await given.navigationTo.detailPage({
+  const { findAllByRole } = await given.navigationTo.detailPage({
     id: 9999,
     rating: "s",
   });
 
-  const quickFixButton = await findByRole("button", {
-    name: "medium-quick-fix-0-0",
-  });
+  const quickFixButton = (
+    await findAllByRole("button", {
+      name: /medium-quick-fix-/i,
+    })
+  )[0];
   expect(quickFixButton).toBeVisible();
   userEvent.click(quickFixButton);
 
