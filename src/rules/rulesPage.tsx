@@ -58,7 +58,6 @@ const RulesPage = () => {
 
   const getRules = (rules: SummaryRule[]) => {
     const getRuleElement = (r: SummaryRule, idx: number) => {
-      console.log(r.definition);
       return (
         <li key={`rule${idx}`}>
           <RuleText {...r.definition} />

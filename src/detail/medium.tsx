@@ -5,28 +5,10 @@ import { SimilarMedia } from "./similarMedia";
 import { mediaSource } from "./media";
 import { useState } from "react";
 import { useEffect } from "react";
+import { VideoMedium } from "./videoMedium";
 
 const Medium = (props: MediumProps) => {
   let kind = "";
-
-  let innerComponent;
-  switch (props.mimeType) {
-    case "video/mp4":
-    case "video/webm":
-    case "video/x-matroska":
-      kind = "video";
-      innerComponent = (
-        <video autoPlay={true} controls loop src={mediaSource(props)} />
-      );
-      break;
-    case "image/jpeg":
-    case "image/jpg":
-    case "image/gif":
-    case "image/png":
-      kind = "image";
-      innerComponent = <img src={mediaSource(props)} />;
-      break;
-  }
 
   const [fitHeight, setFitHeight] = useState<boolean>(true);
   const [mediumClass, setMediumClass] = useState<string>("beevenue-medium");
@@ -38,6 +20,23 @@ const Medium = (props: MediumProps) => {
     setFitHeight((f) => !f);
   };
 
+  let innerComponent;
+  switch (props.mimeType) {
+    case "video/mp4":
+    case "video/webm":
+    case "video/x-matroska":
+      kind = "video";
+      innerComponent = <VideoMedium {...props} />;
+      break;
+    case "image/jpeg":
+    case "image/jpg":
+    case "image/gif":
+    case "image/png":
+      kind = "image";
+      innerComponent = <img src={mediaSource(props)} onClick={onClick} />;
+      break;
+  }
+
   useEffect(() => {
     if (fitHeight) {
       setMediumClass((c) => `${c} beevenue-MediumContainer-Medium--fit`);
@@ -48,7 +47,7 @@ const Medium = (props: MediumProps) => {
 
   return (
     <>
-      <div className="beevenue-MediumContainer" onClick={onClick}>
+      <div className="beevenue-MediumContainer">
         <div className={mediumClass} aria-label="medium">
           {innerComponent}
         </div>

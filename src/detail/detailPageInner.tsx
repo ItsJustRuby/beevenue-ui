@@ -1,4 +1,7 @@
 import React from "react";
+import "bulma-tagsinput/dist/css/bulma-tagsinput.min.css";
+import "react-tagsinput/react-tagsinput.css";
+
 import { ShowViewModel } from "api/show";
 import { useBeevenueSelector } from "redux/selectors";
 import { Medium } from "./medium";

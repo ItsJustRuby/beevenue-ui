@@ -13,9 +13,11 @@ export const Unknown: IUnknown = {};
 export type BeevenueUser = string | number | IAnonymous | IUnknown;
 
 export type ClientThumbnailSize = "s" | "l" | "unknown";
+export type ClientOS = "iOS" | "other" | "unknown";
 
 export interface ClientStore {
   thumbnailSize: ClientThumbnailSize;
+  os: ClientOS;
 }
 
 export interface LoginStore {
