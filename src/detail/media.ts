@@ -22,7 +22,7 @@ export const MimeTypeToExtension = (id: MimeType): Extension => {
   return dict[id];
 };
 
-interface MediumContext {
+export interface MediumContext {
   mimeType: MimeType;
   hash: string;
 }

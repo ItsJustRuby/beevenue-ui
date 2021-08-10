@@ -1,17 +1,17 @@
-import React from "react";
-
 import { MediumProps } from "./mediumProps";
 import { SimilarMedia } from "./similarMedia";
 import { mediaSource } from "./media";
 import { useState } from "react";
 import { useEffect } from "react";
 import { VideoMedium } from "./videoMedium";
+import { useFullscreenOnGlobalHotkey } from "./hotkeys";
 
 const Medium = (props: MediumProps) => {
   let kind = "";
 
   const [fitHeight, setFitHeight] = useState<boolean>(true);
   const [mediumClass, setMediumClass] = useState<string>("beevenue-medium");
+  const fullscreenRef = useFullscreenOnGlobalHotkey<any>("f");
 
   const onClick = () => {
     if (kind !== "image") {
@@ -26,14 +26,18 @@ const Medium = (props: MediumProps) => {
     case "video/webm":
     case "video/x-matroska":
       kind = "video";
-      innerComponent = <VideoMedium {...props} />;
+      innerComponent = (
+        <VideoMedium hash={props.hash} mimeType={props.mimeType} />
+      );
       break;
     case "image/jpeg":
     case "image/jpg":
     case "image/gif":
     case "image/png":
       kind = "image";
-      innerComponent = <img src={mediaSource(props)} onClick={onClick} />;
+      innerComponent = (
+        <img ref={fullscreenRef} src={mediaSource(props)} onClick={onClick} />
+      );
       break;
   }
 

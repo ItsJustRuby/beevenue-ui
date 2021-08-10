@@ -5,11 +5,11 @@ import {
   VideoHTMLAttributes,
 } from "react";
 import { useFullscreenOnGlobalHotkey } from "./hotkeys";
-import { mediaSource } from "./media";
-import { MediumProps } from "./mediumProps";
+import { mediaSource, MediumContext } from "./media";
 
-const VideoMedium = (props: MediumProps) => {
+const VideoMedium = (props: MediumContext) => {
   const [hasFocus, setHasFocus] = useState(false);
+  const fullscreenRef = useFullscreenOnGlobalHotkey<any>("f");
 
   const onMouseEnter = useCallback(() => {
     setHasFocus(true);
@@ -18,8 +18,6 @@ const VideoMedium = (props: MediumProps) => {
   const onMouseLeave = useCallback(() => {
     setHasFocus(false);
   }, [setHasFocus]);
-
-  const selfRef = useFullscreenOnGlobalHotkey<HTMLVideoElement>("f");
 
   const extraProps: DetailedHTMLProps<
     VideoHTMLAttributes<HTMLVideoElement>,
@@ -31,7 +29,6 @@ const VideoMedium = (props: MediumProps) => {
 
   return (
     <video
-      ref={selfRef}
       autoPlay={true}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -40,6 +37,7 @@ const VideoMedium = (props: MediumProps) => {
       loop
       src={mediaSource(props)}
       {...extraProps}
+      ref={fullscreenRef}
     />
   );
 };
