@@ -5,12 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import { BeevenueSpinner } from "./beevenueSpinner";
 
 import { Api } from "api";
-import {
-  login,
-  loginAnonymous,
-  setClientOS,
-  setClientThumbnailSize,
-} from "./redux/actions";
+import { login, loginAnonymous, setClientThumbnailSize } from "./redux/actions";
 import { BeevenuePage } from "./routing/beevenuePage";
 
 import { IndexPage } from "./wall/indexPage";
@@ -66,13 +61,6 @@ const AppRouter = () => {
       dispatch(setClientThumbnailSize("s"));
     } else {
       dispatch(setClientThumbnailSize("l"));
-    }
-
-    const os = browser.getOSName();
-    if (os === "iOS") {
-      dispatch(setClientOS("iOS"));
-    } else {
-      dispatch(setClientOS("other"));
     }
   }, [dispatch]);
 

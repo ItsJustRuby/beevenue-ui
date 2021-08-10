@@ -5,7 +5,6 @@ import { SimilarMedia } from "./similarMedia";
 import { mediaSource } from "./media";
 import { useState } from "react";
 import { useEffect } from "react";
-import { VideoMedium } from "./videoMedium";
 
 const Medium = (props: MediumProps) => {
   let kind = "";
@@ -26,7 +25,16 @@ const Medium = (props: MediumProps) => {
     case "video/webm":
     case "video/x-matroska":
       kind = "video";
-      innerComponent = <VideoMedium {...props} />;
+      innerComponent = (
+        <video
+          className="beevenue-VideoMedium"
+          autoPlay={true}
+          controls
+          playsInline
+          loop
+          src={mediaSource(props)}
+        />
+      );
       break;
     case "image/jpeg":
     case "image/jpg":

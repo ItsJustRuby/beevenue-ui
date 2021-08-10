@@ -1,7 +1,7 @@
-import { SET_CLIENT_OS, SET_CLIENT_THUMBNAIL_SIZE } from "../actionTypes";
+import { SET_CLIENT_THUMBNAIL_SIZE } from "../actionTypes";
 import { ClientStore } from "../storeTypes";
 
-const initialState: ClientStore = { os: "unknown", thumbnailSize: "unknown" };
+const initialState: ClientStore = { thumbnailSize: "unknown" };
 
 const client = (
   state: ClientStore = initialState,
@@ -12,11 +12,6 @@ const client = (
       return {
         ...state,
         thumbnailSize: action.payload,
-      };
-    case SET_CLIENT_OS:
-      return {
-        ...state,
-        os: action.payload,
       };
     default: {
       return state;
