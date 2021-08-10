@@ -27,7 +27,6 @@ const Medium = (props: MediumProps) => {
       kind = "video";
       innerComponent = (
         <video
-          className="beevenue-VideoMedium"
           autoPlay={true}
           controls
           playsInline
