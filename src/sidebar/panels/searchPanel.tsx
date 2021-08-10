@@ -6,11 +6,14 @@ import qs from "qs";
 import { useBeevenueSelector } from "../../redux/selectors";
 import { useHistory, useLocation } from "react-router-dom";
 import { forceRedirect } from "../../redirect";
+import { useFocusOnGlobalHotkey } from "detail/hotkeys";
 
 const SearchPanel = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const focusRef = useFocusOnGlobalHotkey<HTMLInputElement>(".");
 
   const globalSearchTerms = useBeevenueSelector(
     (store) => store.search.searchQuery
@@ -56,7 +59,7 @@ const SearchPanel = () => {
     forceRedirect(history, newPath);
   };
 
-  const onChange = (newSearchTerms: string) => {
+  const onChange = (e: any, newSearchTerms: string) => {
     setSearchTerms(newSearchTerms);
   };
 
@@ -66,12 +69,13 @@ const SearchPanel = () => {
         <div className="content">
           <form onSubmit={(e) => onSubmit(e)}>
             <input
+              ref={focusRef}
               className="input"
               type="text"
               aria-label="search-input"
               placeholder="Search"
               value={searchTerms}
-              onChange={(e) => onChange(e.currentTarget.value)}
+              onChange={(e) => onChange(e, e.currentTarget.value)}
             />
           </form>
         </div>
