@@ -147,10 +147,20 @@ export const defaultHandlers = [
   rest.get("/stats", (req, res, ctx) => {
     return res(
       ctx.json({
-        e: 41,
-        q: 178,
-        s: 55,
-        u: 4,
+        tagHistogram: {
+          0: 2,
+          5: 200,
+        },
+        absentTagHistogram: {
+          0: 5,
+          1: 2,
+        },
+        byRating: {
+          e: 41,
+          q: 178,
+          s: 55,
+          u: 4,
+        },
       })
     );
   }),

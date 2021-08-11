@@ -56,3 +56,34 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.beevenue-TagHistogram {
+  width: 50%;
+
+  @media screen and (max-width: $tablet) {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 80%;
+  }
+
+  @media screen and (min-width: $fullhd) {
+    width: 50%;
+  }
+}
+
+.beevenue-TagHistogram text {
+  font-size: 125%;
+}
+
+.beevenue-TagHistogram-Bar {
+  fill: $primary;
+}
+
+.beevenue-TagHistogram-Tooltip {
+  position: absolute;
+  background-color: #ffffff;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
