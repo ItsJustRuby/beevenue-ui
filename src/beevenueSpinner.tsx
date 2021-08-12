@@ -4,7 +4,11 @@ import React from "react";
 import RingLoader from "react-spinners/RingLoader";
 
 const BeevenueSpinner = (props: any) => {
-  return <RingLoader {...props} />;
+  return (
+    <div className="beevenue-Spinner">
+      <RingLoader {...props} />
+    </div>
+  );
 };
 
 export { BeevenueSpinner };

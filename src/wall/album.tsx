@@ -32,7 +32,7 @@ const Album = (props: AlbumProps) => {
   );
   const isSessionSfw = useIsSessionSfw();
 
-  const [doShowSpinner, setDoShowSpinner] = useState(false);
+  const [doShowSpinner, setDoShowSpinner] = useState(true);
   const [paginationParams, setPaginationParams] =
     useState<PaginationParameters>(() => {
       const q = qs.parse(location.search, { ignoreQueryPrefix: true });
