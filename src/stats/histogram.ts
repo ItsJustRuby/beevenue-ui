@@ -40,7 +40,7 @@ const renderHistogram = (
 ) => {
   var margin = { top: 10, right: 10, bottom: 30, left: 50 },
     width = div.clientWidth - margin.left - margin.right,
-    height = div.clientWidth * 0.5 - margin.top - margin.bottom;
+    height = div.clientWidth * (9 / 14) - margin.top - margin.bottom;
 
   d3.select(div).html(null);
 
