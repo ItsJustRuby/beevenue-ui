@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 import {
   BeevenueNotificationVisitor,
@@ -18,7 +18,7 @@ export class BeevenueNotificationVisitorImpl
     this.elements.push(c.text);
   }
   visitLink(c: LinkContent): void {
-    this.elements.push(<a href={c.location}>{c.text}</a>);
+    this.elements.push(<Link to={c.location}>{c.text}</Link>);
   }
   asElement(): JSX.Element {
     const elementCount = this.elements.length;
