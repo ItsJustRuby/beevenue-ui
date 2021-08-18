@@ -94,14 +94,26 @@ const getStatusText = (files: FileList | null): JSX.Element | null => {
   );
 };
 
+const dragOverNop = (event: React.DragEvent<HTMLDivElement>) => {
+  event.preventDefault();
+};
+
 const renderBox = (
   doneCount: number,
   files: FileList | null,
   onChange: (f: FileList | null) => void
 ) => {
+  const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      onChange(event.dataTransfer.files);
+    }
+  };
+
   return (
     <>
-      <div className="file is-boxed">
+      <div className="file is-boxed" onDrop={onDrop} onDragOver={dragOverNop}>
         <label className="file-label">
           <input
             className="file-input"
