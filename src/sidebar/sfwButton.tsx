@@ -3,6 +3,8 @@ import { Api } from "api";
 import { useDispatch } from "react-redux";
 import { setSfwSession } from "../redux/actions";
 import { useBeevenueSelector } from "../redux/selectors";
+import { useEffect } from "react";
+import { BroadcastChannel } from "broadcast-channel";
 
 const SfwButton = () => {
   const dispatch = useDispatch();
@@ -10,12 +12,19 @@ const SfwButton = () => {
 
   const [sfw, setSfw] = useState(initialSfw);
 
+  useEffect(() => {
+    setSfw(initialSfw);
+  }, [initialSfw]);
+
   const onChange = () => {
     const newValue = !sfw;
     Api.Session.setSfw(newValue).then(
       (_) => {
         dispatch(setSfwSession(newValue));
         setSfw(newValue);
+        const bc = new BroadcastChannel("beevenue");
+        bc.postMessage("refresh");
+        return bc.close();
       },
       (_) => {}
     );
@@ -29,7 +38,7 @@ const SfwButton = () => {
         name="sfw-switch"
         aria-label="sfw-switch"
         className="switch"
-        defaultChecked={initialSfw}
+        checked={sfw}
         onChange={(_) => onChange()}
       />
       <label htmlFor="sfw-switch">SFW</label>

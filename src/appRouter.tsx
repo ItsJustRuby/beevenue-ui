@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import Bowser from "bowser";
 import { Route, Switch } from "react-router-dom";
@@ -11,6 +11,8 @@ import { BeevenuePage } from "./routing/beevenuePage";
 import { IndexPage } from "./wall/indexPage";
 
 import SearchRedirectPage from "routing/searchRedirectPage";
+import { BroadcastChannel } from "broadcast-channel";
+
 const SearchResultsPage = React.lazy(() => import("./wall/searchResultsPage"));
 
 const TagStatisticsPage = React.lazy(() => import("./tags/tagStatisticsPage"));
@@ -29,30 +31,46 @@ const AppRouter = () => {
   const [hasUser, setHasUser] = useState(false);
   const dispatch = useDispatch();
 
+  const doLogin = useCallback(
+    (isMounted: boolean) => {
+      Api.Session.amILoggedIn()
+        .then((res) => {
+          if (!isMounted) return;
+          if (res.data) {
+            dispatch(login(res.data));
+          } else {
+            dispatch(loginAnonymous());
+          }
+          setHasUser(true);
+        })
+        .catch((err) => {
+          if (!isMounted) return;
+          setHasError(true);
+        });
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    const bc = new BroadcastChannel("beevenue");
+    bc.onmessage = (e: string) => {
+      if (e === "refresh") doLogin(true);
+    };
+
+    return () => {
+      bc.close();
+    };
+  }, [doLogin]);
+
   useEffect(() => {
     // Only handle API response if this component is still mounted
     // (this might happen in production, but especially unbreaks tests).
     let isMounted = true;
-
-    Api.Session.amILoggedIn()
-      .then((res) => {
-        if (!isMounted) return;
-        if (res.data) {
-          dispatch(login(res.data));
-        } else {
-          dispatch(loginAnonymous());
-        }
-        setHasUser(true);
-      })
-      .catch((err) => {
-        if (!isMounted) return;
-        setHasError(true);
-      });
-
+    doLogin(isMounted);
     return () => {
       isMounted = false;
     };
-  }, [dispatch, setHasError]);
+  }, [dispatch, doLogin, setHasError]);
 
   useEffect(() => {
     const browser = Bowser.getParser(window.navigator.userAgent);
