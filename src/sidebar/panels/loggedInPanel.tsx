@@ -52,9 +52,11 @@ const LoggedInPanel = () => {
         <div className="card-content">
           <div className="content">
             <SfwButton />
-            <div>Server version: {serverVersion}</div>
-            <div>UI version: {commitId}</div>
-            <div>
+            <div className="field">
+              <div>Server version: {serverVersion}</div>
+              <div>UI version: {commitId}</div>
+            </div>
+            <div className="field">
               <form onSubmit={(e) => submitLogout(e)}>
                 <div className="field">
                   <button className="button">Logout</button>

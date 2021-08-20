@@ -5,6 +5,7 @@ import "react-tagsinput/react-tagsinput.css";
 import { ShowViewModel } from "api/show";
 import { useBeevenueSelector } from "redux/selectors";
 import { Medium } from "./medium";
+import { DetailPageOtpLinks } from "./detailPageOtpLinks";
 import { DetailPageTagsCard } from "./detailPageTagsCard";
 import { DetailPageRatingCard } from "./detailPageRatingCard";
 import { DetailPageAdminCard } from "./detailPageAdminCard";
@@ -64,6 +65,10 @@ const DetailPageInner = (props: DetailPageInnerProps) => {
           }}
         />
         <DetailPageRatingCard rating={rating} userIsAdmin={userIsAdmin} />
+        <DetailPageOtpLinks
+          mimeType={currentViewModel.mimeType}
+          id={currentViewModel.id}
+        />
         <DetailPageAdminCard
           {...{ viewModel: currentViewModel, userIsAdmin }}
         />

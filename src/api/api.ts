@@ -95,6 +95,9 @@ const Api = {
         })
       );
     },
+    requestOtp(mediumId: number): AxiosPromise<string> {
+      return axiosClient.post(`medium/${mediumId}/otp`);
+    },
     search(searchParams: SearchParameters): AxiosPromise<any> {
       return _notification_wrapper(
         axiosClient.get("search", { params: searchParams })
