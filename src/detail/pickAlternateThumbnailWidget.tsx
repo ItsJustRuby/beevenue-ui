@@ -2,46 +2,25 @@ import React, { useState } from "react";
 import { Api } from "api";
 import { BeevenueSpinner } from "../beevenueSpinner";
 
-const usePickCount = () => {
-  const [pickCount, setPickCount] = useState(5);
-
-  const pickCountSelect = (
-    <div className="select">
-      <select
-        aria-label="medium-alternate-thumbnail-pick-count-select"
-        defaultValue="5"
-        value={pickCount}
-        onChange={(e) => setPickCount(Number(e.currentTarget.value))}
-      >
-        <option>3</option>
-        <option>5</option>
-        <option>10</option>
-      </select>
-    </div>
-  );
-
-  return { pickCountSelect, pickCount };
-};
-
-const usePicks = (id: number, pickCount: number) => {
+const usePicks = (id: number, temporaryThumbnails: string[] | null) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [picks, setPicks] = useState<string[] | null>(null);
+  const [isGeneratingThumbnails, setIsGeneratingThumbnails] = useState(false);
+  const [picks, setPicks] = useState<string[]>(temporaryThumbnails || []);
 
   const onClick = () => {
     setIsLoading(true);
-    Api.Medium.generateThumbnailPicks(id, pickCount).then((success) => {
+    Api.Medium.generateThumbnailPicks(id).then((success) => {
       setIsLoading(false);
-      setPicks(success.data.thumbs);
+
+      setIsGeneratingThumbnails(true);
     });
   };
 
   const choosePick = (i: number) => {
-    if (!picks) return;
-
     setIsLoading(true);
-    Api.Medium.selectThumbnailPick(id, i, pickCount).then((success) => {
+    Api.Medium.selectThumbnailPick(id, i).then((success) => {
       setIsLoading(false);
-      setPicks(null);
+      setPicks([]);
     });
   };
 
@@ -51,15 +30,24 @@ const usePicks = (id: number, pickCount: number) => {
       className="button is-primary"
       onClick={(e) => onClick()}
     >
-      Go
+      Generate new thumbnails
     </button>
   );
 
-  return { goButton, picks, choosePick, isLoading };
+  const widgetContent =
+    isGeneratingThumbnails || temporaryThumbnails === null ? (
+      <p>
+        New thumbnails are being generated! Refresh this page in a few minutes.
+      </p>
+    ) : (
+      goButton
+    );
+
+  return { widgetContent, picks, choosePick, isLoading };
 };
 
-const renderPicks = (picks: string[] | null, choosePick: (p: any) => void) => {
-  if (!picks) {
+const renderPicks = (picks: string[], choosePick: (p: any) => void) => {
+  if (picks.length === 0) {
     return null;
   }
 
@@ -68,6 +56,7 @@ const renderPicks = (picks: string[] | null, choosePick: (p: any) => void) => {
       {picks.map((p: any, i: number) => {
         return (
           <img
+            className="beevenue-ThumbnailPicks-Item"
             key={`pick${i}`}
             aria-label={`medium-alternate-thumbnail-pick-${i}`}
             onClick={(_) => choosePick(i)}
@@ -81,9 +70,8 @@ const renderPicks = (picks: string[] | null, choosePick: (p: any) => void) => {
 
 const renderContent = (
   isLoading: boolean,
-  pickCountSelect: JSX.Element,
-  goButton: JSX.Element,
-  picks: string[] | null,
+  widgetContent: JSX.Element,
+  picks: string[],
   choosePick: (p: any) => void
 ) => {
   if (isLoading) {
@@ -92,12 +80,7 @@ const renderContent = (
 
   return (
     <>
-      <div>
-        Generate&nbsp;
-        {pickCountSelect}
-        &nbsp;new thumbnails:&nbsp;
-        {goButton}
-      </div>
+      <div>{picks.length === 0 ? widgetContent : null}</div>
       <div>{renderPicks(picks, choosePick)}</div>
     </>
   );
@@ -106,15 +89,15 @@ const renderContent = (
 interface PickAlternateThumbnailWidgetProps {
   id: number;
   mimeType: string;
+  temporaryThumbnails: string[] | null;
 }
 
 const PickAlternateThumbnailWidget = (
   props: PickAlternateThumbnailWidgetProps
 ) => {
-  const { pickCount, pickCountSelect } = usePickCount();
-  const { goButton, picks, choosePick, isLoading } = usePicks(
+  const { widgetContent, picks, choosePick, isLoading } = usePicks(
     props.id,
-    pickCount
+    props.temporaryThumbnails
   );
 
   if (!/^video/.test(props.mimeType)) {
@@ -128,13 +111,7 @@ const PickAlternateThumbnailWidget = (
       </header>
       <div className="card-content">
         <div className="content">
-          {renderContent(
-            isLoading,
-            pickCountSelect,
-            goButton,
-            picks,
-            choosePick
-          )}
+          {renderContent(isLoading, widgetContent, picks, choosePick)}
         </div>
       </div>
     </div>

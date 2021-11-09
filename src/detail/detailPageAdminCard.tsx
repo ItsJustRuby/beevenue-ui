@@ -25,6 +25,7 @@ const DetailPageAdminCard = (props: DetailPageAdminCardProps) => {
       <PickAlternateThumbnailWidget
         id={viewModel.id}
         mimeType={viewModel.mimeType}
+        temporaryThumbnails={viewModel.temporaryThumbnails}
       />
       <ReplaceMediumWidget id={viewModel.id} />
 

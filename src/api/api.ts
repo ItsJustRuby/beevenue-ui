@@ -71,12 +71,8 @@ const Api = {
     delete(id: number): AxiosPromise<any> {
       return _notification_wrapper(axiosClient.delete(`medium/${id}`));
     },
-    generateThumbnailPicks(mediumId: number, n: number): AxiosPromise<any> {
-      return axiosClient.get(`medium/${mediumId}/thumbnail/picks/${n}`, {
-        // This could potentially take a really long time. Turn off timeouts
-        // completely for this request.
-        timeout: 0,
-      });
+    generateThumbnailPicks(mediumId: number): AxiosPromise<any> {
+      return axiosClient.get(`medium/${mediumId}/thumbnail/picks`);
     },
     load(params: PaginationParameters): AxiosPromise<any> {
       return _notification_wrapper(axiosClient.get(`media`, { params }));
@@ -103,17 +99,9 @@ const Api = {
         axiosClient.get("search", { params: searchParams })
       );
     },
-    selectThumbnailPick(
-      mediumId: number,
-      i: number,
-      n: number
-    ): AxiosPromise<any> {
+    selectThumbnailPick(mediumId: number, i: number): AxiosPromise<any> {
       return _notification_wrapper(
-        axiosClient.patch(`medium/${mediumId}/thumbnail/pick/${i}/${n}`, {
-          // This could potentially take a really long time. Turn off timeouts
-          // completely for this request.
-          timeout: 0,
-        })
+        axiosClient.patch(`medium/${mediumId}/thumbnail/pick/${i}`)
       );
     },
     show(id: number): AxiosPromise<any> {

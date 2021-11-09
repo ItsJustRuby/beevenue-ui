@@ -12,4 +12,5 @@ export interface PartialShowViewModel {
 
 export interface ShowViewModel extends PartialShowViewModel {
   similar: PartialShowViewModel[];
+  temporaryThumbnails: string[] | null;
 }

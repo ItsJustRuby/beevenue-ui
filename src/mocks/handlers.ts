@@ -74,15 +74,14 @@ export const defaultHandlers = [
   rest.delete("/medium/:whatever", (req, res, ctx) => {
     return res(ctx.json(""));
   }),
-  rest.get("/medium/:id/thumbnail/picks/:n", (req, res, ctx) => {
-    const { n } = req.params;
+  rest.get("/medium/:id/thumbnail/picks", (req, res, ctx) => {
     return res(
       ctx.json({
-        thumbs: [Array(n).fill("/9j/example")],
+        thumbs: [Array(30).fill("/9j/example")],
       })
     );
   }),
-  rest.patch("/medium/:id/thumbnail/pick/:i/:n", (req, res, ctx) => {
+  rest.patch("/medium/:id/thumbnail/pick/:i", (req, res, ctx) => {
     return res(
       ctx.json({
         contents: [

@@ -3,4 +3,9 @@
 .beevenue-ThumbnailPicks {
   display: flex;
   justify-content: space-between;
+  overflow-x: scroll;
+}
+
+.beevenue-ThumbnailPicks-Item + .beevenue-ThumbnailPicks-Item {
+  margin-left: 1rem;
 }
