@@ -221,22 +221,32 @@ const Api = {
   },
 
   Session: {
+    amILoggedIn(): AxiosPromise<any> {
+      return axiosClient.get("login");
+    },
+
+    connectGoogleAccount(googleJWT: string): AxiosPromise<any> {
+      return _notification_wrapper(
+        axiosClient.post("connectGoogleAccount", { googleJWT })
+      );
+    },
+
     login(data: LoginParameters): AxiosPromise<any> {
       return axiosClient.post("login", data);
     },
 
-    setSfw(sfw: boolean): AxiosPromise<any> {
-      return _notification_wrapper(
-        axiosClient.patch("sfw", { sfwSession: sfw })
-      );
+    loginWithGoogle(googleJWT: string): AxiosPromise<any> {
+      return axiosClient.post("loginWithGoogle", { googleJWT });
     },
 
     logout(): AxiosPromise<any> {
       return _notification_wrapper(axiosClient.post("logout"));
     },
 
-    amILoggedIn(): AxiosPromise<any> {
-      return axiosClient.get("login");
+    setSfw(sfw: boolean): AxiosPromise<any> {
+      return _notification_wrapper(
+        axiosClient.patch("sfw", { sfwSession: sfw })
+      );
     },
   },
 

@@ -24,6 +24,8 @@ const DetailPage = React.lazy(() => import("./detail/detailPage"));
 const RulesPage = React.lazy(() => import("./rules/rulesPage"));
 const StatsPage = React.lazy(() => import("./stats/statsPage"));
 
+const ProfilePage = React.lazy(() => import("./profile/profilePage"));
+
 const WildcardPage = React.lazy(() => import("./routing/wildcardPage"));
 
 const AppRouter = () => {
@@ -115,6 +117,7 @@ const AppRouter = () => {
           <Route path="/show/:id" component={DetailPage} />
           <Route path="/tags" component={TagsPage} />
           <Route path="/tagStats" component={TagStatisticsPage} />
+          <Route path="/profile" component={ProfilePage} />
           <Route path="/stats" component={StatsPage} />
           <Route path="/tag/:name" component={TagDetailPage} />
           <Route path="/rules" component={RulesPage} />

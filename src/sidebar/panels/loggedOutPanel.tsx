@@ -4,19 +4,21 @@ import { useDispatch } from "react-redux";
 import { Api } from "api";
 import { login } from "../../redux/actions";
 import { BeevenueSpinner } from "../../beevenueSpinner";
+import { GoogleLoginButton } from "./googleLoginButton";
+import { AxiosPromise } from "axios";
 
 const useLoginSubmission = () => {
   const [loginInProgress, setLoginInProgress] = useState(false);
   const dispatch = useDispatch();
-  const onSubmit = (
-    event: FormEvent,
+
+  const loginHelper = (
+    apiCall: AxiosPromise<any>,
     isMounted: boolean,
-    username: string,
-    password: string
+    event?: FormEvent
   ) => {
     setLoginInProgress(true);
 
-    Api.Session.login({ username, password })
+    apiCall
       .then((res) => {
         if (res.status === 200) {
           // The session cookie is set now.
@@ -28,9 +30,23 @@ const useLoginSubmission = () => {
         setLoginInProgress(false);
       });
 
-    event.preventDefault();
+    event?.preventDefault();
   };
-  return { onSubmit, loginInProgress };
+
+  const onFormLogin = (
+    event: FormEvent,
+    isMounted: boolean,
+    username: string,
+    password: string
+  ) => {
+    loginHelper(Api.Session.login({ username, password }), isMounted, event);
+  };
+
+  const onGoogleLogin = (isMounted: boolean, jwt: string) => {
+    loginHelper(Api.Session.loginWithGoogle(jwt), isMounted);
+  };
+
+  return { onFormLogin, onGoogleLogin, loginInProgress };
 };
 
 const getUsernameField = (setUsername: (p: string) => void) => {
@@ -64,12 +80,12 @@ const getPasswordField = (setPassword: (p: string) => void) => {
   );
 };
 
-const useForm = (onSubmit: any, isMounted: boolean) => {
+const useForm = (onFormLogin: any, isMounted: boolean) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <form onSubmit={(e) => onSubmit(e, isMounted, username, password)}>
+    <form onSubmit={(e) => onFormLogin(e, isMounted, username, password)}>
       {getUsernameField(setUsername)}
       {getPasswordField(setPassword)}
       <div className="field">
@@ -81,8 +97,8 @@ const useForm = (onSubmit: any, isMounted: boolean) => {
 
 const LoggedOutPanel = () => {
   const isMounted = useRef(true);
-  const { onSubmit, loginInProgress } = useLoginSubmission();
-  const form = useForm(onSubmit, isMounted.current);
+  const { onFormLogin, onGoogleLogin, loginInProgress } = useLoginSubmission();
+  const form = useForm(onFormLogin, isMounted.current);
 
   const renderLogin = () => {
     return (
@@ -92,6 +108,9 @@ const LoggedOutPanel = () => {
         </div>
         <div className="card-content">
           <div className="content">{form}</div>
+          <GoogleLoginButton
+            onSuccess={(jwt) => onGoogleLogin(isMounted.current, jwt)}
+          />
         </div>
       </div>
     );

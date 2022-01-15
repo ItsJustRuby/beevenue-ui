@@ -11,6 +11,7 @@ const LinksPanel = (props: LinksPanelProps) => {
     let items = [
       <Link to="/tags">Tags</Link>,
       <Link to="/tagStats">Tag statistics</Link>,
+      <Link to="/profile">Profile</Link>,
     ];
 
     if (props.isAdmin) {
