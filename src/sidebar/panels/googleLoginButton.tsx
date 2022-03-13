@@ -5,6 +5,7 @@ import GoogleLogin, {
 import Config from "../../config.json";
 
 interface GoogleLoginButtonProps {
+  doAutoLogin: boolean;
   onSuccess: (jwt: string) => void;
 }
 
@@ -18,7 +19,14 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
     }
   };
 
-  return <GoogleLogin clientId={Config.googleClientId} onSuccess={onSuccess} />;
+  return (
+    <GoogleLogin
+      clientId={Config.googleClientId}
+      isSignedIn={props.doAutoLogin}
+      uxMode="redirect"
+      onSuccess={onSuccess}
+    />
+  );
 };
 
 export { GoogleLoginButton };

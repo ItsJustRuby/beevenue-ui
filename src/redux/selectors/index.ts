@@ -11,3 +11,6 @@ export const useTitle = () => useBeevenueSelector((store) => store.title);
 
 export const useIsSessionSfw = () =>
   useBeevenueSelector((store) => store.login.sfwSession);
+
+export const useDoAutoLogin = () =>
+  useBeevenueSelector((store) => store.login.doAutoLogin);
