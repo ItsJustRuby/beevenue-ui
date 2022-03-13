@@ -2,6 +2,7 @@ import {
   LOGIN,
   LOGIN_ANONYMOUS,
   LOGOUT,
+  SET_DO_AUTO_LOGIN,
   ADD_NOTIFICATION,
   DISMISS_NOTIFICATION,
   DISMISS_ALL_NOTIFICATIONS,
@@ -51,6 +52,11 @@ export const loginAnonymous = () => {
 export const logout = () => ({
   type: LOGOUT,
   payload: {},
+});
+
+export const setDoAutoLogin = (doAutoLogin: boolean) => ({
+  type: SET_DO_AUTO_LOGIN,
+  payload: doAutoLogin,
 });
 
 export const setSearchQuery = (query: string) => ({

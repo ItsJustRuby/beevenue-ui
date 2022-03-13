@@ -3,10 +3,12 @@ import {
   LOGOUT,
   LOGIN_ANONYMOUS,
   SET_SFW_SESSION,
+  SET_DO_AUTO_LOGIN,
 } from "../actionTypes";
 import { LoginStore, Unknown, Anonymous } from "../storeTypes";
 
 const initialState: LoginStore = {
+  doAutoLogin: true,
   loggedInUser: Unknown,
   loggedInRole: null,
   sfwSession: true,
@@ -37,6 +39,7 @@ const doLogout = (state: LoginStore) => {
     ...state,
     loggedInUser: Anonymous,
     loggedInRole: null,
+    doAutoLogin: false,
   };
 };
 
@@ -52,6 +55,12 @@ const login = (state: LoginStore = initialState, action: any): LoginStore => {
       return {
         ...state,
         sfwSession: action.payload,
+      };
+    }
+    case SET_DO_AUTO_LOGIN: {
+      return {
+        ...state,
+        doAutoLogin: action.payload,
       };
     }
     default: {

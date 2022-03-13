@@ -19,6 +19,7 @@ export interface ClientStore {
 }
 
 export interface LoginStore {
+  doAutoLogin: boolean;
   loggedInUser: BeevenueUser;
   loggedInRole: string | null;
   sfwSession: boolean;

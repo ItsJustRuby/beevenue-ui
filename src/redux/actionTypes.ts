@@ -1,6 +1,7 @@
 export const LOGIN = "LOGIN";
 export const LOGIN_ANONYMOUS = "LOGIN_ANONYMOUS";
 export const LOGOUT = "LOGOUT";
+export const SET_DO_AUTO_LOGIN = "SET_DO_AUTO_LOGIN";
 export const SET_SFW_SESSION = "SET_SFW_SESSION";
 
 export const NEW_SEARCH_QUERY = "NEW_SEARCH_QUERY";
