@@ -23,7 +23,6 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
     <GoogleLogin
       clientId={Config.googleClientId}
       isSignedIn={props.doAutoLogin}
-      uxMode="redirect"
       onSuccess={onSuccess}
     />
   );
