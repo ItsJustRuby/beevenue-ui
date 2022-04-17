@@ -1,4 +1,4 @@
-import { backendUrl } from "../config.json";
+import CONFIG from "../config";
 import { MimeType } from "./media";
 
 interface DetailPageOtpButtonsProps {
@@ -19,9 +19,9 @@ const DetailPageOtpLinks = (props: DetailPageOtpButtonsProps) => {
   }
 
   const url = (target: string) => {
-    return `${backendUrl}/medium/${props.id}/otp?target=${encodeURIComponent(
-      target
-    )}`;
+    return `${CONFIG.backendUrl}/medium/${
+      props.id
+    }/otp?target=${encodeURIComponent(target)}`;
   };
 
   return (

@@ -2,7 +2,7 @@ import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import Config from "../../config.json";
+import Config from "../../config";
 
 interface GoogleLoginButtonProps {
   doAutoLogin: boolean;

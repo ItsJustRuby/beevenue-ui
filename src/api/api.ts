@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from "axios";
 
-import { backendUrl, backendTimeoutMs } from "../config.json";
+import CONFIG from "../config";
 import { ShowViewModel } from "./show";
 import pick from "lodash-es/pick";
 import store from "../redux/store";
@@ -17,8 +17,8 @@ import {
 import { Rule } from "rules/ruleText";
 
 const axiosClient = axios.create({
-  baseURL: `${backendUrl}/`,
-  timeout: backendTimeoutMs,
+  baseURL: `${CONFIG.backendUrl}/`,
+  timeout: CONFIG.backendTimeoutMs,
   withCredentials: true,
 });
 

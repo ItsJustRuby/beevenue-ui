@@ -1,4 +1,4 @@
-import { backendUrl } from "../config.json";
+import CONFIG from "../config";
 
 type ImageMimeType = "image/gif" | "image/png" | "image/jpeg" | "image/jpg";
 
@@ -29,5 +29,5 @@ export interface MediumContext {
 
 export const mediaSource = (ctx: MediumContext) => {
   const extension = MimeTypeToExtension(ctx.mimeType);
-  return `${backendUrl}/files/${ctx.hash}${extension}`;
+  return `${CONFIG.backendUrl}/files/${ctx.hash}${extension}`;
 };

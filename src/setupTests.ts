@@ -3,9 +3,9 @@ import { configure } from "@testing-library/react";
 import { server } from "mocks/server";
 import { mocked } from "ts-jest/utils";
 
-import Config from "./config.json";
+import Config from "./config";
 
-jest.mock("./config.json");
+jest.mock("./config");
 const mockBackendUrl = mocked(Config, false);
 mockBackendUrl.backendUrl = "/";
 

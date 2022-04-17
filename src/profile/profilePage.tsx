@@ -5,7 +5,7 @@ import {
 } from "react-google-login";
 
 import { Api } from "api";
-import Config from "../config.json";
+import Config from "../config";
 import { useLoginRequired } from "../hooks/loginRequired";
 
 const ProfilePage = () => {

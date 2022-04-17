@@ -1,5 +1,5 @@
 import React from "react";
-import { backendUrl } from "../config.json";
+import CONFIG from "../config";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons/faFileDownload";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -16,7 +16,7 @@ const RuleFileDownloadCard = () => {
               className="button"
               download
               arial-label="rule-download-button"
-              href={`${backendUrl}/rules/rules.json`}
+              href={`${CONFIG.backendUrl}/rules/rules.json`}
             >
               <span className="icon">
                 <FontAwesomeIcon icon={faFileDownload} />

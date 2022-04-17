@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import qs from "qs";
 
 import { useDispatch } from "react-redux";

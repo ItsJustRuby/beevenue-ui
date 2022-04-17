@@ -18,9 +18,9 @@ jobs:
         uses: actions/checkout@master
       - name: Build
         run:
-          echo -n '${{ secrets.BEEVENUE_CI_BUILD_CONFIG }}' > src/config.json &&
+          echo -n '${{ secrets.BEEVENUE_CI_BUILD_CONFIG }}' > src/config.ts &&
           sed -i 's|\%PUBLIC_URL\%|'${{ secrets.BEEVENUE_CI_PUBLIC_URL }}'|g' public/opensearch.xml &&
-          sed -i 's/\%\%COMMIT_ID\%\%/'${GITHUB_SHA:0:8}'/g' src/config.json &&
+          sed -i 's/\%\%COMMIT_ID\%\%/'${GITHUB_SHA:0:8}'/g' src/config.ts &&
           npm install && npm run build
       - name: Install deps
         run: sudo apt-get update && sudo apt-get install -y rsync
