@@ -1,8 +1,9 @@
 import React from "react";
-import TagsInput from "react-tagsinput";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ImmediateUpdateDispatch } from "./detailPageInner";
+import Tags from "@yaireo/tagify/dist/react.tagify";
+import { BaseTagData, ChangeEventData } from "@yaireo/tagify";
 
 interface DetailPageTagsCardProps {
   isAbsentTags: boolean;
@@ -59,8 +60,8 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
     return null;
   }
 
-  const replaceTags = (newValue: string[]) => {
-    newValue = cleanTags(newValue);
+  const replaceTags = (event: CustomEvent<ChangeEventData<BaseTagData>>) => {
+    const newValue = cleanTags(event.detail.tagify.value.map((o) => o.value));
 
     if (isAbsentTags) {
       dispatch({
@@ -88,22 +89,25 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
 
   return (
     <nav className={`level ${className}`}>
-      <TagsInput
-        value={tags.sort()}
-        disabled={userIsAdmin ? undefined : true}
+      {/* TODO Keep fixing me */}
+      <Tags
         className="tagsinput field is-grouped is-grouped-multiline input"
+        onChange={replaceTags}
+        value={tags.sort()}
+        placeholder={placeholder}
+        readOnly={userIsAdmin ? undefined : true}
+        settings={{
+          delimiters: ",| |\n|\t",
+        }}
+      />
+      {/* <TagsInput
         inputProps={{
           "aria-label": className,
-          className: "react-tagsinput-input beevenue-TagsInput-Input",
-          placeholder,
         }}
         tagProps={tagProps}
         renderTag={renderTag}
         renderLayout={getRenderLayout(userIsAdmin)}
-        onlyUnique={true}
-        addKeys={[9, 13, 32, 188]} // Tab, Enter, Space, Comma
-        onChange={replaceTags}
-      />
+      /> */}
     </nav>
   );
 };
