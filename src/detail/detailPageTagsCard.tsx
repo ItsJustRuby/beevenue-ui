@@ -1,25 +1,16 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ImmediateUpdateDispatch } from "./detailPageInner";
 import CreatableSelect from "react-select/creatable";
 import { useEffect } from "react";
-import {
-  ActionMeta,
-  MultiValue,
-  MultiValueProps,
-  OnChangeValue,
-} from "react-select";
+import { MultiValue, MultiValueProps, OnChangeValue } from "react-select";
 import isEqual from "lodash-es/isEqual";
 
 interface DetailPageTagsCardProps {
   isAbsentTags: boolean;
   tags: Array<string>;
   userIsAdmin: boolean;
-}
-
-interface TagProps extends MultiValueProps<Option, true> {
-  className: string;
 }
 
 const Tag = (props: MultiValueProps<Option, true>) => {
@@ -86,36 +77,64 @@ const createOption = (label: string) => ({
 const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
   const { isAbsentTags, tags, userIsAdmin } = props;
 
+  const sortedTagsFromProps = React.useMemo(() => {
+    return tags.map(createOption).sort();
+  }, [tags]);
+
   const [state, setState] = useState<State>({
     inputValue: "",
-    value: tags.map(createOption),
+    value: sortedTagsFromProps,
   });
+
+  const [isInSync, setIsInSync] = useState(false);
 
   const dispatch = useContext(ImmediateUpdateDispatch)!;
 
   useEffect(() => {
-    const newValue = cleanTags(state.value.map((o) => o.value));
+    const newValue = cleanTags(state.value.map((o) => o.value)).sort();
+
+    if (isEqual(newValue, sortedTagsFromProps.map((o) => o.value).sort())) {
+      return;
+    }
+
+    if (isInSync) {
+      setState((s) => {
+        return {
+          ...s,
+          value: sortedTagsFromProps,
+        };
+      });
+      return;
+    }
+
     if (isAbsentTags) {
       dispatch({
         action: "replaceAbsentTags",
         absentTags: newValue,
       });
+      setIsInSync(false);
     } else {
       dispatch({
         action: "replaceTags",
         tags: newValue,
       });
+      setIsInSync(false);
     }
-  }, [state.value]);
+  }, [dispatch, isAbsentTags, isInSync, sortedTagsFromProps, state.value]);
 
   useEffect(() => {
-    if (!isEqual(state.value, tags.map(createOption))) {
-      setState({
-        ...state,
-        value: tags.map(createOption),
-      });
+    if (isInSync) {
+      return;
     }
-  }, [tags]);
+
+    setState((s) => {
+      return {
+        ...s,
+        value: sortedTagsFromProps,
+      };
+    });
+    setIsInSync(true);
+  }, [isInSync, sortedTagsFromProps]);
 
   if (!tags) {
     return null;
@@ -128,6 +147,7 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
 
   const handleInputChange = (inputValue: string) => {
     setState({ ...state, inputValue });
+    setIsInSync(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -140,6 +160,7 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
           inputValue: "",
           value: [...state.value, createOption(state.inputValue)],
         });
+        setIsInSync(false);
     }
   };
 
@@ -158,15 +179,9 @@ const DetailPageTagsCard = (props: DetailPageTagsCardProps) => {
     MultiValue: TagHOC,
   };
 
-  const handleChange = (
-    value: OnChangeValue<Option, true>,
-    actionMeta: ActionMeta<Option>
-  ) => {
-    console.group("Value Changed");
-    console.log(value);
-    console.log(`action: ${actionMeta.action}`);
-    console.groupEnd();
+  const handleChange = (value: OnChangeValue<Option, true>) => {
     setState({ ...state, value });
+    setIsInSync(false);
   };
 
   return (

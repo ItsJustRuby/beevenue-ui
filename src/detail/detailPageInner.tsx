@@ -1,7 +1,5 @@
 import React from "react";
-// TODO: Fixme
 import "bulma-tagsinput/dist/css/bulma-tagsinput.min.css";
-import "@yaireo/tagify/dist/tagify.css";
 
 import { ShowViewModel } from "api/show";
 import { useBeevenueSelector } from "redux/selectors";

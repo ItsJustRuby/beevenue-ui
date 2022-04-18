@@ -30,12 +30,8 @@ const DetailPageOtpLinks = (props: DetailPageOtpButtonsProps) => {
         <div className="buttons has-addons">
           {Object.entries(PAGES).map(([n, target], idx) => {
             return (
-              <button className="button">
-                <a
-                  className="beevenue-OtpLinks-OtpLink"
-                  href={url(target)}
-                  key={idx}
-                >
+              <button className="button" key={idx}>
+                <a className="beevenue-OtpLinks-OtpLink" href={url(target)}>
                   {n}
                 </a>
               </button>
