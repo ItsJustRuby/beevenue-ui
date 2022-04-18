@@ -8,19 +8,19 @@ test("no changes to UI happen on entering (absent) tags", async () => {
     rating: "s",
   });
 
-  const tagsInput = await findByRole("textbox", {
+  const tagsInput = await findByRole("navigation", {
     name: "beevenue-medium-tags",
   });
   expect(tagsInput).toBeVisible();
-  userEvent.type(tagsInput, "someTag{enter}");
+  await userEvent.type(tagsInput, "someTag{enter}");
 
   await new Promise((res) => setTimeout(res, 2000));
 
-  const absentTagsInput = await findByRole("textbox", {
+  const absentTagsInput = await findByRole("navigation", {
     name: "beevenue-medium-absent-tags",
   });
   expect(absentTagsInput).toBeVisible();
-  userEvent.type(absentTagsInput, "someAbsentTag{enter}");
+  await userEvent.type(absentTagsInput, "someAbsentTag{enter}");
 
   await new Promise((res) => setTimeout(res, 2000));
 });

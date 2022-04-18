@@ -20,13 +20,13 @@ const ProfilePage = () => {
       return;
     }
 
-    (window as any).google.accounts.id.initialize({
+    window.google.accounts.id.initialize({
       client_id: Config.googleClientId,
       callback: onEvent,
       ux_mode: "popup",
     });
 
-    (window as any).google.accounts.id.renderButton(buttonRef.current, {
+    window.google.accounts.id.renderButton(buttonRef.current, {
       type: "standard",
       text: "signup_with",
     });

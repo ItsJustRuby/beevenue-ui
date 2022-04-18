@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { configure } from "@testing-library/react";
 import { server } from "mocks/server";
-import { mocked } from "ts-jest/utils";
+import { mocked } from "jest-mock";
 
 import Config from "./config";
 
@@ -10,6 +10,10 @@ const mockBackendUrl = mocked(Config, false);
 mockBackendUrl.backendUrl = "/";
 
 jest.setTimeout(20_000);
+
+global.crypto = {
+  getRandomValues: (arr: any) => require("crypto").randomBytes(arr.length),
+} as any;
 
 // https://github.com/jsdom/jsdom/issues/1695
 Element.prototype.scrollIntoView = jest.fn();
@@ -21,11 +25,11 @@ configure({
   throwSuggestions: true,
 });
 
-beforeAll(() =>
+beforeAll(() => {
   server.listen({
     onUnhandledRequest: "error",
-  })
-);
+  });
+});
 afterEach(() => {
   server.resetHandlers();
 });

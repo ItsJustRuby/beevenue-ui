@@ -12,7 +12,7 @@ test("detail page has a pick alternate thumbnail widget", async () => {
   const goButton = await findByRole("button", {
     name: "medium-alternate-thumbnail-go-button",
   });
-  userEvent.click(goButton);
+  await userEvent.click(goButton);
 
   const successMessage = await findByText(/New thumbnails are being generated/);
   expect(successMessage).toBeVisible();

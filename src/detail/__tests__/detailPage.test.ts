@@ -8,7 +8,7 @@ test("detail page switches away when toggled to SFW", async () => {
     rating: "q",
   });
 
-  userEvent.click(await findByRole("checkbox", { name: /sfw-switch/i }));
+  await userEvent.click(await findByRole("checkbox", { name: /sfw-switch/i }));
 
   const masonry = await findByTestId("beevenue-masonry");
   expect(masonry).toBeVisible();
@@ -26,14 +26,14 @@ test("detail page has a delete button that opens a modal", async () => {
   });
   expect(mediumDeleteButton).toBeVisible();
 
-  userEvent.click(mediumDeleteButton);
+  await userEvent.click(mediumDeleteButton);
 
   const modalDeleteButton = await findByRole("button", {
     name: /modal-delete-button/i,
   });
   expect(modalDeleteButton).toBeVisible();
 
-  userEvent.click(modalDeleteButton);
+  await userEvent.click(modalDeleteButton);
 
   const infoNotification = await findByText(/Successfully deleted medium/i);
   expect(infoNotification).toBeVisible();
@@ -42,7 +42,7 @@ test("detail page has a delete button that opens a modal", async () => {
   const dismissAllLink = await findByRole("link", {
     name: /notifications-dismiss-all-link/i,
   });
-  userEvent.click(dismissAllLink);
+  await userEvent.click(dismissAllLink);
   expect(dismissAllLink).not.toBeVisible();
 });
 
@@ -59,7 +59,7 @@ test("detail page has a regenerate thumbnail button", async () => {
   });
   expect(regenButton).toBeVisible();
 
-  userEvent.click(regenButton);
+  await userEvent.click(regenButton);
 
   const infoNotification = await findByText(
     /Successfully created new thumbnails/i
@@ -72,6 +72,6 @@ test("detail page has a regenerate thumbnail button", async () => {
       name: /notifications-dismiss-button-/i,
     })
   )[0];
-  userEvent.click(dismissButton);
+  await userEvent.click(dismissButton);
   expect(dismissButton).not.toBeVisible();
 });

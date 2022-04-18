@@ -17,13 +17,13 @@ test("can add and remove alias", async () => {
     name: /add-alias-input/i,
   });
   expect(aliasField).toBeVisible();
-  userEvent.type(aliasField, "CoolerA{enter}");
+  await userEvent.type(aliasField, "CoolerA{enter}");
   await waitFor(() => expect(aliasField).toHaveAttribute("disabled"));
   await waitFor(() => expect(aliasField).not.toHaveAttribute("disabled"));
 
   const deleteLink = await findByLabelText(/tag-delete-alias-0/i);
   expect(deleteLink).toBeVisible();
-  userEvent.click(deleteLink);
+  await userEvent.click(deleteLink);
   await waitFor(() => expect(deleteLink).not.toBeInTheDocument());
 });
 
@@ -37,7 +37,7 @@ test("can add implications going either way", async () => {
     name: /add-implication-input-ImpliedByThis/i,
   });
   expect(impliedByThisField).toBeVisible();
-  userEvent.type(impliedByThisField, "B{enter}");
+  await userEvent.type(impliedByThisField, "B{enter}");
   await waitFor(() => expect(impliedByThisField).toHaveAttribute("disabled"));
   await waitFor(() =>
     expect(impliedByThisField).not.toHaveAttribute("disabled")
@@ -45,14 +45,14 @@ test("can add implications going either way", async () => {
 
   const deleteImplied = await findByLabelText(/tag-delete-implication-B/i);
   expect(deleteImplied).toBeVisible();
-  userEvent.click(deleteImplied);
+  await userEvent.click(deleteImplied);
   await waitFor(() => expect(deleteImplied).not.toBeVisible());
 
   const implyingThisField = await findByRole("textbox", {
     name: /add-implication-input-ImplyingThis/i,
   });
   expect(implyingThisField).toBeVisible();
-  userEvent.type(implyingThisField, "C{enter}");
+  await userEvent.type(implyingThisField, "C{enter}");
   await waitFor(() => expect(implyingThisField).toHaveAttribute("disabled"));
   await waitFor(() =>
     expect(implyingThisField).not.toHaveAttribute("disabled")
@@ -60,6 +60,6 @@ test("can add implications going either way", async () => {
 
   const deleteImplying = await findByLabelText(/tag-delete-implication-C/i);
   expect(deleteImplying).toBeVisible();
-  userEvent.click(deleteImplying);
+  await userEvent.click(deleteImplying);
   await waitFor(() => expect(deleteImplying).not.toBeVisible());
 });

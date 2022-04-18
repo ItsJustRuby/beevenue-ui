@@ -7,7 +7,7 @@ test("upload panel happy flow", async () => {
 
   const { findByLabelText, findByRole, findByText } = given.app();
 
-  userEvent.upload(await findByLabelText("medium-upload-input"), [
+  await userEvent.upload(await findByLabelText("medium-upload-input"), [
     new File(["Example file contents 1"], "example.jpg", {
       type: "image/jpeg",
     }),
@@ -21,7 +21,7 @@ test("upload panel happy flow", async () => {
   const submitButton = await findByRole("button", {
     name: "medium-upload-submit-button",
   });
-  userEvent.click(submitButton);
+  await userEvent.click(submitButton);
 
   const progressBar = await findByRole("progressbar", {
     name: /upload\-panel\-progress\-bar/i,

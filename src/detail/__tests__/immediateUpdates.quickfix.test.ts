@@ -15,7 +15,7 @@ test("quick fix buttons disappear immediately", async () => {
     })
   )[0];
   expect(quickFixButton).toBeVisible();
-  userEvent.click(quickFixButton);
+  await userEvent.click(quickFixButton);
 
   await waitFor(() => expect(quickFixButton).not.toBeVisible());
 });
