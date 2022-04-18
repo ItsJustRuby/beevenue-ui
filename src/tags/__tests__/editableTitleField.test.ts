@@ -11,13 +11,13 @@ test("has an editable title field", async () => {
   const titleElement = await findByLabelText("tag-title");
   expect(titleElement).toBeVisible();
 
-  userEvent.click(titleElement);
+  await userEvent.click(titleElement);
 
   const titleField = await findByRole("textbox", { name: /tag-title-input/i });
   await waitFor(() => expect(titleField).toBeVisible());
 
-  userEvent.clear(titleField);
-  userEvent.type(titleField, "ReplacementA{enter}");
+  await userEvent.clear(titleField);
+  await userEvent.type(titleField, "ReplacementA{enter}");
 
   await waitFor(async () =>
     expect(await findByLabelText("tag-title")).toBeVisible()

@@ -45,7 +45,9 @@ const rulesPage = async () => {
   const app = given.app();
   const { findByRole } = app;
 
-  fireEvent.click(await findByRole("link", { name: /^Configure rules$/i }));
+  await fireEvent.click(
+    await findByRole("link", { name: /^Configure rules$/i })
+  );
 
   const currentRulesList = await findByRole("heading", {
     name: /^Rules$/i,

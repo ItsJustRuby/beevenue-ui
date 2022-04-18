@@ -10,13 +10,13 @@ test("can delete rules", async () => {
   const deleteLink = await findByRole("link", { name: "rules-delete-link-4" });
   expect(deleteLink).toBeVisible();
 
-  userEvent.click(deleteLink);
+  await userEvent.click(deleteLink);
 
   const modalDeleteButton = await findByRole("button", {
     name: /modal-delete-button/i,
   });
   expect(modalDeleteButton).toBeVisible();
-  userEvent.click(modalDeleteButton);
+  await userEvent.click(modalDeleteButton);
 
   await new Promise((res) => setTimeout(res, 1000));
 

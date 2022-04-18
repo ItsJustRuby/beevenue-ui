@@ -13,7 +13,7 @@ const whenChangingARating = async (id: number) => {
   });
   expect(setRatingSRadio).toBeVisible();
 
-  userEvent.click(setRatingSRadio);
+  await userEvent.click(setRatingSRadio);
   return setRatingSRadio;
 };
 

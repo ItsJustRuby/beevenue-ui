@@ -1,8 +1,11 @@
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
-import Config from "../../config.json";
+import { useEffect, useRef } from "react";
+import Config from "../../config";
+
+type CredentialResponse = Parameters<
+  NonNullable<
+    Parameters<typeof window.google.accounts.id.initialize>[0]["callback"]
+  >
+>[0];
 
 interface GoogleLoginButtonProps {
   doAutoLogin: boolean;
@@ -10,22 +13,36 @@ interface GoogleLoginButtonProps {
 }
 
 const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
-  const onSuccess = (
-    response: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    if ((response as GoogleLoginResponse).tokenId !== undefined) {
-      console.log(response);
-      props.onSuccess((response as GoogleLoginResponse).tokenId);
-    }
-  };
+  const buttonRef = useRef(null);
 
-  return (
-    <GoogleLogin
-      clientId={Config.googleClientId}
-      isSignedIn={props.doAutoLogin}
-      onSuccess={onSuccess}
-    />
-  );
+  useEffect(() => {
+    if (!buttonRef.current || !window.google) {
+      return;
+    }
+
+    const onSuccess = (response: CredentialResponse) => {
+      if (response.credential !== undefined) {
+        props.onSuccess(response.credential);
+      }
+    };
+
+    window.google.accounts.id.initialize({
+      auto_select: props.doAutoLogin,
+      cancel_on_tap_outside: false,
+      client_id: Config.googleClientId,
+      callback: onSuccess,
+      ux_mode: "popup",
+    });
+
+    if (props.doAutoLogin) {
+      window.google.accounts.id.prompt(() => {});
+    }
+    window.google.accounts.id.renderButton(buttonRef.current, {
+      type: "icon",
+    });
+  }, [buttonRef, props, props.doAutoLogin]);
+
+  return <div ref={buttonRef}></div>;
 };
 
 export { GoogleLoginButton };

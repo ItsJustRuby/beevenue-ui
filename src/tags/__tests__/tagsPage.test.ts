@@ -30,7 +30,7 @@ test("has a filter that works", async () => {
     name: "tags-filter",
   });
 
-  userEvent.type(filterTextbox, "A");
+  await userEvent.type(filterTextbox, "A");
 
   await waitFor(async () => {
     expect(

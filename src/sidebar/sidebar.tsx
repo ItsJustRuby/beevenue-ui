@@ -49,7 +49,7 @@ const Sidebar = () => {
       <nav className="level beevenue-home">
         <div className="level-item">
           <h2 className="title">
-            <a href="#" onClick={(e) => onHomeButtonClicked(e)}>
+            <a href="/" onClick={(e) => onHomeButtonClicked(e)}>
               Home
             </a>
           </h2>

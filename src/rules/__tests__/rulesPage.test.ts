@@ -2,7 +2,7 @@ import userEvent, { FilesArgument } from "@testing-library/user-event";
 import given from "mocks/given";
 
 const whenUploading = async (app: any, filesArgument: FilesArgument) => {
-  userEvent.upload(
+  await userEvent.upload(
     await app.findByLabelText("rule-upload-input"),
     filesArgument
   );

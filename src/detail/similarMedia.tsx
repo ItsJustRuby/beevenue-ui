@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useBeevenueSelector } from "redux/selectors";
 
-import { backendUrl } from "../config.json";
+import CONFIG from "../config";
 
 interface TinyShowModel {
   id: number;
@@ -23,7 +23,9 @@ const SimilarMedia = (props: SimilarMediaProps) => {
       {props.media.map((s) => (
         <div className="beevenue-SimilarMedia-SimilarMedium" key={s.id}>
           <Link to={`/show/${s.id}`}>
-            <img src={`${backendUrl}/thumbs/${s.hash}.${thumbnailSize}.jpg`} />
+            <img
+              src={`${CONFIG.backendUrl}/thumbs/${s.hash}.${thumbnailSize}.jpg`}
+            />
           </Link>
         </div>
       ))}

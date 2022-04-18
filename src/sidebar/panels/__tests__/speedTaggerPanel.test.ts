@@ -13,14 +13,14 @@ test.each([false, true])(
     });
     expect(speedTaggerInput).toBeVisible();
 
-    userEvent.type(speedTaggerInput, "D");
+    await userEvent.type(speedTaggerInput, "D");
 
     const isActiveToggle = await findByRole("checkbox", {
       name: /speed-tagger-active-switch/i,
     });
     expect(isActiveToggle).toBeVisible();
     if (!isActiveToggle.hasAttribute("checked")) {
-      userEvent.click(isActiveToggle);
+      await userEvent.click(isActiveToggle);
     }
 
     await waitFor(() => expect(isActiveToggle).toHaveAttribute("checked"));
@@ -30,12 +30,12 @@ test.each([false, true])(
         name: /speed-tagger-absent-switch/i,
       });
       expect(isAbsentToggle).toBeVisible();
-      userEvent.click(isAbsentToggle);
+      await userEvent.click(isAbsentToggle);
     }
 
     const medium = await findByLabelText(/speed-tagger-medium-1/i);
     expect(medium).toBeVisible();
-    userEvent.click(medium);
+    await userEvent.click(medium);
     await waitFor(() =>
       expect(medium).toHaveClass("beevenue-speed-tagger-medium-selected")
     );
@@ -44,7 +44,7 @@ test.each([false, true])(
     expect(speedTaggerTitle).toBeVisible();
 
     const goLink = await findByLabelText(/speed-tagger-go-link/i);
-    userEvent.click(goLink);
+    await userEvent.click(goLink);
 
     const infoNotification = await findByText(/That went well/i);
     expect(infoNotification).toBeVisible();

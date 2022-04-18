@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useRouteMatch } from "react-router";
 
 import { Api } from "api";
 import { ShowViewModel } from "../api/show";
@@ -9,7 +8,7 @@ import { BeevenueSpinner } from "../beevenueSpinner";
 
 import { useBeevenueSelector } from "../redux/selectors";
 import { forceRedirect } from "../redirect";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { DetailPageInner } from "./detailPageInner";
 
 interface DetailPageParams {

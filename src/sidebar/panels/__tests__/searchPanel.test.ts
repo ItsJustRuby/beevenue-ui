@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import given from "mocks/given";
 
 const whenSearchingFor = async (app: RenderResult, searchText: string) => {
-  userEvent.type(
+  await userEvent.type(
     await app.findByRole("textbox", { name: "search-input" }),
     `${searchText}{enter}`
   );

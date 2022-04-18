@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useRouteMatch } from "react-router";
+import { useRouteMatch } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 

@@ -108,10 +108,13 @@ export const defaultHandlers = [
     );
   }),
   rest.patch("/medium/:id/file", (req, res, ctx) => {
-    return res(ctx.json(defaultMedium(req.params.id)));
+    return res(ctx.json(defaultMedium(Number(req.params.id))));
   }),
   rest.patch("/medium/:id/metadata", (req, res, ctx) => {
-    const patchedMedium = { ...defaultMedium(req.params.id), ...req.params };
+    const patchedMedium = {
+      ...defaultMedium(Number(req.params.id)),
+      ...req.params,
+    };
     return res(ctx.json(patchedMedium));
   }),
   rest.get("/media", mediaHandler),

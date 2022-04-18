@@ -12,7 +12,7 @@ test("detail page has a replace medium widget", async () => {
   const mediumReplaceInput = await findByLabelText("medium-replace-input");
   expect(mediumReplaceInput).toBeVisible();
 
-  userEvent.upload(
+  await userEvent.upload(
     mediumReplaceInput,
     new File(["Example file contents"], "example.jpg", {
       type: "image/jpeg",
@@ -24,7 +24,7 @@ test("detail page has a replace medium widget", async () => {
   });
   expect(goButton).not.toHaveAttribute("disabled");
 
-  userEvent.click(goButton);
+  await userEvent.click(goButton);
 
   await waitFor(() => expect(goButton).toHaveAttribute("disabled"));
   await waitFor(() => expect(goButton).not.toHaveAttribute("disabled"));

@@ -6,7 +6,7 @@ import { logout } from "../../redux/actions";
 import { SfwButton } from "../sfwButton";
 import { BeevenueSpinner } from "../../beevenueSpinner";
 
-import { commitId } from "../../config.json";
+import CONFIG from "../../config";
 import { useBeevenueSelector } from "../../redux/selectors";
 import { forceRedirect } from "../../redirect";
 import { useHistory } from "react-router-dom";
@@ -54,7 +54,7 @@ const LoggedInPanel = () => {
             <SfwButton />
             <div className="field">
               <div>Server version: {serverVersion}</div>
-              <div>UI version: {commitId}</div>
+              <div>UI version: {CONFIG.commitId}</div>
             </div>
             <div className="field">
               <form onSubmit={(e) => submitLogout(e)}>

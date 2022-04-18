@@ -1,39 +1,41 @@
-import {
-  GoogleLogin,
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
-
 import { Api } from "api";
-import Config from "../config.json";
+import Config from "../config";
 import { useLoginRequired } from "../hooks/loginRequired";
+import { useEffect, useRef } from "react";
 
 const ProfilePage = () => {
   useLoginRequired();
-  const onSuccess = (
-    response: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    if ((response as GoogleLoginResponse).tokenId !== undefined) {
-      console.log(response);
-      Api.Session.connectGoogleAccount(
-        (response as GoogleLoginResponse).tokenId
-      );
+  const onEvent = (response: any) => {
+    if (response.credential !== undefined) {
+      Api.Session.connectGoogleAccount(response.credential);
+    } else {
+      console.log("Could not identify using Google Social login:", response);
     }
   };
 
-  const onFailure = (error: any) => {
-    console.log("Could not identify using Google Social login:", error);
-  };
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    if (!buttonRef.current) {
+      return;
+    }
+
+    window.google.accounts.id.initialize({
+      client_id: Config.googleClientId,
+      callback: onEvent,
+      ux_mode: "popup",
+    });
+
+    window.google.accounts.id.renderButton(buttonRef.current, {
+      type: "standard",
+      text: "signup_with",
+    });
+  }, [buttonRef]);
 
   return (
     <>
       <h2 className="title is-2">Profile</h2>
-      <GoogleLogin
-        buttonText="Connect Google account"
-        clientId={Config.googleClientId}
-        onFailure={onFailure}
-        onSuccess={onSuccess}
-      />
+      <div ref={buttonRef}></div>
     </>
   );
 };

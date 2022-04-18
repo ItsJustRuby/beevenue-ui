@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { SpeedTaggingItem } from "./speedTaggingItem";
-import { backendUrl } from "../config.json";
+import CONFIG from "../config";
 import { useBeevenueSelector } from "../redux/selectors";
 
 interface Medium {
@@ -36,7 +36,7 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
         resolve(img.src);
       };
 
-      img.src = `${backendUrl}/thumbs/${props.medium.hash}.${thumbnailSize}.jpg`;
+      img.src = `${CONFIG.backendUrl}/thumbs/${props.medium.hash}.${thumbnailSize}.jpg`;
     }).then((resSrc: any) => {
       if (!isMounted.current) return;
       setSrc(resSrc);

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
-import { useRouteMatch } from "react-router";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { forceRedirect } from "../redirect";
 
 interface WildcardPageParams {

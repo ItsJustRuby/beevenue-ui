@@ -17,5 +17,5 @@ jobs:
         uses: actions/checkout@master
       - name: Build
         run:
-          echo -n '${{ secrets.BEEVENUE_CI_PR_BUILD_CONFIG }}' > src/config.json &&
+          echo -n '${{ secrets.BEEVENUE_CI_PR_BUILD_CONFIG }}' > src/config.ts &&
           npm install && npm run build

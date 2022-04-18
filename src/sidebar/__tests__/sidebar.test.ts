@@ -22,7 +22,7 @@ test("shows login panel after logging out", async () => {
   expect(logoutButton).toBeVisible();
 
   given.loggedOut();
-  userEvent.click(logoutButton);
+  await userEvent.click(logoutButton);
 
   const loginButton = await findByRole("button", { name: /login/i });
   expect(loginButton).toBeVisible();
@@ -74,15 +74,15 @@ test("login panel logs people in, duh.", async () => {
   // When entering some user details and clicking "login"
   const usernameField = await findByRole("textbox", { name: /username/i });
   expect(usernameField).toBeVisible();
-  userEvent.type(usernameField, "irrelevant");
+  await userEvent.type(usernameField, "irrelevant");
 
   const passwordField = await findByPlaceholderText(/password/i);
   expect(passwordField).toBeVisible();
-  userEvent.type(passwordField, "completelymeaningless");
+  await userEvent.type(passwordField, "completelymeaningless");
 
   const loginButton = await findByRole("button", { name: /login/i });
   expect(loginButton).toBeVisible();
-  userEvent.click(loginButton);
+  await userEvent.click(loginButton);
 
   // Then sidebar is fully visible
   expect(await findByRole("checkbox", { name: /sfw-switch/i })).toBeVisible();
