@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Config from "../../config";
 
 type CredentialResponse = Parameters<
@@ -15,8 +15,10 @@ interface GoogleLoginButtonProps {
 const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
   const buttonRef = useRef(null);
 
+  const [isLoadComplete, setIsLoadComplete] = useState(false);
+
   useEffect(() => {
-    if (!buttonRef.current || !window.google) {
+    if (!isLoadComplete || !buttonRef.current) {
       return;
     }
 
@@ -40,7 +42,21 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
     window.google.accounts.id.renderButton(buttonRef.current, {
       type: "icon",
     });
-  }, [buttonRef, props, props.doAutoLogin]);
+  }, [buttonRef, isLoadComplete, props, props.doAutoLogin]);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      setIsLoadComplete(true);
+    };
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [setIsLoadComplete]);
 
   return <div ref={buttonRef}></div>;
 };
