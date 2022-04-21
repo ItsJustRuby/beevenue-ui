@@ -28,7 +28,7 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
       }
     };
 
-    google.accounts.id.initialize({
+    google.initialize({
       auto_select: props.doAutoLogin,
       cancel_on_tap_outside: false,
       client_id: Config.googleClientId,
@@ -37,12 +37,12 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
     });
 
     if (props.doAutoLogin) {
-      google.accounts.id.prompt(() => {});
+      google.prompt(() => {});
     }
-    google.accounts.id.renderButton(buttonRef.current, {
+    google.renderButton(buttonRef.current, {
       type: "icon",
     });
-  }, [buttonRef, isLoadComplete, props, props.doAutoLogin]);
+  }, [buttonRef, google, isLoadComplete, props, props.doAutoLogin]);
 
   return <div ref={buttonRef}></div>;
 };

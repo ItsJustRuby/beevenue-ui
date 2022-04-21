@@ -22,17 +22,17 @@ const ProfilePage = () => {
       return;
     }
 
-    google.accounts.id.initialize({
+    google.initialize({
       client_id: Config.googleClientId,
       callback: onEvent,
       ux_mode: "popup",
     });
 
-    google.accounts.id.renderButton(buttonRef.current, {
+    google.renderButton(buttonRef.current, {
       type: "standard",
       text: "signup_with",
     });
-  }, [buttonRef, isLoadComplete]);
+  }, [buttonRef, google, isLoadComplete]);
 
   return (
     <>

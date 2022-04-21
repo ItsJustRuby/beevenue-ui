@@ -17,7 +17,7 @@ const useGoogleSignIn = () => {
     };
   }, [setIsLoadComplete]);
 
-  return { isLoadComplete, google: window.google };
+  return { isLoadComplete, google: window.google?.accounts?.id };
 };
 
 export { useGoogleSignIn };
