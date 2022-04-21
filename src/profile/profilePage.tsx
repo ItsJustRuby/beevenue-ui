@@ -2,6 +2,7 @@ import { Api } from "api";
 import Config from "../config";
 import { useLoginRequired } from "../hooks/loginRequired";
 import { useEffect, useRef } from "react";
+import { useGoogleSignIn } from "hooks/googleSignIn";
 
 const ProfilePage = () => {
   useLoginRequired();
@@ -14,23 +15,24 @@ const ProfilePage = () => {
   };
 
   const buttonRef = useRef(null);
+  const { isLoadComplete, google } = useGoogleSignIn();
 
   useEffect(() => {
-    if (!buttonRef.current) {
+    if (!isLoadComplete || !buttonRef.current) {
       return;
     }
 
-    window.google.accounts.id.initialize({
+    google.accounts.id.initialize({
       client_id: Config.googleClientId,
       callback: onEvent,
       ux_mode: "popup",
     });
 
-    window.google.accounts.id.renderButton(buttonRef.current, {
+    google.accounts.id.renderButton(buttonRef.current, {
       type: "standard",
       text: "signup_with",
     });
-  }, [buttonRef]);
+  }, [buttonRef, isLoadComplete]);
 
   return (
     <>

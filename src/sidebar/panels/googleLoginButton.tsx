@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useGoogleSignIn } from "hooks/googleSignIn";
+import { useEffect, useRef } from "react";
 import Config from "../../config";
 
 type CredentialResponse = Parameters<
@@ -14,8 +15,7 @@ interface GoogleLoginButtonProps {
 
 const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
   const buttonRef = useRef(null);
-
-  const [isLoadComplete, setIsLoadComplete] = useState(false);
+  const { isLoadComplete, google } = useGoogleSignIn();
 
   useEffect(() => {
     if (!isLoadComplete || !buttonRef.current) {
@@ -28,7 +28,7 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
       }
     };
 
-    window.google.accounts.id.initialize({
+    google.accounts.id.initialize({
       auto_select: props.doAutoLogin,
       cancel_on_tap_outside: false,
       client_id: Config.googleClientId,
@@ -37,26 +37,12 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
     });
 
     if (props.doAutoLogin) {
-      window.google.accounts.id.prompt(() => {});
+      google.accounts.id.prompt(() => {});
     }
-    window.google.accounts.id.renderButton(buttonRef.current, {
+    google.accounts.id.renderButton(buttonRef.current, {
       type: "icon",
     });
   }, [buttonRef, isLoadComplete, props, props.doAutoLogin]);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      setIsLoadComplete(true);
-    };
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [setIsLoadComplete]);
 
   return <div ref={buttonRef}></div>;
 };
