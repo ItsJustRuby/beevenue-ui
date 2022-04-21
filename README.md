@@ -1,5 +1,4 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![Maintainability](https://api.codeclimate.com/v1/badges/97420d44e8f3d5c1e91f/maintainability)](https://codeclimate.com/github/ItsJustRuby/beevenue-ui/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/ItsJustRuby/beevenue-ui/badge.svg)](https://coveralls.io/github/ItsJustRuby/beevenue-ui)
 
 # Beevenue
