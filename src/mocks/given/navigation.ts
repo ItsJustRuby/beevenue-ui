@@ -41,6 +41,20 @@ const detailPage = async (options: AllMediumOptions) => {
   return app;
 };
 
+const profilePage = async () => {
+  const app = given.app();
+  const { findByRole } = app;
+
+  await fireEvent.click(await findByRole("link", { name: /^Profile$/i }));
+
+  const heading = await findByRole("heading", {
+    name: /^Profile$/i,
+  });
+  expect(heading).toBeVisible();
+
+  return app;
+};
+
 const rulesPage = async () => {
   const app = given.app();
   const { findByRole } = app;
@@ -57,4 +71,4 @@ const rulesPage = async () => {
   return app;
 };
 
-export default { detailPage, rulesPage, tagShowPage, tagsPage };
+export default { detailPage, profilePage, rulesPage, tagShowPage, tagsPage };
