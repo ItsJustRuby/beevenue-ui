@@ -3,11 +3,72 @@ import { Link } from "react-router-dom";
 import { SpeedTaggingItem } from "./speedTaggingItem";
 import CONFIG from "../config";
 import { useBeevenueSelector } from "../redux/selectors";
+import { MimeType } from "detail/media";
 
 interface Medium {
   id: number;
   hash: string;
+  mimeType: MimeType;
 }
+
+interface ThumbContainerProps {
+  mimeType: MimeType;
+  className: string;
+  src: string;
+}
+
+const ThumbContainer = (props: ThumbContainerProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMouseInside, setIsMouseInside] = useState(false);
+
+  if (!props.mimeType.startsWith("video/") && props.mimeType !== "image/gif") {
+    return (
+      <div className="beevenue-thumb-container">
+        <img width="50vw" className={props.className} src={props.src} />
+      </div>
+    );
+  }
+
+  const onMouseEnter = () => {
+    setIsMouseInside(true);
+  };
+
+  const onMouseLeave = () => {
+    setIsMouseInside(false);
+    if (videoRef.current) videoRef.current.currentTime = 0;
+  };
+
+  const videoSrc = props.src.replace(".jpg", ".mp4");
+  return (
+    <div
+      className="beevenue-thumb-container"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <video
+        className={props.className}
+        preload="none"
+        src={videoSrc}
+        autoPlay={true}
+        loop={true}
+        muted={true}
+        playsInline={true}
+        ref={videoRef}
+        style={{
+          visibility: isMouseInside ? "visible" : "hidden",
+        }}
+      />
+      <img
+        className={props.className}
+        src={props.src}
+        width="50vw"
+        style={{
+          visibility: isMouseInside ? "hidden" : "visible",
+        }}
+      />
+    </div>
+  );
+};
 
 interface ProgressiveThumbnailProps {
   src?: string;
@@ -54,17 +115,21 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
     className = `${className} beevenue-tiny-thumb`;
   }
 
+  const thumbContainer = (
+    <ThumbContainer
+      src={src}
+      className={className}
+      mimeType={props.medium.mimeType}
+    />
+  );
+
   if (isSpeedTagging) {
     const innerProps = {
       ...props.medium,
     };
 
     return (
-      <SpeedTaggingItem {...innerProps}>
-        <div className="beevenue-thumb-container">
-          <img width="50vw" className={className} src={src} />
-        </div>
-      </SpeedTaggingItem>
+      <SpeedTaggingItem {...innerProps}>{thumbContainer}</SpeedTaggingItem>
     );
   }
 
@@ -73,9 +138,7 @@ const ProgressiveThumbnail = (props: ProgressiveThumbnailProps) => {
       to={`/show/${props.medium.id}`}
       aria-label={`medium-${props.medium.id}`}
     >
-      <div className="beevenue-thumb-container">
-        <img width="50vw" className={className} src={src} />
-      </div>
+      {thumbContainer}
     </Link>
   );
 };

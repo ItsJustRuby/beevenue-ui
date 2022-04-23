@@ -21,6 +21,7 @@ $gutter: 1.25rem;
 .beevenue-Masonry-Item img {
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 .card {
@@ -29,6 +30,19 @@ $gutter: 1.25rem;
 
 .beevenue-thumb-container {
   overflow: hidden;
+  display: grid;
+}
+
+.beevenue-thumb-container * {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.beevenue-thumb-container video {
+  margin: 0;
+  top: 0;
+  height: calc(100% + 1px);
+  object-fit: fill;
 }
 
 .beevenue-thumb {
