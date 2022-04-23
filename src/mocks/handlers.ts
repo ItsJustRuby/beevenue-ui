@@ -43,6 +43,7 @@ const mediaHandler = (req: any, res: any, ctx: any) => {
           hash: "9762152070fd76452299c84c8658893e",
           id: 1,
           tinyThumbnail: "Zm9vYmFyCg==",
+          mimeType: "image/png",
         },
       ],
       pageCount: 5,

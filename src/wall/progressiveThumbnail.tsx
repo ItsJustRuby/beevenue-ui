@@ -21,8 +21,7 @@ const ThumbContainer = (props: ThumbContainerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMouseInside, setIsMouseInside] = useState(false);
 
-  // TODO Eugh, cleanup?
-  if (!props.mimeType.startsWith("video/")) {
+  if (!props.mimeType.startsWith("video/") && props.mimeType != "image/gif") {
     return (
       <div className="beevenue-thumb-container">
         <img width="50vw" className={props.className} src={props.src} />
@@ -40,9 +39,6 @@ const ThumbContainer = (props: ThumbContainerProps) => {
   };
 
   const videoSrc = props.src.replace(".jpg", ".mp4");
-  // TODO Consider what should happen to gifs? They are tagged "video" but don't have "video/" mime types
-  //      so are probably buggy r/n
-  // TODO Kinda meh that this requests the animated thumbnail eagerly - but why not eh?
   return (
     <div
       className="beevenue-thumb-container"

@@ -25,6 +25,7 @@ const indexPageListsMedium = (id: number) => {
               hash: "abcd",
               id: id,
               tinyThumbnail: "Zm9vYmFyCg==",
+              mimeType: "image/png",
             },
           ],
           pageCount: 5,
