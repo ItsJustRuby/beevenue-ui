@@ -21,7 +21,7 @@ const ThumbContainer = (props: ThumbContainerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMouseInside, setIsMouseInside] = useState(false);
 
-  if (!props.mimeType.startsWith("video/") && props.mimeType != "image/gif") {
+  if (!props.mimeType.startsWith("video/") && props.mimeType !== "image/gif") {
     return (
       <div className="beevenue-thumb-container">
         <img width="50vw" className={props.className} src={props.src} />
