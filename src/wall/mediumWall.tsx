@@ -84,7 +84,7 @@ const MediumWall = (props: MediumWallProps) => {
         breakpointCols={{
           default: 4,
           1600: 2,
-          768: 1,
+          599: 1,
         }}
         className="beevenue-Masonry"
         data-testid="beevenue-masonry"

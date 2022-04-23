@@ -20,7 +20,7 @@ export const BeevenuePage = (props: any) => {
       </Helmet>
       <div>
         <section className="section">
-          <div className="columns is-mobile">
+          <div className="columns is-tablet">
             <div className="column is-narrow-tablet is-narrow-mobile">
               <Sidebar {...props} />
             </div>
