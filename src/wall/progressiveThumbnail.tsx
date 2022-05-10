@@ -46,7 +46,9 @@ const ThumbContainer = (props: ThumbContainerProps) => {
       onMouseLeave={onMouseLeave}
     >
       <video
-        className={props.className}
+        className={`${props.className} ${
+          isMouseInside ? "is-hovered" : undefined
+        }`}
         preload="none"
         src={videoSrc}
         autoPlay={true}
