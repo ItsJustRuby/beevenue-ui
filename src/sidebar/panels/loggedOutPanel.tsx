@@ -1,4 +1,10 @@
-import React, { FormEvent, useState, useRef } from "react";
+import React, {
+  FormEvent,
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { useDispatch } from "react-redux";
 
 import { Api } from "api";
@@ -37,6 +43,8 @@ const useLoginSubmission = () => {
     event?.preventDefault();
   };
 
+  const memoizedLoginHelper = useCallback(loginHelper, [dispatch]);
+
   const onFormLogin = (
     event: FormEvent,
     isMounted: boolean,
@@ -57,10 +65,18 @@ const useLoginSubmission = () => {
     setDoAutoLogin: (f: boolean) => void,
     jwt: string
   ) => {
-    loginHelper(Api.Session.loginWithGoogle(jwt), setDoAutoLogin, isMounted);
+    memoizedLoginHelper(
+      Api.Session.loginWithGoogle(jwt),
+      setDoAutoLogin,
+      isMounted
+    );
   };
 
-  return { onFormLogin, onGoogleLogin, loginInProgress };
+  const memoizedOnGoogleLogin = useCallback(onGoogleLogin, [
+    memoizedLoginHelper,
+  ]);
+
+  return { onFormLogin, onGoogleLogin: memoizedOnGoogleLogin, loginInProgress };
 };
 
 const getUsernameField = (setUsername: (p: string) => void) => {
@@ -129,31 +145,33 @@ const LoggedOutPanel = () => {
 
   const form = useForm(onFormLogin, setDoAutoLoginWrapper, isMounted.current);
 
-  const renderLogin = () => {
+  const googleLoginButton = useMemo(() => {
     return (
-      <div className="card beevenue-Sidebar-Card">
-        <div className="card-header">
-          <p className="card-header-title">Login</p>
-        </div>
-        <div className="card-content">
-          <div className="content">{form}</div>
-          <GoogleLoginButton
-            doAutoLogin={doAutoLogin}
-            onSuccess={(jwt) =>
-              onGoogleLogin(isMounted.current, setDoAutoLogin, jwt)
-            }
-          />
-        </div>
-      </div>
+      <GoogleLoginButton
+        doAutoLogin={doAutoLogin}
+        onSuccess={(jwt) =>
+          onGoogleLogin(isMounted.current, setDoAutoLogin, jwt)
+        }
+      />
     );
-  };
+  }, [isMounted, doAutoLogin, onGoogleLogin]);
 
   if (loginInProgress) {
     isMounted.current = false;
     return <BeevenueSpinner />;
   }
   isMounted.current = true;
-  return renderLogin();
+  return (
+    <div className="card beevenue-Sidebar-Card">
+      <div className="card-header">
+        <p className="card-header-title">Login</p>
+      </div>
+      <div className="card-content">
+        <div className="content">{form}</div>
+        {googleLoginButton}
+      </div>
+    </div>
+  );
 };
 
 export { LoggedOutPanel };
