@@ -168,7 +168,7 @@ const LoggedOutPanel = () => {
       </div>
       <div className="card-content">
         <div className="content">{form}</div>
-        {googleLoginButton}
+        <div className="content">{googleLoginButton}</div>
       </div>
     </div>
   );

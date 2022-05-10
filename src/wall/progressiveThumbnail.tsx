@@ -39,6 +39,12 @@ const ThumbContainer = (props: ThumbContainerProps) => {
   };
 
   const videoSrc = props.src.replace(".jpg", ".mp4");
+
+  let videoClassName = props.className;
+  if (isMouseInside) {
+    videoClassName += " is-hovered";
+  }
+
   return (
     <div
       className="beevenue-thumb-container"
@@ -46,9 +52,7 @@ const ThumbContainer = (props: ThumbContainerProps) => {
       onMouseLeave={onMouseLeave}
     >
       <video
-        className={`${props.className} ${
-          isMouseInside ? "is-hovered" : undefined
-        }`}
+        className={videoClassName}
         preload="none"
         src={videoSrc}
         autoPlay={true}
