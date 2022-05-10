@@ -44,7 +44,11 @@ const GoogleLoginButton = (props: GoogleLoginButtonProps) => {
     });
   }, [buttonRef, google, isLoadComplete, props, props.doAutoLogin]);
 
-  return <div ref={buttonRef}></div>;
+  return (
+    <div className="beevenue-GoogleLoginContainer">
+      <div ref={buttonRef} />
+    </div>
+  );
 };
 
 export { GoogleLoginButton };
