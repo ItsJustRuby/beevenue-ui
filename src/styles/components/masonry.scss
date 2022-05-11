@@ -38,7 +38,12 @@ $gutter: 1.25rem;
   grid-row: 1;
 }
 
+.beevenue-thumb-container video {
+  visibility: hidden;
+}
+
 .beevenue-thumb-container video.is-hovered {
+  visibility: visible;
   margin: 0;
   top: 0;
   height: calc(100% + 1px);

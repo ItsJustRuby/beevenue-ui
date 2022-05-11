@@ -30,12 +30,12 @@ const ThumbContainer = (props: ThumbContainerProps) => {
   }
 
   const onMouseEnter = () => {
+    if (videoRef.current) videoRef.current.currentTime = 0;
     setIsMouseInside(true);
   };
 
   const onMouseLeave = () => {
     setIsMouseInside(false);
-    if (videoRef.current) videoRef.current.currentTime = 0;
   };
 
   const videoSrc = props.src.replace(".jpg", ".mp4");
@@ -51,6 +51,7 @@ const ThumbContainer = (props: ThumbContainerProps) => {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
+      <img className={props.className} src={props.src} width="50vw" />
       <video
         className={videoClassName}
         preload="none"
@@ -60,17 +61,6 @@ const ThumbContainer = (props: ThumbContainerProps) => {
         muted={true}
         playsInline={true}
         ref={videoRef}
-        style={{
-          visibility: isMouseInside ? "visible" : "hidden",
-        }}
-      />
-      <img
-        className={props.className}
-        src={props.src}
-        width="50vw"
-        style={{
-          visibility: isMouseInside ? "hidden" : "visible",
-        }}
       />
     </div>
   );
